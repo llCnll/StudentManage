@@ -24,6 +24,8 @@ public interface StudentDao {
 	/*List<Course> stduentCourse(String id);*/
 
 	int getCount();
+	
+	int getCountGetSt();
 
 	boolean addSelectCourse(String stid, String cid);
 

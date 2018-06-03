@@ -34,13 +34,33 @@ public class StudentServiceImpl implements StudentService {
 		//当前条数
 		pageBean.setCurrentPage(currentPage);
 		//总条数
-		int totalCount = sd.getCount();
+		int totalCount = sd.getCountGetSt();
 		pageBean.setTotalCount(totalCount);
 		//总页数
 		int totalPage = (int)Math.ceil(1.0*totalCount/currentCount);
 		pageBean.setTotalPage(totalPage);
 		//数据
 		List<Student> list = sd.listGetSt((currentPage-1)*currentCount, currentCount, param);
+		pageBean.setList(list);
+		
+		return pageBean;
+	}
+	public PageBean<Student> studentListAll(Integer currentPage, Integer currentCount, Object... param) {
+		
+		//封装pageBean
+		PageBean<Student> pageBean = new PageBean<Student>();
+		//当前页数
+		pageBean.setCurrentCount(currentCount);
+		//当前条数
+		pageBean.setCurrentPage(currentPage);
+		//总条数
+		int totalCount = sd.getCount();
+		pageBean.setTotalCount(totalCount);
+		//总页数
+		int totalPage = (int)Math.ceil(1.0*totalCount/currentCount);
+		pageBean.setTotalPage(totalPage);
+		//数据
+		List<Student> list = sd.list((currentPage-1)*currentCount, currentCount, param);
 		pageBean.setList(list);
 		
 		return pageBean;

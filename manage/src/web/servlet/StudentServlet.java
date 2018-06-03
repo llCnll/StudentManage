@@ -38,7 +38,7 @@ public class StudentServlet extends BaseServlet {
 			System.out.println("-----查询学生成功----\n");
 			request.getRequestDispatcher("jsp/course/list.jsp").forward(request, response);
 		}else{
-			;
+			;//若不存在
 		}
 		
 	}
@@ -193,7 +193,7 @@ public class StudentServlet extends BaseServlet {
 				System.out.println("-----更改学生信息成功----\n");
 				response.sendRedirect(request.getContextPath()+"/jsp/customer/list.jsp");
 			}else{
-				request.setAttribute("addError", "更改失败!");
+				request.setAttribute("error", "更改失败!");
 				System.out.println("-----更改学生信息失败----\n");
 				request.getRequestDispatcher("/jsp/customer/edit.jsp?id="+st.getId()).forward(request, response);
 			}
@@ -263,14 +263,14 @@ public class StudentServlet extends BaseServlet {
 			boolean flag = ss.studentAdd(st);
 			
 			if(flag){
-				System.out.println("-----添加成学生信息功----\n");
-				response.sendRedirect(request.getContextPath()+"/jsp/customer/list.jsp");
+				System.out.println("-----添加学生信息成功----\n");
+				request.setAttribute("message", st.getId()+"添加成功!");
+				request.getRequestDispatcher("/jsp/customer/list.jsp").forward(request, response);
 			}else{
-				request.setAttribute("addError", "添加失败!");
+				request.setAttribute("error", "添加失败!");
 				System.out.println("-----添加学生信息失败----\n");
 				request.getRequestDispatcher("/jsp/customer/add.jsp").forward(request, response);
 			}
-			
 			
 		} catch (IllegalAccessException e) {
 			// TODO Auto-generated catch block
@@ -287,9 +287,10 @@ public class StudentServlet extends BaseServlet {
 		boolean flag = ss.studentDel(id);
 		if(flag){
 			System.out.println("-----删除学生成功----\n");
-			response.sendRedirect(request.getContextPath()+"/jsp/customer/list.jsp");
+			request.setAttribute("message", id+"删除成功!");
+			request.getRequestDispatcher("/jsp/customer/list.jsp").forward(request, response);;
 		}else{
-			request.setAttribute("delError", "删除失败!");
+			request.setAttribute("error", id+"删除失败!");
 			System.out.println("-----删除学生失败----\n");
 			request.getRequestDispatcher("/jsp/customer/list.jsp").forward(request, response);
 		}
@@ -323,7 +324,7 @@ public class StudentServlet extends BaseServlet {
 		
 		Object[] param = paramList.toArray();
 		System.out.println("-----正在获得学生列表中----");
-		PageBean<Student> pageBean = ss.studentList(currentPage, currentCount, param);
+		PageBean<Student> pageBean = ss.studentListAll(currentPage, currentCount, param);
 		System.out.println("-----获取学生列表成功----\n");
 		Gson gson = new Gson();
 		String json = gson.toJson(pageBean);
@@ -354,7 +355,7 @@ public class StudentServlet extends BaseServlet {
 			System.out.println("-----登录成功-----\n");
 			response.sendRedirect(request.getContextPath()+"/index.jsp");
 		}else{
-			request.setAttribute("loginError", "登陆失败用户或密码错误!");
+			request.setAttribute("error", "登陆失败用户或密码错误!");
 			System.out.println("-----登录失败-----\n");
 			request.getRequestDispatcher("/login.jsp").forward(request, response);
 		}

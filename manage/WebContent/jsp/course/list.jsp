@@ -158,6 +158,11 @@
 
 		if(page){//通过上一页下一页执行
 			$("#page").val(page);
+			if(1*page >= 1*$('#totalPage').text()){
+				$("#page").val($('#totalPage').text());
+			}else if(1*page <= 1){
+				$("#page").val(1);
+			}
 		}else{
 			var toPage = $('#page').val();
 			
@@ -214,6 +219,7 @@
 						<TABLE borderColor=#cccccc cellSpacing=0 cellPadding=0
 							width="100%" align=center border=0>
 							<TBODY>
+								<tr><td><span style="color:red;">${error }</span></td></tr>
 								<TR>
 									<TD height=25>
 										<TABLE cellSpacing=0 cellPadding=2 border=0>

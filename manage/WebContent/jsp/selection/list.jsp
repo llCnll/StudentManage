@@ -138,6 +138,11 @@
 
 		if(page){//通过上一页下一页执行
 			$("#page").val(page);
+			if(1*page >= 1*$('#totalPage').text()){
+				$("#page").val($('#totalPage').text());
+			}else if(1*page <= 1){
+				$("#page").val(1);
+			}
 		}else{
 			var toPage = $('#page').val();
 			
@@ -171,7 +176,7 @@
 </HEAD>
 <BODY>
 	<FORM id="customerForm" name="customerForm"
-		action="${pageContext.request.contextPath }/jsp/customer/list.jsp"
+		action="${pageContext.request.contextPath }/jsp/selection/list.jsp"
 		method=get>
 		
 		<TABLE cellSpacing=0 cellPadding=0 width="98%" border=0>

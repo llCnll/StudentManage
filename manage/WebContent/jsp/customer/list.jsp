@@ -133,12 +133,18 @@
 
 		if(page){//通过上一页下一页执行
 			$("#page").val(page);
+		
+			if(1*page >= 1*$('#totalPage').text()){
+				$("#page").val($('#totalPage').text());
+			}else if(1*page <= 1){
+				$("#page").val(1);
+			}
 		}else{
 			var toPage = $('#page').val();
 			
-			if(1*toPage > 1*$('#totalPage').text()){
+			if(1*toPage >= 1*$('#totalPage').text()){
 				$("#page").val($('#totalPage').text());
-			}else if(1*toPage < 1){
+			}else if(1*toPage <= 1){
 				$("#page").val(1);
 			}
 		}
@@ -211,7 +217,7 @@
 													   </select>
 													</TD>
 													<TD><INPUT class=button id=sButton2 type=submit
-														value=" 筛选 " name=sButton2><span style="height: 18px;color: red;">${delError }</span></TD>
+														value=" 筛选 " name=sButton2><span style="height: 18px;color: red;">${error }${message }</span></TD>
 												</TR>
 											</TBODY>
 										</TABLE>

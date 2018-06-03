@@ -76,5 +76,9 @@ public class DataSourceUtils {
 			rs.close();
 		}
 	}
-
+	public static void closeAll(Statement st, ResultSet rs) throws SQLException {
+		closeStatement(st);
+		closeResultSet(rs);
+		//closeConnection();
+	}
 }

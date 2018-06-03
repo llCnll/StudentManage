@@ -9,10 +9,10 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import utils.DataSourceUtils;
 import dao.ClassesDao;
 import dbtools.DB;
 import domain.Classes;
-import domain.Student;
 
 public class ClassesDaoImpl implements ClassesDao {
 	
@@ -26,16 +26,18 @@ public class ClassesDaoImpl implements ClassesDao {
 	public Classes getClassesByCid(String classesId) {
 		
 		String sql = "select * from classes where id = ?";
-		Connection conn = DB.getConnection();
+		Connection conn = null;
 		PreparedStatement pst = null;
+		ResultSet rs = null;
 		Classes classes = null;
 		try {
+			conn = DataSourceUtils.getConnection();
 			pst = conn.prepareStatement(sql);
 			DB.fillStatement(pst, classesId);
-			System.out.println(pst.toString().split(": ")[1]);
+			//System.out.println(pst.toString().split(": ")[1]);
 			
-			ResultSet rs = pst.executeQuery();
-			
+			rs = pst.executeQuery();
+			System.out.println(sql);
 			if(rs.next()) {
 				classes = new Classes();
 				this.classesBean(rs,classes);
@@ -44,7 +46,7 @@ public class ClassesDaoImpl implements ClassesDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			DB.close(pst, conn);
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {e.printStackTrace();}
 		}
 		
 		return classes;
@@ -55,15 +57,17 @@ public class ClassesDaoImpl implements ClassesDao {
 
 		String sql = "select * from classes";
 		
-		Connection conn = DB.getConnection();
+		Connection conn = null;
 		PreparedStatement pst = null;
+		ResultSet rs = null;
 		List<Classes> list = new ArrayList<Classes>();
 		
 		try {
+			conn = DataSourceUtils.getConnection();
 			pst = conn.prepareStatement(sql);
-			System.out.println(pst.toString().split(": ")[1]);
-			ResultSet rs = pst.executeQuery();
-			
+			//System.out.println(pst.toString().split(": ")[1]);
+			rs = pst.executeQuery();
+			System.out.println(sql);
 			while(rs.next()) {
 				Classes c = new Classes();
 				this.classesBean(rs, c);
@@ -73,7 +77,7 @@ public class ClassesDaoImpl implements ClassesDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			DB.close(pst, conn);
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {e.printStackTrace();}
 		}
 		
 		return list.size()>0?list:null;
@@ -83,16 +87,18 @@ public class ClassesDaoImpl implements ClassesDao {
 	public Classes getClassesByName(String name) {
 		
 		String sql = "select * from classes where name = ?";
-		Connection conn = DB.getConnection();
+		Connection conn = null;
 		PreparedStatement pst = null;
+		ResultSet rs = null;
 		Classes classes = null;
 		try {
+			conn = DataSourceUtils.getConnection();
 			pst = conn.prepareStatement(sql);
 			DB.fillStatement(pst, name);
-			System.out.println(pst.toString().split(": ")[1]);
+			//System.out.println(pst.toString().split(": ")[1]);
 			
-			ResultSet rs = pst.executeQuery();
-			
+			rs = pst.executeQuery();
+			System.out.println(sql);
 			if(rs.next()) {
 				classes = new Classes();
 				this.classesBean(rs,classes);
@@ -101,7 +107,7 @@ public class ClassesDaoImpl implements ClassesDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			DB.close(pst, conn);
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {e.printStackTrace();}
 		}
 		
 		return classes;
@@ -110,15 +116,17 @@ public class ClassesDaoImpl implements ClassesDao {
 	public int getCount() {
 		
 		String sql = "select count(id) from classes";
-		Connection conn = DB.getConnection();
+		Connection conn = null;
 		PreparedStatement pst = null;
+		ResultSet rs = null;
 		int count = 0;
 		try {
+			conn = DataSourceUtils.getConnection();
 			pst = conn.prepareStatement(sql);
-			System.out.println(pst.toString().split(": ")[1]);
+			//System.out.println(pst.toString().split(": ")[1]);
 			
-			ResultSet rs = pst.executeQuery();
-			
+			rs = pst.executeQuery();
+			System.out.println(sql);
 			if(rs.next()) {
 				count = rs.getInt("count(id)");
 			}
@@ -126,7 +134,7 @@ public class ClassesDaoImpl implements ClassesDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			DB.close(pst, conn);
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {e.printStackTrace();}
 		}
 		
 		return count;
@@ -168,16 +176,18 @@ public class ClassesDaoImpl implements ClassesDao {
 		
 		param = paramlist.toArray();
 		
-		Connection conn = DB.getConnection();
+		Connection conn = null;
 		PreparedStatement pst = null;
+		ResultSet rs = null;
 		List<Classes> list = new ArrayList<Classes>();
 		
 		try {
+			conn = DataSourceUtils.getConnection();
 			pst = conn.prepareStatement(sql);
 			DB.fillStatement(pst, param);
-			System.out.println(pst.toString().split(": ")[1]);
-			ResultSet rs = pst.executeQuery();
-			
+			//System.out.println(pst.toString().split(": ")[1]);
+			rs = pst.executeQuery();
+			System.out.println(sql);
 			while(rs.next()) {
 				Classes cl = new Classes();
 				this.classesBean(rs, cl);
@@ -187,7 +197,7 @@ public class ClassesDaoImpl implements ClassesDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			DB.close(pst, conn);
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {e.printStackTrace();}
 		}
 		
 		return list.size()>0?list:null;
@@ -195,15 +205,17 @@ public class ClassesDaoImpl implements ClassesDao {
 
 	public List<String> classesGradeSelect() {
 		String sql = "select distinct grade from classes";
-		Connection conn = DB.getConnection();
+		Connection conn = null;
 		PreparedStatement pst = null;
+		ResultSet rs = null;
 		List<String> list = new ArrayList<String>();
 		try {
+			conn = DataSourceUtils.getConnection();
 			pst = conn.prepareStatement(sql);
-			System.out.println(pst.toString().split(": ")[1]);
+			//System.out.println(pst.toString().split(": ")[1]);
 			
-			ResultSet rs = pst.executeQuery();
-			
+			rs = pst.executeQuery();
+			System.out.println(sql);
 			while(rs.next()) {
 				list.add(String.valueOf(rs.getInt("grade")));
 			}
@@ -211,7 +223,7 @@ public class ClassesDaoImpl implements ClassesDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			DB.close(pst, conn);
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {e.printStackTrace();}
 		}
 		
 		return list;
@@ -220,15 +232,17 @@ public class ClassesDaoImpl implements ClassesDao {
 	public List<String> classesMajorSelect() {
 		
 		String sql = "select distinct major from classes";
-		Connection conn = DB.getConnection();
+		Connection conn = null;
 		PreparedStatement pst = null;
+		ResultSet rs = null;
 		List<String> list = new ArrayList<String>();
 		try {
+			conn = DataSourceUtils.getConnection();
 			pst = conn.prepareStatement(sql);
-			System.out.println(pst.toString().split(": ")[1]);
+			//System.out.println(pst.toString().split(": ")[1]);
 			
-			ResultSet rs = pst.executeQuery();
-			
+			rs = pst.executeQuery();
+			System.out.println(sql);
 			while(rs.next()) {
 				list.add(rs.getString("major"));
 			}
@@ -236,7 +250,7 @@ public class ClassesDaoImpl implements ClassesDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			DB.close(pst, conn);
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {e.printStackTrace();}
 		}
 		
 		return list;
@@ -245,21 +259,22 @@ public class ClassesDaoImpl implements ClassesDao {
 	public boolean studentAdd(Classes cl) {
 		
 		String sql = "insert into classes values(null,?,?,?)";
-		Connection conn = DB.getConnection();
+		Connection conn = null;
 		PreparedStatement pst = null;
 		int row = 0;
 
 		try {
+			conn = DataSourceUtils.getConnection();
 			pst = conn.prepareStatement(sql);
 			
 			DB.fillStatement(pst, cl.getName(), cl.getGrade(), cl.getMajor());
-			System.out.println(pst.toString().split(": ")[1]);
+			//System.out.println(pst.toString().split(": ")[1]);
 			row = pst.executeUpdate();
-
+			System.out.println(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			DB.close(pst, conn);
+			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {e.printStackTrace();}
 		}
 		
 		return row > 0? true: false;
@@ -267,20 +282,21 @@ public class ClassesDaoImpl implements ClassesDao {
 
 	public boolean classesDel(String id) {
 		String sql = "delete from classes where id = ?"; 
-		Connection conn = DB.getConnection();
+		Connection conn = null;
 		PreparedStatement pst = null;
 		int row = 0;
 		try {
+			conn = DataSourceUtils.getConnection();
 			pst = conn.prepareStatement(sql);
 			
 			DB.fillStatement(pst, id);
-			System.out.println(pst.toString().split(": ")[1]);
+			//System.out.println(pst.toString().split(": ")[1]);
 			row = pst.executeUpdate();
-			
+			System.out.println(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			DB.close(pst, conn);
+			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {e.printStackTrace();}
 		}
 		
 		return row > 0? true: false;
@@ -289,16 +305,18 @@ public class ClassesDaoImpl implements ClassesDao {
 	public Classes studentEdit(String id) {
 		
 		String sql = "select * from classes where id = ?";
-		Connection conn = DB.getConnection();
+		Connection conn = null;
 		PreparedStatement pst = null;
+		ResultSet rs= null;
 		Classes cl = null;
 		
 		try {
+			conn = DataSourceUtils.getConnection();
 			pst = conn.prepareStatement(sql);
 			DB.fillStatement(pst, id);
-			System.out.println(pst.toString().split(": ")[1]);
-			ResultSet rs = pst.executeQuery();
-			
+			//System.out.println(pst.toString().split(": ")[1]);
+			rs = pst.executeQuery();
+			System.out.println(sql);
 			while(rs.next()) {
 				cl = new Classes();
 				this.classesBean(rs, cl);
@@ -307,7 +325,7 @@ public class ClassesDaoImpl implements ClassesDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			DB.close(pst, conn);
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {e.printStackTrace();}
 		}
 		
 		return cl;
@@ -316,21 +334,22 @@ public class ClassesDaoImpl implements ClassesDao {
 	public boolean studentEditSubmit(Classes cl) {
 		
 		String sql = "update classes set name = ?, grade = ?, major = ? where id = ?";
-		Connection conn = DB.getConnection();
+		Connection conn = null;
 		PreparedStatement pst = null;
 		int row = 0;
 
 		try {
+			conn = DataSourceUtils.getConnection();
 			pst = conn.prepareStatement(sql);
 			
 			DB.fillStatement(pst, cl.getName(), cl.getGrade(), cl.getMajor(), cl.getId());
-			System.out.println(pst.toString().split(": ")[1]);
+			//System.out.println(pst.toString().split(": ")[1]);
 			row = pst.executeUpdate();
-			
+			System.out.println(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			DB.close(pst, conn);
+			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {e.printStackTrace();}
 		}
 
 		return row > 0? true: false;

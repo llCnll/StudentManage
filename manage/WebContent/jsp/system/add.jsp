@@ -157,7 +157,7 @@
 						
 						<table cellspacing=0 cellpadding=5  border=0>
 						  
-						    <tr><td><span style="color:red;">${addError }</span></td></tr>
+						    <tr><td><span style="color:red;">${error }</span></td></tr>
 							<tr>
 								<td>班级名称：</td>
 								<td>

@@ -85,7 +85,7 @@ public class CourseServlet extends BaseServlet {
 			System.out.println("-----删除课程成功----\n");
 			response.sendRedirect(request.getContextPath()+"/jsp/course/list.jsp");
 		}else{
-			request.setAttribute("delError", "删除失败!");
+			request.setAttribute("error", "删除失败!");
 			System.out.println("-----删除课程失败----\n");
 			request.getRequestDispatcher("/jsp/course/list.jsp").forward(request, response);
 		}
@@ -104,7 +104,7 @@ public class CourseServlet extends BaseServlet {
 				System.out.println("-----更改课程信息成功----\n");
 				response.sendRedirect(request.getContextPath()+"/jsp/course/list.jsp");
 			}else{
-				request.setAttribute("addError", "更改失败!");
+				request.setAttribute("error", "更改失败!");
 				System.out.println("-----更改课程信息失败----\n");
 				request.getRequestDispatcher("/jsp/course/edit.jsp?id="+co.getId()).forward(request, response);
 			}

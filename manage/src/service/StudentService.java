@@ -11,6 +11,8 @@ public interface StudentService {
 	Student login(String name, String password);
 
 	PageBean<Student> studentList(Integer currentPage, Integer currentCount, Object... param);
+	
+	PageBean<Student> studentListAll(Integer currentPage, Integer currentCount, Object... param);
 
 	boolean studentAdd(Student st);
 

@@ -117,7 +117,7 @@ $(function(){
 															style="font-weight: bold; visibility: hidden; color: white">请输入密码</span></td>
 													</tr>
 													<tr>
-														<td style="height: 18px;color: red;" colspan="2">${loginError }</td>
+														<td style="height: 18px;color: red;" colspan="2">${error }</td>
 														<td style="height: 18px"></td>
 													</tr>
 													<tr>

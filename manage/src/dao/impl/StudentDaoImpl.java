@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import utils.DataSourceUtils;
 import dao.ClassesDao;
 import dao.CourseDao;
 import dao.StudentDao;
@@ -39,25 +40,33 @@ public class StudentDaoImpl implements StudentDao {
 	public Student login(String id, String pwd) {
 
 		String sql = "select * from student where id = ? && pwd = ?";
-		Connection conn = DB.getConnection();
+		Connection conn = null;
 		PreparedStatement pst = null;
+		ResultSet rs = null;
 		Student st = null;
 		try {
+			conn = DataSourceUtils.getConnection();
 			pst = conn.prepareStatement(sql);
 			DB.fillStatement(pst, id, pwd);
-			System.out.println(pst.toString().split(": ")[1]);
+			//System.out.println(pst.toString().split(": ")[1]);
+			//System.out.printf("select * from student where id = %s && pwd = %s\n", id, pwd);
 			
-			ResultSet rs = pst.executeQuery();
+			rs = pst.executeQuery();
+			System.out.println(sql);
 			
 			if(rs.next()) {
 				st = new Student();
 				this.studentBean(rs, st);
 			}
 			
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}finally{
-			DB.close(pst, conn);
+			try {
+				DataSourceUtils.closeAll(pst, rs);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		return st;
@@ -123,15 +132,18 @@ public class StudentDaoImpl implements StudentDao {
 		
 		param = paramlist.toArray();
 		
-		Connection conn = DB.getConnection();
+		Connection conn = null;
 		PreparedStatement pst = null;
+		ResultSet rs = null;
 		List<Student> list = new ArrayList<Student>();
 		
 		try {
+			conn = DataSourceUtils.getConnection();
 			pst = conn.prepareStatement(sql);
 			DB.fillStatement(pst, param);
-			System.out.println(pst.toString().split(": ")[1]);
-			ResultSet rs = pst.executeQuery();
+			//System.out.println(pst.toString().split(": ")[1]);
+			System.out.println(sql);
+			rs = pst.executeQuery();
 			
 			while(rs.next()) {
 				Student st = new Student();
@@ -142,7 +154,11 @@ public class StudentDaoImpl implements StudentDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			DB.close(pst, conn);
+			try {
+				DataSourceUtils.closeAll(pst, rs);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		return list.size()>0?list:null;
@@ -185,16 +201,18 @@ public class StudentDaoImpl implements StudentDao {
 		
 		param = paramlist.toArray();
 		
-		Connection conn = DB.getConnection();
+		Connection conn = null;
 		PreparedStatement pst = null;
+		ResultSet rs = null;
 		List<Student> list = new ArrayList<Student>();
 		
 		try {
+			conn = DataSourceUtils.getConnection();
 			pst = conn.prepareStatement(sql);
 			DB.fillStatement(pst, param);
-			System.out.println(pst.toString().split(": ")[1]);
-			ResultSet rs = pst.executeQuery();
-			
+			//System.out.println(pst.toString().split(": ")[1]);
+			rs = pst.executeQuery();
+			System.out.println(sql);
 			while(rs.next()) {
 				Student st = new Student();
 				this.studentBean(rs, st);
@@ -204,7 +222,7 @@ public class StudentDaoImpl implements StudentDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			DB.close(pst, conn);
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {e.printStackTrace();}
 		}
 		
 		return list.size()>0?list:null;
@@ -213,21 +231,22 @@ public class StudentDaoImpl implements StudentDao {
 	public boolean studentAdd(Student st) {
 
 		String sql = "insert into student values(?,?,?,?,?)";
-		Connection conn = DB.getConnection();
+		Connection conn = null;
 		PreparedStatement pst = null;
 		int row = 0;
 
 		try {
+			conn = DataSourceUtils.getConnection();
 			pst = conn.prepareStatement(sql);
-			
 			DB.fillStatement(pst, st.getId(), st.getName(), st.getPwd(), st.getClasses().getId(), st.getRoleId());
-			System.out.println(pst.toString().split(": ")[1]);
+			//System.out.println(pst.toString().split(": ")[1]);
 			row = pst.executeUpdate();
+			System.out.println(sql);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			DB.close(pst, conn);
+			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {e.printStackTrace();}
 		}
 		
 		return row > 0? true: false;
@@ -236,20 +255,21 @@ public class StudentDaoImpl implements StudentDao {
 	public boolean studentDel(String id) {
 
 		String sql = "delete from student where id = ?"; 
-		Connection conn = DB.getConnection();
+		Connection conn = null;
 		PreparedStatement pst = null;
 		int row = 0;
 		try {
+			conn = DataSourceUtils.getConnection();
 			pst = conn.prepareStatement(sql);
 			
 			DB.fillStatement(pst, id);
-			System.out.println(pst.toString().split(": ")[1]);
+			//System.out.println(pst.toString().split(": ")[1]);
 			row = pst.executeUpdate();
-			
+			System.out.println(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			DB.close(pst, conn);
+			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {e.printStackTrace();}
 		}
 		
 		return row > 0? true: false;
@@ -258,17 +278,18 @@ public class StudentDaoImpl implements StudentDao {
 	public Student studentEdit(String id) {
 
 		String sql = "select * from student where id = ?";
-		Connection conn = DB.getConnection();
+		Connection conn = null;
 		PreparedStatement pst = null;
+		ResultSet rs = null;
 		Student st = null;
 		
 		try {
-			
+			conn = DataSourceUtils.getConnection();
 			pst = conn.prepareStatement(sql);
 			DB.fillStatement(pst, id);
-			System.out.println(pst.toString().split(": ")[1]);
-			ResultSet rs = pst.executeQuery();
-			
+			//System.out.println(pst.toString().split(": ")[1]);
+			rs = pst.executeQuery();
+			System.out.println(sql);
 			while(rs.next()) {
 				st = new Student();
 				this.studentBean(rs, st);
@@ -277,7 +298,7 @@ public class StudentDaoImpl implements StudentDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			DB.close(pst, conn);
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {e.printStackTrace();}
 		}
 		
 		return st;
@@ -286,21 +307,22 @@ public class StudentDaoImpl implements StudentDao {
 	public boolean studentEditSubmit(Student st) {
 		
 		String sql = "update student set name = ?, pwd = ?, classesId = ?, roleId = ? where id = ?";
-		Connection conn = DB.getConnection();
+		Connection conn =null;
 		PreparedStatement pst = null;
 		int row = 0;
 
 		try {
+			conn = DataSourceUtils.getConnection();
 			pst = conn.prepareStatement(sql);
 			
 			DB.fillStatement(pst, st.getName(), st.getPwd(), st.getClasses().getId(), st.getRoleId(), st.getId());
-			System.out.println(pst.toString().split(": ")[1]);
+			//System.out.println(pst.toString().split(": ")[1]);
 			row = pst.executeUpdate();
-			
+			System.out.println(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			DB.close(pst, conn);
+			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {e.printStackTrace();}
 		}
 		
 		return row > 0? true: false;
@@ -309,15 +331,17 @@ public class StudentDaoImpl implements StudentDao {
 	public int getCount() {
 		
 		String sql = "select count(id) from student";
-		Connection conn = DB.getConnection();
+		Connection conn = null;
 		PreparedStatement pst = null;
+		ResultSet rs = null;
 		int count = 0;
 		try {
+			conn = DataSourceUtils.getConnection();
 			pst = conn.prepareStatement(sql);
-			System.out.println(pst.toString().split(": ")[1]);
+			//System.out.println(pst.toString().split(": ")[1]);
 			
-			ResultSet rs = pst.executeQuery();
-			
+			rs = pst.executeQuery();
+			System.out.println(sql);
 			if(rs.next()) {
 				count = rs.getInt("count(id)");
 			}
@@ -325,7 +349,34 @@ public class StudentDaoImpl implements StudentDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			DB.close(pst, conn);
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {e.printStackTrace();}
+		}
+		
+		return count;
+	}
+	//获得所有用户数量
+	public int getCountGetSt() {
+		
+		String sql = "select count(id) from student where roleId = 0";
+		Connection conn = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		int count = 0;
+		try {
+			conn = DataSourceUtils.getConnection();
+			pst = conn.prepareStatement(sql);
+			//System.out.println(pst.toString().split(": ")[1]);
+			
+			rs = pst.executeQuery();
+			System.out.println(sql);
+			if(rs.next()) {
+				count = rs.getInt("count(id)");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {e.printStackTrace();}
 		}
 		
 		return count;
@@ -335,19 +386,20 @@ public class StudentDaoImpl implements StudentDao {
 
 		String sql = "select * from stcourse where stid = ?";
 		
-		Connection conn = DB.getConnection();
+		Connection conn = null;
 		PreparedStatement pst = null;
+		ResultSet rs = null;
 		
 		List<String> courseIds = new ArrayList<String>();
 		List<Course> courses = new ArrayList<Course>();
 		
 		try {
-			
+			conn = DataSourceUtils.getConnection();
 			pst = conn.prepareStatement(sql);
 			DB.fillStatement(pst, id);
-			System.out.println(pst.toString().split(": ")[1]);
-			ResultSet rs = pst.executeQuery();
-			
+			//System.out.println(pst.toString().split(": ")[1]);
+			rs = pst.executeQuery();
+			System.out.println(sql);
 			while(rs.next()) {
 				courseIds.add(rs.getString("cid"));
 			}
@@ -359,7 +411,7 @@ public class StudentDaoImpl implements StudentDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			DB.close(pst, conn);
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {e.printStackTrace();}
 		}
 		
 		return courses.size()>0?courses:null;
@@ -368,21 +420,22 @@ public class StudentDaoImpl implements StudentDao {
 	public boolean addSelectCourse(String stid, String cid) {
 		
 		String sql = "insert into stcourse values(null,?,?)";
-		Connection conn = DB.getConnection();
+		Connection conn = null;
 		PreparedStatement pst = null;
 		int row = 0;
 
 		try {
+			conn = DataSourceUtils.getConnection();
 			pst = conn.prepareStatement(sql);
 			
 			DB.fillStatement(pst, stid, cid);
-			System.out.println(pst.toString().split(": ")[1]);
+			//System.out.println(pst.toString().split(": ")[1]);
 			row = pst.executeUpdate();
-			
+			System.out.println(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			DB.close(pst, conn);
+			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {e.printStackTrace();}
 		}
 		
 		return row > 0? true: false;
@@ -391,20 +444,21 @@ public class StudentDaoImpl implements StudentDao {
 	public boolean delSelectCourse(String stid, String cid) {
 		
 		String sql = "delete from stcourse where stid = ? && cid = ?"; 
-		Connection conn = DB.getConnection();
+		Connection conn = null;
 		PreparedStatement pst = null;
 		int row = 0;
 		try {
+			conn = DataSourceUtils.getConnection();
 			pst = conn.prepareStatement(sql);
 			
 			DB.fillStatement(pst, stid, cid);
-			System.out.println(pst.toString().split(": ")[1]);
+			//System.out.println(pst.toString().split(": ")[1]);
 			row = pst.executeUpdate();
-			
+			System.out.println(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			DB.close(pst, conn);
+			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {e.printStackTrace();}
 		}
 		
 		return row > 0? true: false;
