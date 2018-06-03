@@ -1,0 +1,32 @@
+package dao;
+
+import java.util.List;
+
+import domain.Course;
+import domain.Student;
+
+public interface StudentDao {
+
+	Student login(String name, String pwd);
+	
+	List<Student> listGetSt(Integer index, Integer currentCount, Object... param);
+
+	List<Student> list(Integer index, Integer currentCount, Object... param);
+
+	boolean studentAdd(Student st);
+
+	boolean studentDel(String id);
+
+	Student studentEdit(String id);
+
+	boolean studentEditSubmit(Student st);
+	
+	/*List<Course> stduentCourse(String id);*/
+
+	int getCount();
+
+	boolean addSelectCourse(String stid, String cid);
+
+	boolean delSelectCourse(String stid, String cid);
+
+}
