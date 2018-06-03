@@ -3,12 +3,12 @@ package service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
-
 import service.StudentService;
 import dao.ClassesDao;
+import dao.CourseDao;
 import dao.StudentDao;
 import dao.impl.ClassesDaoImpl;
+import dao.impl.CourseDaoImpl;
 import dao.impl.StudentDaoImpl;
 import domain.Course;
 import domain.PageBean;
@@ -18,6 +18,7 @@ public class StudentServiceImpl implements StudentService {
 	
 	private StudentDao sd = new StudentDaoImpl();
 	private ClassesDao cd = new ClassesDaoImpl();
+	private CourseDao cod =new CourseDaoImpl();
 
 	public Student login(String id, String pwd) {
 
@@ -111,8 +112,21 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	public boolean addSelectCourse(String stid, String cid) {
-
-		boolean flag = sd.addSelectCourse(stid, cid);
+		Float sum = 0.0f;
+		//判断已选学分
+		Student st = sd.studentEdit(stid);
+		for(Course c : st.getCourses()){
+			sum += c.getCredithour();
+		}
+		
+		//判断该科目学分
+		Course co = cod.courseEdit(cid);
+		
+		//是否可以选课
+		boolean flag = false;
+		if(sum + co.getCredithour() <= 15){
+			flag = sd.addSelectCourse(stid, cid);
+		}
 		
 		return flag;
 	}

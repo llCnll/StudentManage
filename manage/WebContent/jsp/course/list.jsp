@@ -1,4 +1,5 @@
-﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿<%@page import="dao.impl.StudentDaoImpl"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -16,7 +17,14 @@
 		<%
 			domain.Student selectStudent = (domain.Student)request.getAttribute("selectStudent");
 			if(selectStudent == null){
-				selectStudent = (domain.Student)request.getSession().getAttribute("student");
+				String stid = request.getParameter("stid");
+				if(stid == null)
+					selectStudent = (domain.Student)request.getSession().getAttribute("student");
+				else{
+					System.out.println("---前台查询中---\n");
+					selectStudent = new StudentDaoImpl().studentEdit(stid);
+					System.out.println("---前台查询结束---\n\n");
+				}
 			}
 			request.setAttribute("selectStudent", selectStudent);
 		%>
@@ -52,13 +60,19 @@
 							var courses = "${selectStudent.courses}";
 							if(courses.search("id="+pageBean.list[i].id+",")>0){//存在
 								content = content.replace('judgeCourse',"<a href='javascript:delSelectCourse(${selectStudent.id},"+pageBean.list[i].id+");'>退选</a>");
-								selected += pageBean.list[i].name+", ";
+								//selected += pageBean.list[i].name+", ";
 							}else{
 								content = content.replace('judgeCourse',"<a href='javascript:addSelectCourse(${selectStudent.id},"+pageBean.list[i].id+");'>选课</a>");
 							}
 						///* <a onclick=\'roleDel()\'>删除</a> */
 						content = content.replace('myRoleEditAddress',"${pageContext.request.contextPath}/jsp/course/edit.jsp?id="+pageBean.list[i].id);
 						content = content.replace('myRoleDelAddress',"${pageContext.request.contextPath}/course?id="+pageBean.list[i].id+"&method=del");
+				}
+				//alert(courses);
+				//alert((courses.split("name=")).length);//0不算从1, 开始, 直到等于length-1
+				var arr = courses.split("name=");
+				for(var i = 1; i < arr.length; ++i){
+					selected += arr[i].split(",")[0]+", ";
 				}
 				$('#selectedCourses').text(selected);
 				$('#grid').html($('#grid').html()+content);
@@ -188,7 +202,7 @@
 <BODY>
 	<FORM id="customerForm" name="customerForm"
 		action="${pageContext.request.contextPath }/jsp/course/list.jsp"
-		method=get>
+		method=post>
 		
 		<TABLE cellSpacing=0 cellPadding=0 width="98%" border=0>
 			<TBODY>
@@ -225,6 +239,7 @@
 										<TABLE cellSpacing=0 cellPadding=2 border=0>
 											<TBODY>
 												<TR>
+													
 													<TD>课程ID：</TD>
 													<TD><INPUT class=textbox id=id
 														style="WIDTH: 80px" maxLength=50 name="id" value="${param.cid}"></TD>
@@ -232,7 +247,7 @@
 													<TD><INPUT class=textbox id=name
 														style="WIDTH: 80px" maxLength=50 name="name" value="${param.name}"></TD>
 													<TD><INPUT class=button id=sButton2 type=submit
-														value=" 筛选 " name=sButton2><span style="height: 18px;color: red;">${delError }</span></TD>
+														value=" 筛选 " name=sButton2></TD>
 												</TR>
 											</TBODY>
 										</TABLE>
@@ -240,7 +255,7 @@
 								</TR>
 								<tr>
 									<td>
-										当前用户: <span id="currentStudent"></span>, 已选课程:<span id="selectedCourses"></span>
+										当前用户: <span id="currentStudent"></span>, <input type="hidden" name="stid" value="${selectStudent.id }">已选课程:<span id="selectedCourses"></span>
 									</td>
 								</tr>
 							    

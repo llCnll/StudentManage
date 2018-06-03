@@ -71,7 +71,8 @@ public class StudentServlet extends BaseServlet {
 		String stid = request.getParameter("stid");
 		String cid = request.getParameter("cid");
 		
-		System.out.println("-----学生选课中----");
+		System.out.println("-----学生选课中----\n");
+		
 		boolean flag = ss.addSelectCourse(stid, cid);
 		
 		response.setContentType("application/json; charset=utf-8");
@@ -79,8 +80,8 @@ public class StudentServlet extends BaseServlet {
 			System.out.println("-----学生选课成功----\n");
 			response.getWriter().write("{\"message\":"+"\"选课成功!\"}");
 		}else{
-			System.out.println("-----学生选课失败----\n");
-			response.getWriter().write("{\"message\":"+"\"选课失败!\"}");
+			System.out.println("-----学生选课失败, 查看学分是否已选满15分----\n");
+			response.getWriter().write("{\"message\":"+"\"选课失败, 查看学分是否已选满15分或者其他原因!\"}");
 		}
 		
 		//如果操作的是个人信息, 需要更新session的值直接set
