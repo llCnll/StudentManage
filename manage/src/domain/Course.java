@@ -19,6 +19,8 @@ public class Course {
 	private Integer practicehour;
 	private String remark;
 	
+	private Score score;
+	
 	public Integer getId() {
 		return id;
 	}
@@ -55,9 +57,17 @@ public class Course {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
+	public Score getScore() {
+		return score;
+	}
+	public void setScore(Score score) {
+		this.score = score;
+	}
 	@Override
 	public String toString() {
-		return "Course [id=" + id + ", name=" + name + ", credithour=" + credithour + ", classhour=" + classhour
-				+ ", practicehour=" + practicehour + ", remark=" + remark + "]";
+		return "Course [id=" + id + ", name=" + name + ", credithour="
+				+ credithour + ", classhour=" + classhour + ", practicehour="
+				+ practicehour + ", remark=" + remark + ", score=" + score
+				+ "]";
 	}
 }

@@ -32,15 +32,32 @@
 								/* 选课情况 */
 								if(pageBean.list[i].courses == undefined){
 									content  += "<td>未选课</td>";
+									content += "<TD>--</TD><TD>--</TD><TD>--</TD>";
 								}else{
 									content += "<TD>"+pageBean.list[i].courses[0].name+"</TD>";
+									if(pageBean.list[i].courses[0].score != null){
+										content += "<TD>"+(pageBean.list[i].courses[0].score.score1==null?"--":pageBean.list[i].courses[0].score.score1)+"</TD>";
+										content += "<TD>"+(pageBean.list[i].courses[0].score.score2==null?"--":pageBean.list[i].courses[0].score.score2)+"</TD>";
+										content += "<TD>"+(pageBean.list[i].courses[0].score.score3==null?"--":pageBean.list[i].courses[0].score.score3)+"</TD>";
+									}else{
+										content += "<TD>--</TD><TD>--</TD><TD>--</TD>";
+									}
 								}
 					content +=	"<TD "+(pageBean.list[i].courses == undefined ? ("rowspan=1"):("rowspan="+pageBean.list[i].courses.length))+">"
 								+"<a href='javascript:;'onclick='update("+pageBean.list[i].id+")'>修改</a>"
 							+"</TR>";
 					if(pageBean.list[i].courses != undefined){
 						for(var j = 1; j < pageBean.list[i].courses.length; ++j){
-							content += "<Tr style='FONT-WEIGHT: normal; FONT-STYLE: normal; BACKGROUND-COLOR: white; TEXT-DECORATION: none'><td>"+pageBean.list[i].courses[j].name+"</td></Tr>";
+							content += "<Tr style='FONT-WEIGHT: normal; FONT-STYLE: normal; BACKGROUND-COLOR: white; TEXT-DECORATION: none'>"
+									+ "<td>"+pageBean.list[i].courses[j].name+"</td>";
+									if(pageBean.list[i].courses[j].score != null){
+										content += "<TD>"+(pageBean.list[i].courses[j].score.score1==null?"--":pageBean.list[i].courses[j].score.score1)+"</TD>"
+												+  "<TD>"+(pageBean.list[i].courses[j].score.score2==null?"--":pageBean.list[i].courses[j].score.score2)+"</TD>"
+												+  "<TD>"+(pageBean.list[i].courses[j].score.score3==null?"--":pageBean.list[i].courses[j].score.score3)+"</TD>";
+									}else{
+										content += "<TD>--</TD><TD>--</TD><TD>--</TD>";
+									}
+							content += "</Tr>";
 						}
 					}
 						
@@ -253,7 +270,10 @@
 													<TD>用户ID</TD>
 													<TD>用户姓名</TD>
 													<TD>用户班级</TD>
-													<TD>选课情况</TD>
+													<TD>课程</TD>
+													<TD>一考</TD>
+													<TD>二考</TD>
+													<TD>三考</TD>
 													<TD>操作</TD>
 												</TR>
 

@@ -9,19 +9,24 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.junit.Test;
+
 import utils.DataSourceUtils;
 import dao.ClassesDao;
 import dao.CourseDao;
+import dao.ScoreDao;
 import dao.StudentDao;
 import dbtools.DB;
 import domain.Classes;
 import domain.Course;
+import domain.Score;
 import domain.Student;
 
 public class StudentDaoImpl implements StudentDao {
 	
 	private ClassesDao cd = new ClassesDaoImpl();
 	private CourseDao cod = new CourseDaoImpl();
+	private ScoreDao scd = new ScoreDaoImpl();
 	
 	private void studentBean(ResultSet rs, Student st) throws SQLException{
 		st.setId(rs.getString("id"));
@@ -33,6 +38,13 @@ public class StudentDaoImpl implements StudentDao {
 		
 		//封装选课信息
 		List<Course> courses = stduentCourse(st.getId());
+		//已知选课的前提下, 封装成绩信息
+		if(courses != null){
+			for(Course course : courses){
+				Score score = scd.studentScore(st.getId(), course.getId());
+				course.setScore(score);
+			}
+		}
 		st.setCourses(courses);
 	}
 	

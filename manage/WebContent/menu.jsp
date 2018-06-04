@@ -194,15 +194,15 @@ a.active {
 											<tbody>
 												<tr>
 													<td class=menuSmall><A class=style2 href="#"
-														target=main>－ 客户信息查询</A></td>
+														target=main>－成绩录入</A></td>
+												</tr>
+												<tr>
+													<td class=menuSmall><A class=style2 href="${pageContext.request.contextPath}/jsp/score/list.jsp"
+														target=main>－成绩查询</A></td>
 												</tr>
 												<tr>
 													<td class=menuSmall><A class=style2 href="#"
-														target=main>－ 联系人信息查询</A></td>
-												</tr>
-												<tr>
-													<td class=menuSmall><A class=style2 href="#"
-														target=main>－ 客户拜访记录查询</A></td>
+														target=main>－绩点查询</A></td>
 												</tr>
 											</tbody>
 										</table>

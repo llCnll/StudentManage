@@ -57,4 +57,14 @@
     <servlet-name>CourseServlet</servlet-name>
     <url-pattern>/course</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ScoreServlet</display-name>
+    <servlet-name>ScoreServlet</servlet-name>
+    <servlet-class>web.servlet.ScoreServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ScoreServlet</servlet-name>
+    <url-pattern>/score</url-pattern>
+  </servlet-mapping>
 </web-app>
