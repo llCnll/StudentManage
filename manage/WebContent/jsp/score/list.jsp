@@ -13,6 +13,9 @@
 <SCRIPT language=javascript>
 
 	$(function (){
+		
+		checkId();
+		
 		var classes = <%=request.getParameter("classes")%>;
 		//学生列表
 		$.ajax({
@@ -33,18 +36,19 @@
 								if(pageBean.list[i].courses == undefined){
 									content  += "<td>未选课</td>";
 									content += "<TD>--</TD><TD>--</TD><TD>--</TD>";
+									content +=	"<TD>未选课"
 								}else{
 									content += "<TD>"+pageBean.list[i].courses[0].name+"</TD>";
 									if(pageBean.list[i].courses[0].score != null){
 										content += "<TD>"+(pageBean.list[i].courses[0].score.score1==null?"--":pageBean.list[i].courses[0].score.score1)+"</TD>";
 										content += "<TD>"+(pageBean.list[i].courses[0].score.score2==null?"--":pageBean.list[i].courses[0].score.score2)+"</TD>";
 										content += "<TD>"+(pageBean.list[i].courses[0].score.score3==null?"--":pageBean.list[i].courses[0].score.score3)+"</TD>";
+										content +=	"<TD><a href='javascript:;' onclick=\"update('"+pageBean.list[i].id+"', '"+pageBean.list[i].courses[0].id+"', '"+pageBean.list[i].courses[0].name+"')\">修改</a>"
 									}else{
 										content += "<TD>--</TD><TD>--</TD><TD>--</TD>";
+										content +=	"<TD><a href='javascript:;' onclick=\"update('"+pageBean.list[i].id+"', '"+pageBean.list[i].courses[0].id+"', '"+pageBean.list[i].courses[0].name+"')\">录入</a>"
 									}
 								}
-					content +=	"<TD "+(pageBean.list[i].courses == undefined ? ("rowspan=1"):("rowspan="+pageBean.list[i].courses.length))+">"
-								+"<a href='javascript:;'onclick='update("+pageBean.list[i].id+")'>修改</a>"
 							+"</TR>";
 					if(pageBean.list[i].courses != undefined){
 						for(var j = 1; j < pageBean.list[i].courses.length; ++j){
@@ -54,16 +58,14 @@
 										content += "<TD>"+(pageBean.list[i].courses[j].score.score1==null?"--":pageBean.list[i].courses[j].score.score1)+"</TD>"
 												+  "<TD>"+(pageBean.list[i].courses[j].score.score2==null?"--":pageBean.list[i].courses[j].score.score2)+"</TD>"
 												+  "<TD>"+(pageBean.list[i].courses[j].score.score3==null?"--":pageBean.list[i].courses[j].score.score3)+"</TD>";
+										content +=	"<TD><a href='javascript:;' onclick=\"update('"+pageBean.list[i].id+"', '"+pageBean.list[i].courses[j].id+"', '"+pageBean.list[i].courses[j].name+"')\">修改</a>"
 									}else{
 										content += "<TD>--</TD><TD>--</TD><TD>--</TD>";
+										content +=	"<TD><a href='javascript:;' onclick=\"update('"+pageBean.list[i].id+"', '"+pageBean.list[i].courses[j].id+"', '"+pageBean.list[i].courses[j].name+"')\">录入</a>"
 									}
 							content += "</Tr>";
 						}
 					}
-						
-						//content = content.replace('thisRowId',pageBean.list[i].id);
-						//content = content.replace('myRoleEditAddress',"${pageContext.request.contextPath}/jsp/customer/edit.jsp?id="+pageBean.list[i].id);
-						//content = content.replace('myRoleDelAddress',"${pageContext.request.contextPath}/student?id="+pageBean.list[i].id+"&method=del");
 				}
 				$('#grid').html($('#grid').html()+content);
 				$("#totalCount").text(pageBean.totalCount);
@@ -172,21 +174,24 @@
 		document.customerForm.submit();
 	}
 	
-	function update(id){
-		window.location.href = "${pageContext.request.contextPath}/student?method=returnSt&id="+id;
+	function update(id, cid, cname){
+		//console.log("id: "+id+" cid: "+cid+" cname: "+cname);
+		//window.location.href = "${pageContext.request.contextPath}/student?method=returnSt&id="+id+"&goto=score";
+		cname = encodeURI(cname).replace(/\+/g,'%2B');
+		window.location.href = "${pageContext.request.contextPath}/jsp/score/edit.jsp?stid="+id+"&cid="+cid+"&cname="+cname;
 	}
 	
-	function roleDel(){
+	/* function roleDel(){
 		alert("删除权限不足!");
-	}
-	function roleEdit(id, obj){
+	} */
+	/* function roleEdit(id, obj){
 		
 		if(id == '${student.id}'){
 			$(obj).attr("href","${pageContext.request.contextPath}/jsp/customer/edit.jsp?id="+id);
 		}else{
 			alert("修改权限不足!仅能修改个人信息");
 		}
-	}
+	} */
 </SCRIPT>
 
 <META content="MSHTML 6.00.2900.3492" name=GENERATOR>

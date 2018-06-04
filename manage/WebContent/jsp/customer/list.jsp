@@ -13,6 +13,9 @@
 <SCRIPT language=javascript>
 
 	$(function (){
+		
+		checkId();
+		
 		var classes = <%=request.getParameter("classes")%>;
 		//学生列表
 		$.ajax({

@@ -130,7 +130,7 @@
 </HEAD>
 <BODY style="BACKGROUND-COLOR: #2a8dc8;">
 	<FORM id=form1 name=form1
-		action="${pageContext.request.contextPath }/student"
+		action="${pageContext.request.contextPath }/score"
 		method=post>
 		<input type="hidden" name="method" value="add"/>
 	

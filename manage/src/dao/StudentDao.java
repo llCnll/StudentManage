@@ -27,8 +27,4 @@ public interface StudentDao {
 	
 	int getCountGetSt();
 
-	boolean addSelectCourse(String stid, String cid);
-
-	boolean delSelectCourse(String stid, String cid);
-
 }

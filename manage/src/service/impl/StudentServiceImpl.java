@@ -6,9 +6,11 @@ import java.util.List;
 import service.StudentService;
 import dao.ClassesDao;
 import dao.CourseDao;
+import dao.ScoreDao;
 import dao.StudentDao;
 import dao.impl.ClassesDaoImpl;
 import dao.impl.CourseDaoImpl;
+import dao.impl.ScoreDaoImpl;
 import dao.impl.StudentDaoImpl;
 import domain.Course;
 import domain.PageBean;
@@ -19,6 +21,7 @@ public class StudentServiceImpl implements StudentService {
 	private StudentDao sd = new StudentDaoImpl();
 	private ClassesDao cd = new ClassesDaoImpl();
 	private CourseDao cod =new CourseDaoImpl();
+	private ScoreDao scd =new ScoreDaoImpl();
 
 	public Student login(String id, String pwd) {
 
@@ -115,8 +118,10 @@ public class StudentServiceImpl implements StudentService {
 		Float sum = 0.0f;
 		//判断已选学分
 		Student st = sd.studentEdit(stid);
-		for(Course c : st.getCourses()){
-			sum += c.getCredithour();
+		if(st.getCourses() != null){
+			for(Course c : st.getCourses()){
+				sum += c.getCredithour();
+			}
 		}
 		
 		//判断该科目学分
@@ -125,7 +130,7 @@ public class StudentServiceImpl implements StudentService {
 		//是否可以选课
 		boolean flag = false;
 		if(sum + co.getCredithour() <= 15){
-			flag = sd.addSelectCourse(stid, cid);
+			flag = scd.addSelectCourse(stid, cid);
 		}
 		
 		return flag;
@@ -133,7 +138,7 @@ public class StudentServiceImpl implements StudentService {
 
 	public boolean delSelectCourse(String stid, String cid) {
 		
-		boolean flag = sd.delSelectCourse(stid, cid);
+		boolean flag = scd.delSelectCourse(stid, cid);
 		
 		return flag;
 	}

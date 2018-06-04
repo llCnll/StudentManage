@@ -25,7 +25,6 @@ import domain.Student;
 public class StudentDaoImpl implements StudentDao {
 	
 	private ClassesDao cd = new ClassesDaoImpl();
-	private CourseDao cod = new CourseDaoImpl();
 	private ScoreDao scd = new ScoreDaoImpl();
 	
 	private void studentBean(ResultSet rs, Student st) throws SQLException{
@@ -37,7 +36,7 @@ public class StudentDaoImpl implements StudentDao {
 		st.setRoleId(rs.getInt("roleId"));
 		
 		//封装选课信息
-		List<Course> courses = stduentCourse(st.getId());
+		List<Course> courses = scd.stduentCourse(st.getId());
 		//已知选课的前提下, 封装成绩信息
 		if(courses != null){
 			for(Course course : courses){
@@ -366,7 +365,7 @@ public class StudentDaoImpl implements StudentDao {
 		
 		return count;
 	}
-	//获得所有用户数量
+	//获得所有学生数量
 	public int getCountGetSt() {
 		
 		String sql = "select count(id) from student where roleId = 0";
@@ -393,87 +392,4 @@ public class StudentDaoImpl implements StudentDao {
 		
 		return count;
 	}
-
-	private List<Course> stduentCourse(String id) {
-
-		String sql = "select * from stcourse where stid = ?";
-		
-		Connection conn = null;
-		PreparedStatement pst = null;
-		ResultSet rs = null;
-		
-		List<String> courseIds = new ArrayList<String>();
-		List<Course> courses = new ArrayList<Course>();
-		
-		try {
-			conn = DataSourceUtils.getConnection();
-			pst = conn.prepareStatement(sql);
-			DB.fillStatement(pst, id);
-			//System.out.println(pst.toString().split(": ")[1]);
-			rs = pst.executeQuery();
-			System.out.println(sql);
-			while(rs.next()) {
-				courseIds.add(rs.getString("cid"));
-			}
-			for(String courseId : courseIds){
-				Course course = cod.courseEdit(courseId);
-				courses.add(course);
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally{
-			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {e.printStackTrace();}
-		}
-		
-		return courses.size()>0?courses:null;
-	}
-
-	public boolean addSelectCourse(String stid, String cid) {
-		
-		String sql = "insert into stcourse values(null,?,?)";
-		Connection conn = null;
-		PreparedStatement pst = null;
-		int row = 0;
-
-		try {
-			conn = DataSourceUtils.getConnection();
-			pst = conn.prepareStatement(sql);
-			
-			DB.fillStatement(pst, stid, cid);
-			//System.out.println(pst.toString().split(": ")[1]);
-			row = pst.executeUpdate();
-			System.out.println(sql);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally{
-			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {e.printStackTrace();}
-		}
-		
-		return row > 0? true: false;
-	}
-
-	public boolean delSelectCourse(String stid, String cid) {
-		
-		String sql = "delete from stcourse where stid = ? && cid = ?"; 
-		Connection conn = null;
-		PreparedStatement pst = null;
-		int row = 0;
-		try {
-			conn = DataSourceUtils.getConnection();
-			pst = conn.prepareStatement(sql);
-			
-			DB.fillStatement(pst, stid, cid);
-			//System.out.println(pst.toString().split(": ")[1]);
-			row = pst.executeUpdate();
-			System.out.println(sql);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally{
-			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {e.printStackTrace();}
-		}
-		
-		return row > 0? true: false;
-	}
-
 }

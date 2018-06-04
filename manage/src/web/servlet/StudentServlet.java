@@ -36,7 +36,12 @@ public class StudentServlet extends BaseServlet {
 		if(st != null){
 			request.setAttribute("selectStudent", st);
 			System.out.println("-----查询学生成功----\n");
-			request.getRequestDispatcher("jsp/course/list.jsp").forward(request, response);
+			String choose = request.getParameter("goto");
+			if("score".equals(choose)){
+				request.getRequestDispatcher("jsp/score/edit.jsp").forward(request, response);
+			}else{
+				request.getRequestDispatcher("jsp/course/list.jsp").forward(request, response);
+			}
 		}else{
 			;//若不存在
 		}
@@ -217,10 +222,11 @@ public class StudentServlet extends BaseServlet {
 			Gson gson = new Gson();
 			String json = gson.toJson(st);
 			System.out.println("-----查找学生成功----\n");
+			System.out.println(st);
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(json);
 		}else{
-			request.setAttribute("checkError", "用户查找失败!");
+			request.setAttribute("error", "用户查找失败!");
 			System.out.println("-----查找学生失败----\n");
 			request.getRequestDispatcher("/jsp/customer/add.jsp").forward(request, response);
 		}

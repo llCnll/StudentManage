@@ -193,8 +193,8 @@ a.active {
 											cellPadding=2 width=155 align=center border=0>
 											<tbody>
 												<tr>
-													<td class=menuSmall><A class=style2 href="#"
-														target=main>－成绩录入</A></td>
+													<td class=menuSmall><A class=style2 href="${pageContext.request.contextPath}/jsp/score/add.jsp"
+														target=main>－成绩批量录入</A></td>
 												</tr>
 												<tr>
 													<td class=menuSmall><A class=style2 href="${pageContext.request.contextPath}/jsp/score/list.jsp"

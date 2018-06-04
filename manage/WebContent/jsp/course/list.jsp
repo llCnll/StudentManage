@@ -14,6 +14,9 @@
 <SCRIPT language=javascript>
 
 	$(function (){
+		
+		checkId();
+		
 		<%
 			domain.Student selectStudent = (domain.Student)request.getAttribute("selectStudent");
 			if(selectStudent == null){
