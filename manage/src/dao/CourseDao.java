@@ -2,6 +2,7 @@ package dao;
 
 import java.util.List;
 
+import domain.Classes;
 import domain.Course;
 
 public interface CourseDao {
@@ -17,5 +18,7 @@ public interface CourseDao {
 	boolean courseEditSubmit(Course co);
 
 	boolean courseDel(String id);
+
+	Course getCourseByName(String name);
 	
 }

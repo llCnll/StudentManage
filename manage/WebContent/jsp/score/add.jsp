@@ -35,7 +35,7 @@
 	                type: 'binary'
 	            });
 	        }
-			console.log(wb);
+			//console.log(wb);
 	        //wb.SheetNames[0]�ǻ�ȡSheets�е�һ��Sheet������
 	        //wb.Sheets[Sheet��]��ȡ��һ��Sheet������
 	       // document.getElementById("demo").innerHTML= JSON.stringify( XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]]) );
@@ -68,11 +68,14 @@
 		}else{
 			for(var i = 0 ; i < json.length; ++i){
 		    		content += "<TR style='FONT-WEIGHT: normal; FONT-STYLE: normal; BACKGROUND-COLOR: white; TEXT-DECORATION: none'>"
-						+ "<TD><input name='id' style=' text-align:center' value='"+json[i].学号+"' size='8' readonly></TD>"
-						+ "<TD><input name='name' style=' text-align:center' value='"+json[i].姓名+"' size='6' readonly></TD>"
-						+ "<TD><input name='pwd' style=' text-align:center' value='"+(typeof(json[i].密码)== "undefined" ?"123456":json[i].密码)+"' size='6' readonly></TD>"
+						+ "<TD><input name='id' style=' text-align:center' value='"+json[i].用户ID+"' size='8' readonly></TD>"
+						+ "<TD><input name='name' style=' text-align:center' value='"+json[i].用户名称+"' size='6' readonly></TD>"
 						+ "<TD><input name='classesName' style=' text-align:center' value='"+json[i].班级+"' size='8' readonly></TD>"
-						+ "<TD><input name='roleId' style=' text-align:center' value='"+json[i].等级+"' size='8' readonly></TD>"
+						+ "<TD><input name='courseName' style=' text-align:center' value='"+json[i].课程+"' size='8' readonly></TD>"
+						+ "<TD><input name='semester' style=' text-align:center' value='"+json[i].学期+"' size='8' readonly></TD>"
+						+ "<TD><input name='score1' style=' text-align:center' value='"+(json[i].一考==null?"":json[i].一考)+"' size='8'></TD>"
+						+ "<TD><input name='score2' style=' text-align:center' value='"+(json[i].二考==null?"":json[i].二考)+"' size='8'></TD>"
+						+ "<TD><input name='score3' style=' text-align:center' value='"+(json[i].三考==null?"":json[i].三考)+"' size='8'></TD>"
 						/* + "<TD>"
 						+"<a href='${pageContext.request.contextPath}/jsp/customer/edit.jsp?id="+pageBean.list[i].id+"'>修改</a>"
 						+"&nbsp;&nbsp;"
@@ -86,29 +89,10 @@
 	}
 
 	$(function(){
-		$.ajax({
-			url:"${pageContext.request.contextPath}/classes",
-			data:{"method":"select"},
-			async:true,
-			type:"POST",
-			success:function(list){
-				var content = "<option value='-1'>--------请选择--------</option>";
-				for(var i = 0; i < list.length; ++i){
-					content += "<option value='"+list[i].id+"'>"+list[i].name+"</option>";
-				}
-				$("#classes").text('');
-				$('#classes').html($('#classes').html()+content);
-				
-			},
-			error:function(){
-				alert("班级列表请求失败");
-			},
-			dataType:"json"
-		});
 		
 		$('#addBatchButton').click(function(){
 	    	$.ajax({
-	    		url:"${pageContext.request.contextPath }/student",
+	    		url:"${pageContext.request.contextPath }/score",
 	    		type:"post",
 	    		data:$('#addBatchForm').serialize(),
 	    		success:function(ids){
@@ -129,127 +113,73 @@
 <META content="MSHTML 6.00.2900.3492" name=GENERATOR>
 </HEAD>
 <BODY style="BACKGROUND-COLOR: #2a8dc8;">
-	<FORM id=form1 name=form1
-		action="${pageContext.request.contextPath }/score"
-		method=post>
-		<input type="hidden" name="method" value="add"/>
 	
-		<TABLE cellSpacing=0 cellPadding=0 width="98%" border=0>
-			<TBODY>
-				<TR>
-					<TD width=15><IMG src="${pageContext.request.contextPath }/images/new_019.jpg"
-						border=0></TD>
-					<TD width="100%" background="${pageContext.request.contextPath }/images/new_020.jpg"
-						height=20></TD>
-					<TD width=15><IMG src="${pageContext.request.contextPath }/images/new_021.jpg"
-						border=0></TD>
-				</TR>
-			</TBODY>
-		</TABLE>
-		<TABLE cellSpacing=0 cellPadding=0 width="98%" border=0>
-			<TBODY>
-				<TR>
-					<TD width=15 background=${pageContext.request.contextPath }/images/new_022.jpg><IMG
-						src="${pageContext.request.contextPath }/images/new_022.jpg" border=0></TD>
-					<TD vAlign=top width="100%" bgColor=#ffffff>
-						<TABLE cellSpacing=0 cellPadding=5 width="100%" border=0>
-							<TR>
-								<TD class=manageHead>当前位置：成绩管理 &gt; 成绩批量导入</TD>
-							</TR>
-							<TR>
-								<TD height=2></TD>
-							</TR>
-						</TABLE>
-						
-						<table cellspacing=0 cellpadding=5  border=0>
-						  
-						    <tr><td><span style="color:red;">${error }</span></td></tr>
-							<tr>
-								<td>用户学号：</td>
-								<td>
-								<input class=textbox id="id"
-														style="width: 180px" maxlength=50 name="id">
-								</td>
-								<td>用户名称 ：</td>
-								<td>
-								<input class=textbox id="name"
-														style="width: 180px" maxlength=50 name="name">
-								</td>
-							</tr>
-							
-							<tr>
-								
-								<td>用户密码 ：</td>
-								<td>
-								<input class=textbox id="pwd"
-														style="width: 180px" maxlength=50 name="pwd">
-								</td>
-								<td>确认密码：</td>
-								<td>
-								<input class=textbox id="repwd"
-														style="width: 180px" maxlength=50 name="repwd">
-								</td>
-							</tr>
-							
-							<tr>
-								
-								
-								<td>用户班级 ：</td>
-								<td>
-								<select class=textbox id="classes"
-														style="width: 180px; height: 24px;" name="classesId">
-									<option value="-1">加载中...</option>
-								 </select>
-								</td>
-								<td>用户权限 ：</td>
-								<td>
-								<select class=textbox id="st_roleId"
-														style="width: 180px; height: 24px;" name="roleId">
-									<option value="-1" selected>--------请选择--------</option>
-									<option value="0">普通用户</option>
-									<option value="1">管理员</option>
-								</select>
-							</tr>
-							
-							<tr>
-								<td rowspan=2>
-								<input class=button id=save type=submit
-														value=" 保存 " name=sbutton2>
-								</td>
-								<td rowspan=2>
-								<input class=button id=addBactch type=button value="批量添加 " data-toggle="modal" data-target="#myModal">
-								</td>
-							</tr>
-						</table>
-					</TD>
-					<TD width=15 background="${pageContext.request.contextPath }/images/new_023.jpg">
-					<IMG src="${pageContext.request.contextPath }/images/new_023.jpg" border=0></TD>
-				</TR>
-			</TBODY>
-		</TABLE>
-		<TABLE cellSpacing=0 cellPadding=0 width="98%" border=0>
-			<TBODY>
-				<TR>
-					<TD width=15><IMG src="${pageContext.request.contextPath }/images/new_024.jpg"
-						border=0></TD>
-					<TD align=middle width="100%"
-						background="${pageContext.request.contextPath }/images/new_025.jpg" height=15></TD>
-					<TD width=15><IMG src="${pageContext.request.contextPath }/images/new_026.jpg"
-						border=0></TD>
-				</TR>
-			</TBODY>
-		</TABLE>
-	</FORM>
+	<TABLE cellSpacing=0 cellPadding=0 width="98%" border=0>
+		<TBODY>
+			<TR>
+				<TD width=15><IMG src="${pageContext.request.contextPath }/images/new_019.jpg"
+					border=0></TD>
+				<TD width="100%" background="${pageContext.request.contextPath }/images/new_020.jpg"
+					height=20></TD>
+				<TD width=15><IMG src="${pageContext.request.contextPath }/images/new_021.jpg"
+					border=0></TD>
+			</TR>
+		</TBODY>
+	</TABLE>
+	<TABLE cellSpacing=0 cellPadding=0 width="98%" border=0>
+		<TBODY>
+			<TR>
+				<TD width=15 background="${pageContext.request.contextPath }/images/new_022.jpg"><IMG
+					src="${pageContext.request.contextPath }/images/new_022.jpg" border=0></TD>
+				<TD vAlign=top width="100%" bgColor=#ffffff>
+					<TABLE cellSpacing=0 cellPadding=5 width="100%" border=0>
+						<TR>
+							<TD class=manageHead>当前位置：成绩管理 &gt; 成绩批量导入</TD>
+						</TR>
+						<TR>
+							<TD height=2></TD>
+						</TR>
+					</TABLE>
+					
+					<table cellspacing=0 cellpadding=5  border=0>
+					  
+						<tr><td> </td></tr>
+						<tr>
+							<td rowspan=2>
+							<input class=button id=addBactch type=button value="批量添加 " data-toggle="modal" data-target="#myModal">
+							</td>
+							<td rowspan=2>
+							</td>
+						</tr>
+					</table>
+				</TD>
+				<TD width=15 background="${pageContext.request.contextPath }/images/new_023.jpg">
+				<IMG src="${pageContext.request.contextPath }/images/new_023.jpg" border=0></TD>
+			</TR>
+		</TBODY>
+	</TABLE>
+	<TABLE cellSpacing=0 cellPadding=0 width="98%" border=0>
+		<TBODY>
+			<TR>
+				<TD width=15><IMG src="${pageContext.request.contextPath }/images/new_024.jpg"
+					border=0></TD>
+				<TD align=middle width="100%"
+					background="${pageContext.request.contextPath }/images/new_025.jpg" height=15></TD>
+				<TD width=15><IMG src="${pageContext.request.contextPath }/images/new_026.jpg"
+					border=0></TD>
+			</TR>
+		</TBODY>
+	</TABLE>
 	<!-- 模态框（Modal） -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
-			<div class="modal-content">
+			<div class="modal-content" style="width:650px;">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
 						&times;
 					</button>
 					<h4 class="modal-title" id="myModalLabel">
-						批量添加学生信息
+						批量导入学生成绩
 					</h4>
 				</div>
 				<form id="addBatchForm">
@@ -265,9 +195,12 @@
 										style="FONT-WEIGHT: bold; FONT-STYLE: normal; BACKGROUND-COLOR: #eeeeee; TEXT-DECORATION: none">
 										<TD>用户ID</TD>
 										<TD>用户姓名</TD>
-										<TD>用户密码</TD>
-										<TD>用户班级</TD>
-										<TD>用户权限</TD>
+										<TD>班级</TD>
+										<TD>学期</TD>
+										<TD>课程</TD>
+										<TD>一考</TD>
+										<TD>二考</TD>
+										<TD>三考</TD>
 									</TR>
 								</TBODY>
 							</TABLE>

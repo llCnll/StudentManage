@@ -12,6 +12,7 @@ import java.util.List;
 import utils.DataSourceUtils;
 import dao.CourseDao;
 import dbtools.DB;
+import domain.Classes;
 import domain.Course;
 
 public class CourseDaoImpl implements CourseDao {
@@ -205,6 +206,34 @@ public class CourseDaoImpl implements CourseDao {
 		}
 		
 		return row > 0? true: false;
+	}
+
+	public Course getCourseByName(String name) {
+		String sql = "select * from course where name = ?";
+		Connection conn = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		Course course = null;
+		try {
+			conn = DataSourceUtils.getConnection();
+			pst = conn.prepareStatement(sql);
+			DB.fillStatement(pst, name);
+			//System.out.println(pst.toString().split(": ")[1]);
+			
+			rs = pst.executeQuery();
+			System.out.println(sql);
+			if(rs.next()) {
+				course = new Course();
+				this.courseBean(rs,course);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {e.printStackTrace();}
+		}
+		
+		return course;
 	}
 
 }
