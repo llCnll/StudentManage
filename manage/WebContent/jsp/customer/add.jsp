@@ -68,12 +68,11 @@
 		}else{
 			for(var i = 0 ; i < json.length; ++i){
 		    		content += "<TR style='FONT-WEIGHT: normal; FONT-STYLE: normal; BACKGROUND-COLOR: white; TEXT-DECORATION: none'>"
-						+ "<TD><input name='id' style=' text-align:center' value='"+json[i].课程ID+"' size='8' readonly></TD>"
-						+ "<TD><input name='name' style=' text-align:center' value='"+json[i].课程名+"' size='6' readonly></TD>"
-						+ "<TD><input name='credithour' style=' text-align:center' value='"+json[i].学分+"' size='6' readonly></TD>"
-						+ "<TD><input name='classhour' style=' text-align:center' value='"+json[i].讲授学时+"' size='8' readonly></TD>"
-						+ "<TD><input name='practicehour' style=' text-align:center' value='"+json[i].实验学时+"' size='8' readonly></TD>"
-						+ "<TD><input name='remark' style=' text-align:center' value='"+json[i].备注+"' size='8' readonly></TD>"
+						+ "<TD><input name='id' style=' text-align:center' value='"+json[i].学号+"' size='8' readonly></TD>"
+						+ "<TD><input name='name' style=' text-align:center' value='"+json[i].姓名+"' size='6' readonly></TD>"
+						+ "<TD><input name='pwd' style=' text-align:center' value='"+(typeof(json[i].密码)== "undefined" ?"123456":json[i].密码)+"' size='6' readonly></TD>"
+						+ "<TD><input name='classesName' style=' text-align:center' value='"+json[i].班级+"' size='8' readonly></TD>"
+						+ "<TD><input name='roleId' style=' text-align:center' value='"+json[i].等级+"' size='8' readonly></TD>"
 						/* + "<TD>"
 						+"<a href='${pageContext.request.contextPath}/jsp/customer/edit.jsp?id="+pageBean.list[i].id+"'>修改</a>"
 						+"&nbsp;&nbsp;"
@@ -87,10 +86,29 @@
 	}
 
 	$(function(){
+		$.ajax({
+			url:"${pageContext.request.contextPath}/classes",
+			data:{"method":"select"},
+			async:true,
+			type:"POST",
+			success:function(list){
+				var content = "<option value='-1'>--------请选择--------</option>";
+				for(var i = 0; i < list.length; ++i){
+					content += "<option value='"+list[i].id+"'>"+list[i].name+"</option>";
+				}
+				$("#classes").text('');
+				$('#classes').html($('#classes').html()+content);
+				
+			},
+			error:function(){
+				alert("班级列表请求失败");
+			},
+			dataType:"json"
+		});
 		
 		$('#addBatchButton').click(function(){
 	    	$.ajax({
-	    		url:"${pageContext.request.contextPath }/course",
+	    		url:"${pageContext.request.contextPath }/student",
 	    		type:"post",
 	    		data:$('#addBatchForm').serialize(),
 	    		success:function(ids){
@@ -112,7 +130,7 @@
 </HEAD>
 <BODY style="BACKGROUND-COLOR: #2a8dc8;">
 	<FORM id=form1 name=form1
-		action="${pageContext.request.contextPath }/course"
+		action="${pageContext.request.contextPath }/student"
 		method=post>
 		<input type="hidden" name="method" value="add"/>
 	
@@ -136,7 +154,7 @@
 					<TD vAlign=top width="100%" bgColor=#ffffff>
 						<TABLE cellSpacing=0 cellPadding=5 width="100%" border=0>
 							<TR>
-								<TD class=manageHead>当前位置：课程管理 &gt; 添加课程</TD>
+								<TD class=manageHead>当前位置：用户管理 &gt; 添加用户</TD>
 							</TR>
 							<TR>
 								<TD height=2></TD>
@@ -147,12 +165,12 @@
 						  
 						    <tr><td><span style="color:red;">${error }</span></td></tr>
 							<tr>
-								<td>课程ID：</td>
+								<td>用户学号：</td>
 								<td>
 								<input class=textbox id="id"
 														style="width: 180px" maxlength=50 name="id">
 								</td>
-								<td>课程名 ：</td>
+								<td>用户名称 ：</td>
 								<td>
 								<input class=textbox id="name"
 														style="width: 180px" maxlength=50 name="name">
@@ -161,29 +179,36 @@
 							
 							<tr>
 								
-								<td>学分：</td>
+								<td>用户密码 ：</td>
 								<td>
 								<input class=textbox id="pwd"
-														style="width: 180px" maxlength=50 name="credithour">
+														style="width: 180px" maxlength=50 name="pwd">
 								</td>
-								<td>讲授学时：</td>
+								<td>确认密码：</td>
 								<td>
 								<input class=textbox id="repwd"
-														style="width: 180px" maxlength=50 name="classhour">
+														style="width: 180px" maxlength=50 name="repwd">
 								</td>
 							</tr>
 							
 							<tr>
-								<td>实验学时 ：</td>
+								
+								
+								<td>用户班级 ：</td>
 								<td>
-								<input class=textbox id="name"
-													style="width: 180px" maxlength=50 name="practicehour">
+								<select class=textbox id="classes"
+														style="width: 180px; height: 24px;" name="classesId">
+									<option value="-1">加载中...</option>
+								 </select>
 								</td>
-								<td>备注 ：</td>
+								<td>用户权限 ：</td>
 								<td>
-								<input class=textbox id="name"
-														style="width: 180px" maxlength=50 name="remark">
-								</td>
+								<select class=textbox id="st_roleId"
+														style="width: 180px; height: 24px;" name="roleId">
+									<option value="-1" selected>--------请选择--------</option>
+									<option value="0">普通用户</option>
+									<option value="1">管理员</option>
+								</select>
 							</tr>
 							
 							<tr>
@@ -238,12 +263,11 @@
 								<TBODY id="tbodyAdd">
 									<TR
 										style="FONT-WEIGHT: bold; FONT-STYLE: normal; BACKGROUND-COLOR: #eeeeee; TEXT-DECORATION: none">
-										<TD>课程ID</TD>
-										<TD>课程名</TD>
-										<TD>学分</TD>
-										<TD>讲授学时</TD>
-										<TD>实验学时</TD>
-										<TD>备注</TD>
+										<TD>用户ID</TD>
+										<TD>用户姓名</TD>
+										<TD>用户密码</TD>
+										<TD>用户班级</TD>
+										<TD>用户权限</TD>
 									</TR>
 								</TBODY>
 							</TABLE>

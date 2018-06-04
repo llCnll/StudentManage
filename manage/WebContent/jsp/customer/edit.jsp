@@ -85,7 +85,7 @@
 					<TD vAlign=top width="100%" bgColor=#ffffff>
 						<TABLE cellSpacing=0 cellPadding=5 width="100%" border=0>
 							<TR>
-								<TD class=manageHead>当前位置：客户管理 &gt; 修改客户</TD>
+								<TD class=manageHead>当前位置：用户管理 &gt; 修改用户</TD>
 							</TR>
 							<TR>
 								<TD height=2></TD>
