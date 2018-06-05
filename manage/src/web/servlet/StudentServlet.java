@@ -222,7 +222,6 @@ public class StudentServlet extends BaseServlet {
 			Gson gson = new Gson();
 			String json = gson.toJson(st);
 			System.out.println("-----查找学生成功----\n");
-			System.out.println(st);
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(json);
 		}else{

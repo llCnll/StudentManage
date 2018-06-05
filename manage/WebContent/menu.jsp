@@ -192,10 +192,12 @@ a.active {
 										<table id=table_3 style="DISPLAY: none" cellSpacing=0
 											cellPadding=2 width=155 align=center border=0>
 											<tbody>
-												<tr>
-													<td class=menuSmall><A class=style2 href="${pageContext.request.contextPath}/jsp/score/add.jsp"
-														target=main>－成绩批量录入</A></td>
-												</tr>
+												<c:if test="${student.roleId == 1 }">
+													<tr>
+														<td class=menuSmall><A class=style2 href="${pageContext.request.contextPath}/jsp/score/add.jsp"
+															target=main>－成绩批量录入</A></td>
+													</tr>
+												</c:if>
 												<tr>
 													<td class=menuSmall><A class=style2 href="${pageContext.request.contextPath}/jsp/score/list.jsp"
 														target=main>－成绩查询</A></td>
@@ -220,10 +222,12 @@ a.active {
 										<table id=table_4 style="DISPLAY: none" cellSpacing=0
 											cellPadding=2 width=155 align=center border=0>
 											<tbody>
+												<c:if test="${student.roleId == 1 }">
 												<tr>
 													<td class=menuSmall><A class=style2 href="${pageContext.request.contextPath}/jsp/system/add.jsp"
 														target=main>－新增班级</A></td>
 												</tr>
+												</c:if>
 												<tr>
 													<td class=menuSmall><A class=style2 href="${pageContext.request.contextPath}/jsp/system/list.jsp"
 														target=main>－班级列表</A></td>

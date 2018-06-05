@@ -36,7 +36,7 @@
 									content += "<TD>"+pageBean.list[i].courses[0].name+"</TD>";
 								}
 					content +=	"<TD "+(pageBean.list[i].courses == undefined ? ("rowspan=1"):("rowspan="+pageBean.list[i].courses.length))+">"
-								+"<a href='javascript:;'onclick='update("+pageBean.list[i].id+")'>修改</a>"
+								+"<a ${student.roleId==1?"href='javascript:;'":""} onclick='update("+pageBean.list[i].id+")'>修改</a>"
 							+"</TR>";
 					if(pageBean.list[i].courses != undefined){
 						for(var j = 1; j < pageBean.list[i].courses.length; ++j){
@@ -131,20 +131,15 @@
 	}
 	
 	function update(id){
-		window.location.href = "${pageContext.request.contextPath}/student?method=returnSt&id="+id;
-	}
-	
-	function roleDel(){
-		alert("删除权限不足!");
-	}
-	function roleEdit(id, obj){
-		
-		if(id == '${student.id}'){
-			$(obj).attr("href","${pageContext.request.contextPath}/jsp/customer/edit.jsp?id="+id);
+		if(${student.roleId} == 1){
+			window.location.href = "${pageContext.request.contextPath}/student?method=returnSt&id="+id;
+		}else if(${student.id} == id){
+			window.location.href = "${pageContext.request.contextPath}/student?method=returnSt&id="+id;
 		}else{
 			alert("修改权限不足!仅能修改个人信息");
 		}
 	}
+	
 </SCRIPT>
 
 <META content="MSHTML 6.00.2900.3492" name=GENERATOR>

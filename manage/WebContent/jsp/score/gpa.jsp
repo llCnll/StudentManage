@@ -195,8 +195,11 @@
 													<TD><INPUT class=button id=sButton2 type=submit
 														value=" 筛选 " name=sButton2>
 														&nbsp;&nbsp;
-														<INPUT class=button id=export type=button
-														value=" 打印当前条件下的学生 " name=sButton2><span style="height: 18px;color: red;">${error }${message }</span></TD>
+														<c:if test="${student.roleId==1 }">
+															<INPUT class=button id=export type=button
+															value=" 打印当前条件下的学生 " name=sButton2>
+														</c:if>
+														<span style="height: 18px;color: red;">${error }${message }</span></TD>
 												</TR>
 											</TBODY>
 										</TABLE>

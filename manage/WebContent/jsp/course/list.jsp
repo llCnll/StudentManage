@@ -29,6 +29,7 @@
 					System.out.println("---前台查询结束---\n\n");
 				}
 			}
+			System.out.println(selectStudent);
 			request.setAttribute("selectStudent", selectStudent);
 		%>
 		
