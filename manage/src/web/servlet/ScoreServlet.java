@@ -1,12 +1,27 @@
 package web.servlet;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+
+import service.ScoreService;
+import service.impl.ScoreServiceImpl;
 
 import com.google.gson.Gson;
 
@@ -14,8 +29,6 @@ import domain.Course;
 import domain.PageBean;
 import domain.Score;
 import domain.Student;
-import service.ScoreService;
-import service.impl.ScoreServiceImpl;
 
 public class ScoreServlet extends BaseServlet{
 	private static final long serialVersionUID = 1L;
@@ -25,7 +38,97 @@ public class ScoreServlet extends BaseServlet{
     }
     
     private ScoreService scs = new ScoreServiceImpl();
+
+    private HSSFWorkbook exportExcel(String[] title, List<Student> list) throws Exception{  
+    	//创建excel工作簿
+    	HSSFWorkbook workbook=new HSSFWorkbook();
+    	//创建工作表sheet
+    	HSSFSheet sheet=workbook.createSheet();
+    	//创建第一行
+    	HSSFRow row=sheet.createRow(0);
+    	HSSFCell cell=null;
+    	//插入第一行数据的表头
+    	for(int i=0;i<title.length;i++){
+    	    cell=row.createCell(i);
+    	    cell.setCellValue(title[i]);
+    	}
+    	//写入数据
+    	for (int i=1;i<=list.size();i++){
+    		Student st = list.get(i-1);
+    	    HSSFRow nrow=sheet.createRow(i);
+    	    HSSFCell ncell=nrow.createCell(0);
+    	    ncell.setCellValue(st.getId());
+    	    ncell=nrow.createCell(1);
+    	    ncell.setCellValue(st.getName());
+    	    ncell=nrow.createCell(2);
+    	    ncell.setCellValue(st.getClasses().getName());
+    	    ncell=nrow.createCell(3);
+    	    Float gpa = st.getGpa();
+    	    ncell.setCellValue(gpa!=null?(gpa+""):"未选课");
+    	}
+		
+		return workbook;
+    }  
     
+    //打印绩点
+    protected void exportGpa(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	
+    	
+    	request.setCharacterEncoding("UTF-8");
+    	//获得要下载的文件名
+    	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+    	String fileName = "gpa"+format.format(new Date())+".csv";
+    	String resource = request.getSession().getServletContext().getRealPath("/temp");
+    	
+    	//定义表头
+    	String[] title={"用户ID","用户姓名","用户班级", "绩点"};
+    	
+    	//获得学生信息
+    	List<Object> paramList = new ArrayList<Object>();
+    	
+		String id = request.getParameter("id");
+		String name = request.getParameter("name");
+		String classes = request.getParameter("classes");	
+		paramList.add(id);
+		paramList.add(name);
+		paramList.add(classes);
+		
+		Object[] param = paramList.toArray();
+    	
+		System.out.println("-----正在获得学生绩点列表中----");
+		List<Student> list = scs.getGpa(param);
+		System.out.println("-----获取学生绩点列表成功----\n");
+    	
+		HSSFWorkbook workbook = exportExcel(title, list);
+		FileOutputStream out =  new FileOutputStream(resource+"/"+fileName);
+		workbook.write(out);
+		out.close();
+    	//准备excel完毕
+		
+    	FileInputStream in = new FileInputStream(resource+"/"+fileName);
+    	//获得excel
+		//设置客户端名称
+		response.setHeader("content-disposition", "attachment;filename=" + URLEncoder.encode(fileName, "UTF-8"));
+		//读取要下载的文件，保存到文件输入流
+		OutputStream output = response.getOutputStream();
+		//创建缓冲区
+		byte buffer[] = new byte[1024];
+		int len = 0;
+		//循环将输入流中的内容读取到缓冲区当中
+		while((len=in.read(buffer))>0){
+		//输出缓冲区的内容到浏览器，实现文件下载
+			output.write(buffer, 0, len);
+		}                  
+		//关闭文件输入流
+		in.close();
+		//关闭输出流
+		output.close();
+		
+		//删除文件
+		File file = new File(resource+"/"+fileName);
+		file.delete();
+		
+	}
     //获取绩点
     protected void getGpa(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	

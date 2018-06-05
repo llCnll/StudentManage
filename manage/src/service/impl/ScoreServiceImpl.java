@@ -50,7 +50,7 @@ public class ScoreServiceImpl implements ScoreService {
 		//当前条数
 		pageBean.setCurrentPage(currentPage);
 		//总条数
-		int totalCount = sd.getCountGetSt();
+		int totalCount = sd.getCountGetSt(param);
 		pageBean.setTotalCount(totalCount);
 		//总页数
 		int totalPage = (int)Math.ceil(1.0*totalCount/currentCount);
@@ -97,6 +97,16 @@ public class ScoreServiceImpl implements ScoreService {
 		}
 		
 		return gpa;
+	}
+
+	public List<Student> getGpa(Object[] param) {
+		//数据
+		List<Student> list = sd.listGetSt(param);
+		for(Student st : list) {
+			Float gpa = getGpa(st.getCourses());
+			st.setGpa(gpa);
+		}
+		return list;
 	}
 	
 }

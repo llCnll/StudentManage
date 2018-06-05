@@ -103,7 +103,7 @@ public class StudentDaoImpl implements StudentDao {
 		sql=sql.replaceAll("where and", "where");
 		return null;
 	}*/
-	//所有非管理用户信息
+	//获得非管理用户信息 分页 
 	public List<Student> listGetSt(Integer index, Integer currentCount, Object... param) {
 
 		String sql = "select * from student where ";
@@ -391,5 +391,120 @@ public class StudentDaoImpl implements StudentDao {
 		}
 		
 		return count;
+	}
+	//获得所有学生数量 按条件
+	public int getCountGetSt(Object[] param) {
+		
+		String sql = "select count(id) from student where roleId = 0 ";
+		
+		//[0]: id  [1]: name  [2]: classes
+		ArrayList<Object> paramlist = new ArrayList<Object>(Arrays.asList(param));
+		
+		if(param[0] != null && !("").equals(param[0])){
+			sql += "&& id = ?";
+			paramlist.remove(1);
+			paramlist.remove(1);
+		}else{
+			if(param[1] != null && !("").equals(param[1])){
+				paramlist.set(1, "%"+paramlist.get(1)+"%");
+				sql += "&& name like ?";
+			}
+			if(param[2] != null && !("").equals(param[2]) && Integer.parseInt((String) param[2]) > 0){
+				sql += "&& classesId = ?";
+			}
+		}
+		paramlist.removeAll(Collections.singleton(""));
+		paramlist.removeAll(Collections.singleton(null));
+		paramlist.removeAll(Collections.singleton("-1"));
+		
+		param = paramlist.toArray();
+		
+		Connection conn = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		int count = 0;
+		try {
+			conn = DataSourceUtils.getConnection();
+			pst = conn.prepareStatement(sql);
+			//System.out.println(pst.toString().split(": ")[1]);
+			DB.fillStatement(pst, param);
+			rs = pst.executeQuery();
+			if(rs.next()) {
+				count = rs.getInt("count(id)");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {e.printStackTrace();}
+		}
+		
+		return count;
+	}
+	//所有学生信息
+	public List<Student> listGetSt(Object[] param) {
+		String sql = "select * from student where ";
+		//[0]: id  [1]: name  [2]: classes
+		ArrayList<Object> paramlist = new ArrayList<Object>(Arrays.asList(param));
+		
+		if(param[0] != null && !("").equals(param[0])){
+			sql += "&& id = ?";
+			paramlist.remove(1);
+			paramlist.remove(1);
+		}else{
+			if(param[1] != null && !("").equals(param[1])){
+				paramlist.set(1, "%"+paramlist.get(1)+"%");
+				sql += "&& name like ?";
+			}
+			if(param[2] != null && !("").equals(param[2]) && Integer.parseInt((String) param[2]) > 0){
+				sql += "&& classesId = ?";
+			}
+		}
+		paramlist.removeAll(Collections.singleton(""));
+		paramlist.removeAll(Collections.singleton(null));
+		paramlist.removeAll(Collections.singleton("-1"));
+		
+		sql += "&& roleId = 0";
+		
+		//判断 where 和 where &&
+		if(sql.endsWith("where ")){
+			sql = sql.substring(0, sql.indexOf("where ")-1);
+		}
+		if(sql.contains("where &&")){
+			sql = sql.replaceAll("where &&", "where");
+		}
+		
+		param = paramlist.toArray();
+		
+		Connection conn = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		List<Student> list = new ArrayList<Student>();
+		
+		try {
+			conn = DataSourceUtils.getConnection();
+			pst = conn.prepareStatement(sql);
+			DB.fillStatement(pst, param);
+			//System.out.println(pst.toString().split(": ")[1]);
+			System.out.println(sql);
+			rs = pst.executeQuery();
+			
+			while(rs.next()) {
+				Student st = new Student();
+				this.studentBean(rs, st);
+				list.add(st);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				DataSourceUtils.closeAll(pst, rs);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return list.size()>0?list:null;
 	}
 }

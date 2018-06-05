@@ -13,4 +13,6 @@ public interface ScoreService {
 
 	PageBean<Student> getGpa(Integer currentPage, Integer currentCount, Object[] param);
 
+	List<Student> getGpa(Object[] param);
+
 }

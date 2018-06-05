@@ -26,5 +26,9 @@ public interface StudentDao {
 	int getCount();
 	
 	int getCountGetSt();
+	
+	int getCountGetSt(Object[] param);
+
+	List<Student> listGetSt(Object[] param);
 
 }

@@ -30,7 +30,6 @@
 								+ "<TD style=\"width: 76px;\"><input type=\"checkbox\" name=\"select\" value=\""+pageBean.list[i].id+"\"/></TD>"
 								+ "<TD>"+pageBean.list[i].id+"</TD>"
 								+ "<TD>"+pageBean.list[i].name+"</TD>"
-								+ "<TD>"+pageBean.list[i].pwd+"</TD>"
 								+ "<TD>"+pageBean.list[i].classes.name+"</TD>"
 								+ "<TD>"+(pageBean.list[i].gpa==null?"未选课":pageBean.list[i].gpa)+"</TD>"
 							+"</TR>";
@@ -50,29 +49,6 @@
 			     $subBox.click(function(){
 			    	 $("#checkAll").prop("checked" , $subBox.length == $subBox.filter(":checked").length ? true :false);
 			     });
-			     $('#delBnt').click(function(){
-			 		var ids ="";
-			 		$("input[name='select']:checkbox:checked").each(function(){ 
-			 			ids+=$(this).val()+",";
-			 		});
-			 		
-			 		$.ajax({
-						url:"${pageContext.request.contextPath}/student",
-						data:{"method":"delBactch", "ids":ids},
-						async:true,
-						type:"POST",
-						success:function(message){
-							alert(message.message);
-							window.location.reload();
-						},
-						error:function(){
-							alert("删除请求失败");
-							window.location.reload();
-						},
-						dataType:"json"
-					});
-			 		
-			 	});
 			},
 			error:function(){
 				alert("学生列表请求失败");
@@ -118,8 +94,26 @@
 		$("#id").blur(function (){
 			checkId();
 		});
+		
+		$('#export').click(function(){
+			//学生列表
+			/* $.ajax({
+				url:"${pageContext.request.contextPath}/score",
+				async:true,
+				type:"POST",
+				data:{"method":"exportGpa","id":"${param.id}", "name":"${param.name}", "classes":"${param.classes}", "page":"${param.page}", "currentCount":"${param.currentCount}"},
+				success:function(){
+				 	
+				},
+				error:function(){
+					alert("学生列表请求失败");
+				},
+				dataType:"json"
+			}); */
+			window.location.href = "${pageContext.request.contextPath}/score?method=exportGpa&id=${param.id}&name=${param.name}&classes=${param.classes}";
+		});
+		
 	});
-	
 	
 	function to_page(page){
 
@@ -142,6 +136,7 @@
 		}
 		document.customerForm.submit();
 	}
+	
 </SCRIPT>
 
 <META content="MSHTML 6.00.2900.3492" name=GENERATOR>
@@ -198,7 +193,10 @@
 													   </select>
 													</TD>
 													<TD><INPUT class=button id=sButton2 type=submit
-														value=" 筛选 " name=sButton2><span style="height: 18px;color: red;">${error }${message }</span></TD>
+														value=" 筛选 " name=sButton2>
+														&nbsp;&nbsp;
+														<INPUT class=button id=export type=button
+														value=" 打印当前条件下的学生 " name=sButton2><span style="height: 18px;color: red;">${error }${message }</span></TD>
 												</TR>
 											</TBODY>
 										</TABLE>
@@ -214,14 +212,10 @@
 												<TR
 													style="FONT-WEIGHT: bold; FONT-STYLE: normal; BACKGROUND-COLOR: #eeeeee; TEXT-DECORATION: none">
 													<TD style="width:76px">
-													<c:if test="${student.roleId==1 }">
-														<input type="button" id="delBnt" value="批量删除">
-													</c:if>
 														<input type="checkbox" id="checkAll" name="checkAll">
 													</TD>
 													<TD>用户ID</TD>
 													<TD>用户姓名</TD>
-													<TD>用户密码</TD>
 													<TD>用户班级</TD>
 													<TD>绩点</TD>
 												</TR>
