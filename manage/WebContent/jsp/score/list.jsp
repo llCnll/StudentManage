@@ -82,29 +82,6 @@
 			     $subBox.click(function(){
 			    	 $("#checkAll").prop("checked" , $subBox.length == $subBox.filter(":checked").length ? true :false);
 			     });
-			     $('#delBnt').click(function(){
-			 		var ids ="";
-			 		$("input[name='select']:checkbox:checked").each(function(){ 
-			 			ids+=$(this).val()+",";
-			 		});
-			 		
-			 		$.ajax({
-						url:"${pageContext.request.contextPath}/student",
-						data:{"method":"delBactch", "ids":ids},
-						async:true,
-						type:"POST",
-						success:function(message){
-							alert(message.message);
-							window.location.reload();
-						},
-						error:function(){
-							alert("删除请求失败");
-							window.location.reload();
-						},
-						dataType:"json"
-					});
-			 		
-			 	});
 			},
 			error:function(){
 				alert("学生列表请求失败");
@@ -264,12 +241,6 @@
 												<TR
 													style="FONT-WEIGHT: bold; FONT-STYLE: normal; BACKGROUND-COLOR: #eeeeee; TEXT-DECORATION: none">
 													<TD style="width:76px">
-													<c:if test="${student.roleId==1 }">
-														<input type="button" id="delBnt" value="批量删除">
-													</c:if>
-													<c:if test="${student.roleId==0 }">
-														<input type="button" id="selectCourseBnt" value="批量选课">
-													</c:if>
 														<input type="checkbox" id="checkAll" name="checkAll">
 													</TD>
 													<TD>用户ID</TD>
