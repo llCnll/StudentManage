@@ -19,7 +19,9 @@ public class Student {
 	private String name;
 	private String pwd;
 	private Classes classes;
-	private int roleId;
+	private Integer roleId;
+	
+	private Float gpa;
 	
 	private List<Course> courses;
 	
@@ -60,10 +62,15 @@ public class Student {
 	public void setCourses(List<Course> courses) {
 		this.courses = courses;
 	}
+	public Float getGpa() {
+		return gpa;
+	}
+	public void setGpa(Float gpa) {
+		this.gpa = gpa;
+	}
 	@Override
 	public String toString() {
-		return "Student [id=" + id + ", name=" + name + ", pwd=" + pwd
-				+ ", classes=" + classes + ", roleId=" + roleId + ", courses="
-				+ courses + "]";
+		return "Student [id=" + id + ", name=" + name + ", pwd=" + pwd + ", classes=" + classes + ", roleId=" + roleId
+				+ ", gpa=" + gpa + ", courses=" + courses + "]";
 	}
 }

@@ -1,4 +1,4 @@
-﻿  <%@ page language="java" contentType="text/html; charset=UTF-8"
+  <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -19,53 +19,21 @@
 		var classes = <%=request.getParameter("classes")%>;
 		//学生列表
 		$.ajax({
-			url:"${pageContext.request.contextPath}/student",
+			url:"${pageContext.request.contextPath}/score",
 			async:true,
 			type:"POST",
-			data:{"method":"selectCourseList","id":"${param.id}", "name":"${param.name}", "classes":"${param.classes}", "page":"${param.page}", "currentCount":"${param.currentCount}"},
+			data:{"method":"getGpa","id":"${param.id}", "name":"${param.name}", "classes":"${param.classes}", "page":"${param.page}", "currentCount":"${param.currentCount}"},
 			success:function(pageBean){
 				var content = "";
-				//pageBean.list.length;
 				for(var i = 0; i < pageBean.list.length; ++i){
 					content += "<TR style='FONT-WEIGHT: normal; FONT-STYLE: normal; BACKGROUND-COLOR: white; TEXT-DECORATION: none'>"
-								+ "<TD "+(pageBean.list[i].courses == undefined ? ("rowspan=1"):("rowspan="+pageBean.list[i].courses.length))+"style=\"width: 76px;\"><input type=\"checkbox\" name=\"select\" value=\""+pageBean.list[i].id+"\"/></TD>"
-								+ "<TD "+(pageBean.list[i].courses == undefined ? ("rowspan=1"):("rowspan="+pageBean.list[i].courses.length))+">"+pageBean.list[i].id+"</TD>"
-								+ "<TD "+(pageBean.list[i].courses == undefined ? ("rowspan=1"):("rowspan="+pageBean.list[i].courses.length))+">"+pageBean.list[i].name+"</TD>"
-								+ "<TD "+(pageBean.list[i].courses == undefined ? ("rowspan=1"):("rowspan="+pageBean.list[i].courses.length))+">"+pageBean.list[i].classes.name+"</TD>";
-								/* 选课情况 */
-								if(pageBean.list[i].courses == undefined){
-									content  += "<td>未选课</td>";
-									content += "<TD>--</TD><TD>--</TD><TD>--</TD>";
-									content +=	"<TD>未选课"
-								}else{
-									content += "<TD>"+pageBean.list[i].courses[0].name+"</TD>";
-									if(pageBean.list[i].courses[0].score != null){
-										content += "<TD>"+(pageBean.list[i].courses[0].score.score1==null?"--":pageBean.list[i].courses[0].score.score1)+"</TD>";
-										content += "<TD>"+(pageBean.list[i].courses[0].score.score2==null?"--":pageBean.list[i].courses[0].score.score2)+"</TD>";
-										content += "<TD>"+(pageBean.list[i].courses[0].score.score3==null?"--":pageBean.list[i].courses[0].score.score3)+"</TD>";
-										content +=	"<TD><a href='javascript:;' onclick=\"update('"+pageBean.list[i].id+"', '"+pageBean.list[i].courses[0].id+"', '"+pageBean.list[i].courses[0].name+"')\">修改</a>"
-									}else{
-										content += "<TD>--</TD><TD>--</TD><TD>--</TD>";
-										content +=	"<TD><a href='javascript:;' onclick=\"update('"+pageBean.list[i].id+"', '"+pageBean.list[i].courses[0].id+"', '"+pageBean.list[i].courses[0].name+"')\">录入</a>"
-									}
-								}
+								+ "<TD style=\"width: 76px;\"><input type=\"checkbox\" name=\"select\" value=\""+pageBean.list[i].id+"\"/></TD>"
+								+ "<TD>"+pageBean.list[i].id+"</TD>"
+								+ "<TD>"+pageBean.list[i].name+"</TD>"
+								+ "<TD>"+pageBean.list[i].pwd+"</TD>"
+								+ "<TD>"+pageBean.list[i].classes.name+"</TD>"
+								+ "<TD>"+(pageBean.list[i].gpa==null?"未选课":pageBean.list[i].gpa)+"</TD>"
 							+"</TR>";
-					if(pageBean.list[i].courses != undefined){
-						for(var j = 1; j < pageBean.list[i].courses.length; ++j){
-							content += "<Tr style='FONT-WEIGHT: normal; FONT-STYLE: normal; BACKGROUND-COLOR: white; TEXT-DECORATION: none'>"
-									+ "<td>"+pageBean.list[i].courses[j].name+"</td>";
-									if(pageBean.list[i].courses[j].score != null){
-										content += "<TD>"+(pageBean.list[i].courses[j].score.score1==null?"--":pageBean.list[i].courses[j].score.score1)+"</TD>"
-												+  "<TD>"+(pageBean.list[i].courses[j].score.score2==null?"--":pageBean.list[i].courses[j].score.score2)+"</TD>"
-												+  "<TD>"+(pageBean.list[i].courses[j].score.score3==null?"--":pageBean.list[i].courses[j].score.score3)+"</TD>";
-										content +=	"<TD><a href='javascript:;' onclick=\"update('"+pageBean.list[i].id+"', '"+pageBean.list[i].courses[j].id+"', '"+pageBean.list[i].courses[j].name+"')\">修改</a>"
-									}else{
-										content += "<TD>--</TD><TD>--</TD><TD>--</TD>";
-										content +=	"<TD><a href='javascript:;' onclick=\"update('"+pageBean.list[i].id+"', '"+pageBean.list[i].courses[j].id+"', '"+pageBean.list[i].courses[j].name+"')\">录入</a>"
-									}
-							content += "</Tr>";
-						}
-					}
 				}
 				$('#grid').html($('#grid').html()+content);
 				$("#totalCount").text(pageBean.totalCount);
@@ -157,6 +125,7 @@
 
 		if(page){//通过上一页下一页执行
 			$("#page").val(page);
+		
 			if(1*page >= 1*$('#totalPage').text()){
 				$("#page").val($('#totalPage').text());
 			}else if(1*page <= 1){
@@ -165,41 +134,22 @@
 		}else{
 			var toPage = $('#page').val();
 			
-			if(1*toPage > 1*$('#totalPage').text()){
+			if(1*toPage >= 1*$('#totalPage').text()){
 				$("#page").val($('#totalPage').text());
-			}else if(1*toPage < 1){
+			}else if(1*toPage <= 1){
 				$("#page").val(1);
 			}
 		}
 		document.customerForm.submit();
 	}
-	
-	function update(id, cid, cname){
-		//console.log("id: "+id+" cid: "+cid+" cname: "+cname);
-		//window.location.href = "${pageContext.request.contextPath}/student?method=returnSt&id="+id+"&goto=score";
-		cname = encodeURI(cname).replace(/\+/g,'%2B');
-		window.location.href = "${pageContext.request.contextPath}/jsp/score/edit.jsp?stid="+id+"&cid="+cid+"&cname="+cname;
-	}
-	
-	/* function roleDel(){
-		alert("删除权限不足!");
-	} */
-	/* function roleEdit(id, obj){
-		
-		if(id == '${student.id}'){
-			$(obj).attr("href","${pageContext.request.contextPath}/jsp/customer/edit.jsp?id="+id);
-		}else{
-			alert("修改权限不足!仅能修改个人信息");
-		}
-	} */
 </SCRIPT>
 
 <META content="MSHTML 6.00.2900.3492" name=GENERATOR>
 </HEAD>
 <BODY>
 	<FORM id="customerForm" name="customerForm"
-		action="${pageContext.request.contextPath }/jsp/score/list.jsp"
-		method=post>
+		action="${pageContext.request.contextPath }/jsp/score/gpa.jsp"
+		method=get>
 		
 		<TABLE cellSpacing=0 cellPadding=0 width="98%" border=0>
 			<TBODY>
@@ -221,7 +171,7 @@
 					<TD vAlign=top width="100%" bgColor=#ffffff>
 						<TABLE cellSpacing=0 cellPadding=5 width="100%" border=0>
 							<TR>
-								<TD class=manageHead>当前位置：课程管理 &gt; 选课查询</TD>
+								<TD class=manageHead>当前位置：成绩管理 &gt; 绩点查询</TD>
 							</TR>
 							<TR>
 								<TD height=2></TD>
@@ -248,7 +198,7 @@
 													   </select>
 													</TD>
 													<TD><INPUT class=button id=sButton2 type=submit
-														value=" 筛选 " name=sButton2><span style="height: 18px;color: red;">${error }</span></TD>
+														value=" 筛选 " name=sButton2><span style="height: 18px;color: red;">${error }${message }</span></TD>
 												</TR>
 											</TBODY>
 										</TABLE>
@@ -267,19 +217,13 @@
 													<c:if test="${student.roleId==1 }">
 														<input type="button" id="delBnt" value="批量删除">
 													</c:if>
-													<c:if test="${student.roleId==0 }">
-														<input type="button" id="selectCourseBnt" value="批量选课">
-													</c:if>
 														<input type="checkbox" id="checkAll" name="checkAll">
 													</TD>
 													<TD>用户ID</TD>
 													<TD>用户姓名</TD>
+													<TD>用户密码</TD>
 													<TD>用户班级</TD>
-													<TD>课程</TD>
-													<TD>一考</TD>
-													<TD>二考</TD>
-													<TD>三考</TD>
-													<TD>操作</TD>
+													<TD>绩点</TD>
 												</TR>
 
 											</TBODY>

@@ -1,7 +1,6 @@
 package web.servlet;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,14 +8,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.beanutils.BeanUtils;
+import com.google.gson.Gson;
 
-import service.ScoreService;
-import service.impl.ScoreServiceImpl;
-import domain.Classes;
 import domain.Course;
+import domain.PageBean;
 import domain.Score;
 import domain.Student;
+import service.ScoreService;
+import service.impl.ScoreServiceImpl;
 
 public class ScoreServlet extends BaseServlet{
 	private static final long serialVersionUID = 1L;
@@ -27,6 +26,43 @@ public class ScoreServlet extends BaseServlet{
     
     private ScoreService scs = new ScoreServiceImpl();
     
+    //获取绩点
+    protected void getGpa(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	
+    	List<Object> paramList = new ArrayList<Object>();
+		
+		request.setCharacterEncoding("UTF-8");
+		
+		String id = request.getParameter("id");
+		String name = request.getParameter("name");
+		String classes = request.getParameter("classes");
+		
+		String currentPageStr = request.getParameter("page");
+		String currentCountStr = request.getParameter("currentCount");
+		if(currentPageStr == null || "".equals(currentPageStr)) {
+			currentPageStr = "1";
+		}
+		if(currentCountStr == null || "".equals(currentCountStr)) {
+			currentCountStr = "5";//默认值 每页显示5个
+		}
+		Integer currentPage = Integer.parseInt(currentPageStr);
+		Integer currentCount = Integer.parseInt(currentCountStr);
+		System.out.println("currentPage:"+currentPage+" currentCount:"+ currentCount);
+		
+		paramList.add(id);
+		paramList.add(name);
+		paramList.add(classes);
+		
+		Object[] param = paramList.toArray();
+		System.out.println("-----正在获得学生绩点列表中----");
+		PageBean<Student> pageBean = scs.getGpa(currentPage, currentCount, param);
+		System.out.println("-----获取学生绩点列表成功----\n");
+		Gson gson = new Gson();
+		String json = gson.toJson(pageBean);
+		/*response.setCharacterEncoding("UTF-8");*/
+		response.setContentType("text/html; charset=UTF-8");
+		response.getWriter().write(json);
+    }	
     //批量添加
   	protected void addBactch(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
   			

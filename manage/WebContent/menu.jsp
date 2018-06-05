@@ -201,7 +201,7 @@ a.active {
 														target=main>－成绩查询</A></td>
 												</tr>
 												<tr>
-													<td class=menuSmall><A class=style2 href="#"
+													<td class=menuSmall><A class=style2 href="${pageContext.request.contextPath}/jsp/score/gpa.jsp"
 														target=main>－绩点查询</A></td>
 												</tr>
 											</tbody>
