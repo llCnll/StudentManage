@@ -122,7 +122,9 @@ $(function(){
 													</tr>
 													<tr>
 														<td>
-															<input class=button id=signUp type=button value="注册" data-toggle="modal" data-target="#myModal">
+															<input id=signUp data-toggle="modal" data-target="#myModal"
+																style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px"
+																type=image src="images/regist_button.jpg" name=btn>
 														</td>
 														<td><input id=btn
 															style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px"
