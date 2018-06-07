@@ -185,9 +185,9 @@ public class ClassesServlet extends BaseServlet {
 		paramList.add(major);
 		
 		Object[] param = paramList.toArray();
-		logger.info("-----正在获得班级下拉列表中----");
+		logger.info("-----正在获得班级列表中----");
 		PageBean<Classes> pageBean = cs.classesList(currentPage, currentCount, param);
-		logger.info("-----班级下拉列表获取成功----\n");
+		logger.info("-----班级列表获取成功----\n");
 		Gson gson = new Gson();
 		String json = gson.toJson(pageBean);
 		response.setContentType("text/html; charset=UTF-8");

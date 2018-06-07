@@ -232,6 +232,12 @@ a.active {
 													<td class=menuSmall><A class=style2 href="${pageContext.request.contextPath}/jsp/system/list.jsp"
 														target=main>－班级列表</A></td>
 												</tr>
+												<c:if test="${student.roleId == 1 }">
+												<tr>
+													<td class=menuSmall><A class=style2 href="${pageContext.request.contextPath}/jsp/system/log.jsp"
+														target=main>－日志查询</A></td>
+												</tr>
+												</c:if>
 											</tbody>
 										</table>
 									</td>
