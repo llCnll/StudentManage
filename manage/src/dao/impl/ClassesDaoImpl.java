@@ -9,12 +9,18 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import utils.DataSourceUtils;
+
+
 import dao.ClassesDao;
 import dbtools.DB;
 import domain.Classes;
 
 public class ClassesDaoImpl implements ClassesDao {
+	
+	private Logger logger = Logger.getLogger(ClassesDaoImpl.class);
 	
 	private void classesBean(ResultSet rs, Classes classes) throws SQLException{
 		classes.setId(rs.getInt("id"));
@@ -37,16 +43,16 @@ public class ClassesDaoImpl implements ClassesDao {
 			//System.out.println(pst.toString().split(": ")[1]);
 			
 			rs = pst.executeQuery();
-			System.out.println(sql);
+			logger.debug(sql);
 			if(rs.next()) {
 				classes = new Classes();
 				this.classesBean(rs,classes);
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}finally{
-			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {e.printStackTrace();}
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage());}
 		}
 		
 		return classes;
@@ -67,7 +73,7 @@ public class ClassesDaoImpl implements ClassesDao {
 			pst = conn.prepareStatement(sql);
 			//System.out.println(pst.toString().split(": ")[1]);
 			rs = pst.executeQuery();
-			System.out.println(sql);
+			logger.debug(sql);
 			while(rs.next()) {
 				Classes c = new Classes();
 				this.classesBean(rs, c);
@@ -75,9 +81,9 @@ public class ClassesDaoImpl implements ClassesDao {
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}finally{
-			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {e.printStackTrace();}
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage());}
 		}
 		
 		return list.size()>0?list:null;
@@ -98,16 +104,16 @@ public class ClassesDaoImpl implements ClassesDao {
 			//System.out.println(pst.toString().split(": ")[1]);
 			
 			rs = pst.executeQuery();
-			System.out.println(sql);
+			logger.debug(sql);
 			if(rs.next()) {
 				classes = new Classes();
 				this.classesBean(rs,classes);
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}finally{
-			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {e.printStackTrace();}
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage());}
 		}
 		
 		return classes;
@@ -126,15 +132,15 @@ public class ClassesDaoImpl implements ClassesDao {
 			//System.out.println(pst.toString().split(": ")[1]);
 			
 			rs = pst.executeQuery();
-			System.out.println(sql);
+			logger.debug(sql);
 			if(rs.next()) {
 				count = rs.getInt("count(id)");
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}finally{
-			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {e.printStackTrace();}
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage());}
 		}
 		
 		return count;
@@ -187,7 +193,7 @@ public class ClassesDaoImpl implements ClassesDao {
 			DB.fillStatement(pst, param);
 			//System.out.println(pst.toString().split(": ")[1]);
 			rs = pst.executeQuery();
-			System.out.println(sql);
+			logger.debug(sql);
 			while(rs.next()) {
 				Classes cl = new Classes();
 				this.classesBean(rs, cl);
@@ -195,9 +201,9 @@ public class ClassesDaoImpl implements ClassesDao {
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}finally{
-			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {e.printStackTrace();}
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage());}
 		}
 		
 		return list.size()>0?list:null;
@@ -215,15 +221,15 @@ public class ClassesDaoImpl implements ClassesDao {
 			//System.out.println(pst.toString().split(": ")[1]);
 			
 			rs = pst.executeQuery();
-			System.out.println(sql);
+			logger.debug(sql);
 			while(rs.next()) {
 				list.add(String.valueOf(rs.getInt("grade")));
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}finally{
-			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {e.printStackTrace();}
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage());}
 		}
 		
 		return list;
@@ -242,15 +248,15 @@ public class ClassesDaoImpl implements ClassesDao {
 			//System.out.println(pst.toString().split(": ")[1]);
 			
 			rs = pst.executeQuery();
-			System.out.println(sql);
+			logger.debug(sql);
 			while(rs.next()) {
 				list.add(rs.getString("major"));
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}finally{
-			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {e.printStackTrace();}
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage());}
 		}
 		
 		return list;
@@ -270,11 +276,11 @@ public class ClassesDaoImpl implements ClassesDao {
 			DB.fillStatement(pst, cl.getName(), cl.getGrade(), cl.getMajor());
 			//System.out.println(pst.toString().split(": ")[1]);
 			row = pst.executeUpdate();
-			System.out.println(sql);
+			logger.debug(sql);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}finally{
-			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {e.printStackTrace();}
+			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {logger.error(e.getMessage());}
 		}
 		
 		return row > 0? true: false;
@@ -292,11 +298,11 @@ public class ClassesDaoImpl implements ClassesDao {
 			DB.fillStatement(pst, id);
 			//System.out.println(pst.toString().split(": ")[1]);
 			row = pst.executeUpdate();
-			System.out.println(sql);
+			logger.debug(sql);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}finally{
-			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {e.printStackTrace();}
+			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {logger.error(e.getMessage());}
 		}
 		
 		return row > 0? true: false;
@@ -316,16 +322,16 @@ public class ClassesDaoImpl implements ClassesDao {
 			DB.fillStatement(pst, id);
 			//System.out.println(pst.toString().split(": ")[1]);
 			rs = pst.executeQuery();
-			System.out.println(sql);
+			logger.debug(sql);
 			while(rs.next()) {
 				cl = new Classes();
 				this.classesBean(rs, cl);
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}finally{
-			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {e.printStackTrace();}
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage());}
 		}
 		
 		return cl;
@@ -345,11 +351,11 @@ public class ClassesDaoImpl implements ClassesDao {
 			DB.fillStatement(pst, cl.getName(), cl.getGrade(), cl.getMajor(), cl.getId());
 			//System.out.println(pst.toString().split(": ")[1]);
 			row = pst.executeUpdate();
-			System.out.println(sql);
+			logger.debug(sql);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}finally{
-			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {e.printStackTrace();}
+			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {logger.error(e.getMessage());}
 		}
 
 		return row > 0? true: false;

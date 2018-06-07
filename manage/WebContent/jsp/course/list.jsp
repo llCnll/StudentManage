@@ -1,4 +1,5 @@
 ﻿<%@page import="dao.impl.StudentDaoImpl"%>
+<%@page import="org.apache.log4j.Logger"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -18,18 +19,18 @@
 		checkId();
 		
 		<%
+			Logger logger = Logger.getLogger(this.getClass());
 			domain.Student selectStudent = (domain.Student)request.getAttribute("selectStudent");
 			if(selectStudent == null){
 				String stid = request.getParameter("stid");
 				if(stid == null)
 					selectStudent = (domain.Student)request.getSession().getAttribute("student");
 				else{
-					System.out.println("---前台查询中---\n");
+					logger.info("---前台查询中---\n");
 					selectStudent = new StudentDaoImpl().studentEdit(stid);
-					System.out.println("---前台查询结束---\n\n");
+					logger.info("---前台查询结束---\n\n");
 				}
 			}
-			System.out.println(selectStudent);
 			request.setAttribute("selectStudent", selectStudent);
 		%>
 		

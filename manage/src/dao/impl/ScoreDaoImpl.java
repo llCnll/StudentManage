@@ -7,7 +7,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import utils.DataSourceUtils;
+
+
 import dao.CourseDao;
 import dao.ScoreDao;
 import dbtools.DB;
@@ -18,6 +22,7 @@ import domain.Student;
 public class ScoreDaoImpl implements ScoreDao {
 	
 	private CourseDao cod = new CourseDaoImpl();
+	private Logger logger = Logger.getLogger(ScoreDaoImpl.class);
 	
 	private void scoreBean(ResultSet rs, Score score) throws SQLException {
 		score.setId(rs.getLong("id"));
@@ -42,7 +47,7 @@ public class ScoreDaoImpl implements ScoreDao {
 			//System.out.printf("select * from student where id = %s && pwd = %s\n", id, pwd);
 			
 			rs = pst.executeQuery();
-			System.out.println(sql);
+			logger.debug(sql);
 			
 			if(rs.next()) {
 				score = new Score();
@@ -50,12 +55,12 @@ public class ScoreDaoImpl implements ScoreDao {
 			}
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}finally{
 			try {
 				DataSourceUtils.closeAll(pst, rs);
 			} catch (SQLException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage());
 			}
 		}
 		return score;
@@ -76,11 +81,11 @@ public class ScoreDaoImpl implements ScoreDao {
 			DB.fillStatement(pst, Long.parseLong(st.getId()+""+st.getCourses().get(0).getId()), st.getCourses().get(0).getScore().getSemester(), st.getCourses().get(0).getScore().getScore1(), st.getCourses().get(0).getScore().getScore2(), st.getCourses().get(0).getScore().getScore3(), st.getId(), st.getCourses().get(0).getId());
 			//System.out.println(pst.toString().split(": ")[1]);
 			row = pst.executeUpdate();
-			System.out.println(sql);
+			logger.debug(sql);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}finally{
-			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {e.printStackTrace();}
+			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {logger.error(e.getMessage());}
 		}
 		
 		return row > 0? true: false;
@@ -100,11 +105,11 @@ public class ScoreDaoImpl implements ScoreDao {
 			DB.fillStatement(pst, Long.parseLong( stid+""+cid), stid, cid);
 			//System.out.println(pst.toString().split(": ")[1]);
 			row = pst.executeUpdate();
-			System.out.println(sql);
+			logger.debug(sql);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}finally{
-			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {e.printStackTrace();}
+			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {logger.error(e.getMessage());}
 		}
 		
 		return row > 0? true: false;
@@ -123,11 +128,11 @@ public class ScoreDaoImpl implements ScoreDao {
 			DB.fillStatement(pst, stid, cid);
 			//System.out.println(pst.toString().split(": ")[1]);
 			row = pst.executeUpdate();
-			System.out.println(sql);
+			logger.debug(sql);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}finally{
-			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {e.printStackTrace();}
+			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {logger.error(e.getMessage());}
 		}
 		
 		return row > 0? true: false;
@@ -150,7 +155,7 @@ public class ScoreDaoImpl implements ScoreDao {
 			DB.fillStatement(pst, id);
 			//System.out.println(pst.toString().split(": ")[1]);
 			rs = pst.executeQuery();
-			System.out.println(sql);
+			logger.debug(sql);
 			while(rs.next()) {
 				courseIds.add(rs.getString("courseid"));
 			}
@@ -160,9 +165,9 @@ public class ScoreDaoImpl implements ScoreDao {
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}finally{
-			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {e.printStackTrace();}
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage());}
 		}
 		
 		return courses.size()>0?courses:null;

@@ -9,11 +9,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import org.junit.Test;
+import org.apache.log4j.Logger;
 
 import utils.DataSourceUtils;
+
+
 import dao.ClassesDao;
-import dao.CourseDao;
 import dao.ScoreDao;
 import dao.StudentDao;
 import dbtools.DB;
@@ -26,6 +27,7 @@ public class StudentDaoImpl implements StudentDao {
 	
 	private ClassesDao cd = new ClassesDaoImpl();
 	private ScoreDao scd = new ScoreDaoImpl();
+	private Logger logger = Logger.getLogger(StudentDaoImpl.class);
 	
 	private void studentBean(ResultSet rs, Student st) throws SQLException{
 		st.setId(rs.getString("id"));
@@ -63,7 +65,7 @@ public class StudentDaoImpl implements StudentDao {
 			//System.out.printf("select * from student where id = %s && pwd = %s\n", id, pwd);
 			
 			rs = pst.executeQuery();
-			System.out.println(sql);
+			logger.debug(sql);
 			
 			if(rs.next()) {
 				st = new Student();
@@ -71,12 +73,12 @@ public class StudentDaoImpl implements StudentDao {
 			}
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}finally{
 			try {
 				DataSourceUtils.closeAll(pst, rs);
 			} catch (SQLException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage());
 			}
 		}
 		
@@ -153,7 +155,7 @@ public class StudentDaoImpl implements StudentDao {
 			pst = conn.prepareStatement(sql);
 			DB.fillStatement(pst, param);
 			//System.out.println(pst.toString().split(": ")[1]);
-			System.out.println(sql);
+			logger.debug(sql);
 			rs = pst.executeQuery();
 			
 			while(rs.next()) {
@@ -163,12 +165,12 @@ public class StudentDaoImpl implements StudentDao {
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}finally{
 			try {
 				DataSourceUtils.closeAll(pst, rs);
 			} catch (SQLException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage());
 			}
 		}
 		
@@ -223,7 +225,7 @@ public class StudentDaoImpl implements StudentDao {
 			DB.fillStatement(pst, param);
 			//System.out.println(pst.toString().split(": ")[1]);
 			rs = pst.executeQuery();
-			System.out.println(sql);
+			logger.debug(sql);
 			while(rs.next()) {
 				Student st = new Student();
 				this.studentBean(rs, st);
@@ -231,9 +233,9 @@ public class StudentDaoImpl implements StudentDao {
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}finally{
-			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {e.printStackTrace();}
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage());}
 		}
 		
 		return list.size()>0?list:null;
@@ -252,12 +254,12 @@ public class StudentDaoImpl implements StudentDao {
 			DB.fillStatement(pst, st.getId(), st.getName(), st.getPwd(), st.getClasses().getId(), st.getRoleId());
 			//System.out.println(pst.toString().split(": ")[1]);
 			row = pst.executeUpdate();
-			System.out.println(sql);
+			logger.debug(sql);
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}finally{
-			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {e.printStackTrace();}
+			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {logger.error(e.getMessage());}
 		}
 		
 		return row > 0? true: false;
@@ -276,11 +278,11 @@ public class StudentDaoImpl implements StudentDao {
 			DB.fillStatement(pst, id);
 			//System.out.println(pst.toString().split(": ")[1]);
 			row = pst.executeUpdate();
-			System.out.println(sql);
+			logger.debug(sql);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}finally{
-			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {e.printStackTrace();}
+			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {logger.error(e.getMessage());}
 		}
 		
 		return row > 0? true: false;
@@ -300,16 +302,16 @@ public class StudentDaoImpl implements StudentDao {
 			DB.fillStatement(pst, id);
 			//System.out.println(pst.toString().split(": ")[1]);
 			rs = pst.executeQuery();
-			System.out.println(sql);
+			logger.debug(sql);
 			while(rs.next()) {
 				st = new Student();
 				this.studentBean(rs, st);
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}finally{
-			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {e.printStackTrace();}
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage());}
 		}
 		
 		return st;
@@ -329,11 +331,11 @@ public class StudentDaoImpl implements StudentDao {
 			DB.fillStatement(pst, st.getName(), st.getPwd(), st.getClasses().getId(), st.getRoleId(), st.getId());
 			//System.out.println(pst.toString().split(": ")[1]);
 			row = pst.executeUpdate();
-			System.out.println(sql);
+			logger.debug(sql);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}finally{
-			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {e.printStackTrace();}
+			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {logger.error(e.getMessage());}
 		}
 		
 		return row > 0? true: false;
@@ -352,15 +354,15 @@ public class StudentDaoImpl implements StudentDao {
 			//System.out.println(pst.toString().split(": ")[1]);
 			
 			rs = pst.executeQuery();
-			System.out.println(sql);
+			logger.debug(sql);
 			if(rs.next()) {
 				count = rs.getInt("count(id)");
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}finally{
-			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {e.printStackTrace();}
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage());}
 		}
 		
 		return count;
@@ -379,15 +381,15 @@ public class StudentDaoImpl implements StudentDao {
 			//System.out.println(pst.toString().split(": ")[1]);
 			
 			rs = pst.executeQuery();
-			System.out.println(sql);
+			logger.debug(sql);
 			if(rs.next()) {
 				count = rs.getInt("count(id)");
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}finally{
-			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {e.printStackTrace();}
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage());}
 		}
 		
 		return count;
@@ -434,9 +436,9 @@ public class StudentDaoImpl implements StudentDao {
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}finally{
-			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {e.printStackTrace();}
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage());}
 		}
 		
 		return count;
@@ -486,7 +488,7 @@ public class StudentDaoImpl implements StudentDao {
 			pst = conn.prepareStatement(sql);
 			DB.fillStatement(pst, param);
 			//System.out.println(pst.toString().split(": ")[1]);
-			System.out.println(sql);
+			logger.debug(sql);
 			rs = pst.executeQuery();
 			
 			while(rs.next()) {
@@ -496,12 +498,12 @@ public class StudentDaoImpl implements StudentDao {
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}finally{
 			try {
 				DataSourceUtils.closeAll(pst, rs);
 			} catch (SQLException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage());
 			}
 		}
 		

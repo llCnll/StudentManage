@@ -15,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -38,6 +39,7 @@ public class ScoreServlet extends BaseServlet{
     }
     
     private ScoreService scs = new ScoreServiceImpl();
+    private Logger logger = Logger.getLogger(ScoreServlet.class);
 
     private HSSFWorkbook exportExcel(String[] title, List<Student> list) throws Exception{  
     	//创建excel工作簿
@@ -95,9 +97,9 @@ public class ScoreServlet extends BaseServlet{
 		
 		Object[] param = paramList.toArray();
     	
-		System.out.println("-----正在获得学生绩点列表中----");
+		logger.info("-----正在获得学生绩点列表中----");
 		List<Student> list = scs.getGpa(param);
-		System.out.println("-----获取学生绩点列表成功----\n");
+		logger.info("-----获取学生绩点列表成功----\n");
     	
 		HSSFWorkbook workbook = exportExcel(title, list);
 		FileOutputStream out =  new FileOutputStream(resource+"/"+fileName);
@@ -157,9 +159,9 @@ public class ScoreServlet extends BaseServlet{
 		paramList.add(classes);
 		
 		Object[] param = paramList.toArray();
-		System.out.println("-----正在获得学生绩点列表中----");
+		logger.info("-----正在获得学生绩点列表中----");
 		PageBean<Student> pageBean = scs.getGpa(currentPage, currentCount, param);
-		System.out.println("-----获取学生绩点列表成功----\n");
+		logger.info("-----获取学生绩点列表成功----\n");
 		Gson gson = new Gson();
 		String json = gson.toJson(pageBean);
 		/*response.setCharacterEncoding("UTF-8");*/
@@ -177,7 +179,7 @@ public class ScoreServlet extends BaseServlet{
   		String[] score3s = request.getParameterValues("score3");
   		
   		List<Student> list = new ArrayList<Student>();
-  		System.out.println("-----正在批量录入成绩中----");
+  		logger.info("-----正在批量录入成绩中----");
   		for(int i = 0; ids != null &&  i < ids.length; ++i){
   			
   			Student st = new Student();
@@ -197,12 +199,11 @@ public class ScoreServlet extends BaseServlet{
   			st.setCourses(new ArrayList<Course>());
   			st.getCourses().add(c);
   			
-  			System.out.println(st);
   			list.add(st);
   		}
   		
   		List<String> successId = scs.scoreAddBatch(list);
-  		System.out.println("-----批量录入课程成功----\n");
+  		logger.info("-----批量录入课程成功----\n");
   	}	
     
     //保存一个学生的成绩
@@ -224,16 +225,16 @@ public class ScoreServlet extends BaseServlet{
 		c.setScore(sc);
 		st.setCourses(new ArrayList<Course>());
 		st.getCourses().add(c);
-		System.out.println("-----正在录入学生成绩中----");
+		logger.info("-----正在录入学生成绩中----");
 		boolean flag = scs.saveScore(st);
 		
 		if(flag){
-			System.out.println("-----录入学生成绩成功----\n");
+			logger.info("-----录入学生成绩成功----\n");
 			request.setAttribute("message", "录入成绩成功!");
 			request.getRequestDispatcher("/jsp/score/list.jsp").forward(request, response);;
 		}else{
 			request.setAttribute("error", "录入成绩失败!");
-			System.out.println("-----录入学生成绩失败----\n");
+			logger.info("-----录入学生成绩失败----\n");
 			request.getRequestDispatcher("/jsp/score/edit.jsp").forward(request, response);
 		}
 	}

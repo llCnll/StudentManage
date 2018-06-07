@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.log4j.Logger;
 
 import service.ClassesSerivce;
 import service.impl.ClassesServiceImpl;
@@ -18,11 +19,11 @@ import com.google.gson.Gson;
 
 import domain.Classes;
 import domain.PageBean;
-import domain.Student;
 
 public class ClassesServlet extends BaseServlet {
 	
 	private ClassesSerivce cs = new ClassesServiceImpl();
+	private Logger logger = Logger.getLogger(ClassesServlet.class);
 	
 	//批量添加
 	protected void addBactch(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -32,18 +33,18 @@ public class ClassesServlet extends BaseServlet {
 		String[] majors = request.getParameterValues("major");
 		
 		List<Classes> list = new ArrayList<Classes>();
-		
+		logger.info("-----正在批量添加班级中----");
 		for(int i = 0; names != null &&  i < names.length; ++i){
 			
 			Classes cl = new Classes();
 			cl.setName(names[i]);
 			cl.setGrade(Integer.parseInt(grades[i]));
 			cl.setMajor(majors[i]);
-			System.out.println(cl);
 			list.add(cl);
 		}
 		
 		List<String> successId = cs.classesAddBatch(list);
+		logger.info("-----批量添加班级成功----\n");
 		//添加成功的剩下操作还未补全
 	}	
 	
@@ -53,10 +54,10 @@ public class ClassesServlet extends BaseServlet {
 		String[] ids = idStr.split(",");
 		StringBuffer sb = new StringBuffer();
 		for(String id: ids){
-			System.out.println("-----正在删除班级中----");
+			logger.info("-----正在删除班级中----");
 			boolean flag = cs.classesDel(id);
 			if(flag){
-				System.out.println("-----删除班级成功----\n");
+				logger.info("-----删除班级成功----\n");
 			}else{
 				sb.append(id+"删除失败!");
 			}
@@ -75,42 +76,42 @@ public class ClassesServlet extends BaseServlet {
 			Classes cl = new Classes();
 			BeanUtils.populate(cl, request.getParameterMap());
 			
-			System.out.println("-----正在更改学生信息中----");
+			logger.info("-----正在更改学生信息中----");
 			boolean flag = cs.classesEditSubmit(cl);
 			
 			if(flag){
-				System.out.println("-----更改班级信息成功----\n");
+				logger.info("-----更改班级信息成功----\n");
 				response.sendRedirect(request.getContextPath()+"/jsp/system/list.jsp");
 			}else{
-				request.setAttribute("editError", "更改失败!");
-				System.out.println("-----更改班级信息失败----\n");
+				request.setAttribute("error", "更改失败!");
+				logger.info("-----更改班级信息失败----\n");
 				request.getRequestDispatcher("/jsp/system/edit.jsp?id="+cl.getId()).forward(request, response);
 			}
 			
 		} catch (IllegalAccessException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		} catch (InvocationTargetException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 	
 	//查询修改的班级
 	protected void edit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String id = request.getParameter("id");
-		System.out.println("-----正在查找班级中----");
+		logger.info("-----正在查找班级中----");
 		Classes cl = cs.classesEdit(id);
 		
 		if(cl != null){
 			Gson gson = new Gson();
 			String json = gson.toJson(cl);
-			System.out.println("-----查找班级成功----\n");
+			logger.info("-----查找班级成功----\n");
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(json);
 		}else{
-			request.setAttribute("checkError", "班级查找失败!");
-			System.out.println("-----查找班级失败----\n");
+			request.setAttribute("error", "班级查找失败!");
+			logger.info("-----查找班级失败----\n");
 			request.getRequestDispatcher("/jsp/system/add.jsp").forward(request, response);
 		}
 	}
@@ -118,14 +119,14 @@ public class ClassesServlet extends BaseServlet {
 	//删除班级
 	protected void del(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String id = request.getParameter("id");
-		System.out.println("-----正在删除班级中----");
+		logger.info("-----正在删除班级中----");
 		boolean flag = cs.classesDel(id);
 		if(flag){
-			System.out.println("-----删除班级成功----\n");
+			logger.info("-----删除班级成功----\n");
 			response.sendRedirect(request.getContextPath()+"/jsp/system/list.jsp");
 		}else{
-			request.setAttribute("delError", "删除失败!");
-			System.out.println("-----删除班级失败----\n");
+			request.setAttribute("error", "删除失败!");
+			logger.info("-----删除班级失败----\n");
 			request.getRequestDispatcher("/jsp/system/list.jsp").forward(request, response);
 		}
 	}
@@ -135,24 +136,24 @@ public class ClassesServlet extends BaseServlet {
 		try {
 			Classes cl = new Classes();
 			BeanUtils.populate(cl, request.getParameterMap());
-			System.out.println("-----正在添加学生信息中----");
+			logger.info("-----正在添加学生信息中----");
 			
 			boolean flag = cs.classesAdd(cl);
 			
 			if(flag){
-				System.out.println("-----添加班级信息成功----\n");
+				logger.info("-----添加班级信息成功----\n");
 				response.sendRedirect(request.getContextPath()+"/jsp/system/list.jsp");
 			}else{
 				request.setAttribute("addError", "添加失败!");
-				System.out.println("-----添加班级信息失败----\n");
+				logger.info("-----添加班级信息失败----\n");
 				request.getRequestDispatcher("/jsp/system/add.jsp").forward(request, response);
 			}
 		} catch (IllegalAccessException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		} catch (InvocationTargetException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 	}
 
@@ -184,9 +185,9 @@ public class ClassesServlet extends BaseServlet {
 		paramList.add(major);
 		
 		Object[] param = paramList.toArray();
-		System.out.println("-----正在获得班级下拉列表中----");
+		logger.info("-----正在获得班级下拉列表中----");
 		PageBean<Classes> pageBean = cs.classesList(currentPage, currentCount, param);
-		System.out.println("-----班级下拉列表获取成功----\n");
+		logger.info("-----班级下拉列表获取成功----\n");
 		Gson gson = new Gson();
 		String json = gson.toJson(pageBean);
 		response.setContentType("text/html; charset=UTF-8");
@@ -195,9 +196,9 @@ public class ClassesServlet extends BaseServlet {
 	
 	//班级专业下拉框
 	protected void majorSelect(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("-----正在获得班级专业下拉列表中----");
+		logger.info("-----正在获得班级专业下拉列表中----");
 		List<String> list = cs.classesMajorSelect();
-		System.out.println("-----班级专业下拉列表获取成功----\n");
+		logger.info("-----班级专业下拉列表获取成功----\n");
 		Gson gson = new Gson();
 		String json = gson.toJson(list);
 		response.setContentType("text/html; charset=UTF-8");
@@ -206,9 +207,9 @@ public class ClassesServlet extends BaseServlet {
 	
 	//年级下拉框
 	protected void gradeSelect(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("-----正在获得年级下拉列表中----");
+		logger.info("-----正在获得年级下拉列表中----");
 		List<String> list = cs.classesGradeSelect();
-		System.out.println("-----年级下拉列表获取成功----\n");
+		logger.info("-----年级下拉列表获取成功----\n");
 		Gson gson = new Gson();
 		String json = gson.toJson(list);
 		response.setContentType("text/html; charset=UTF-8");
@@ -217,9 +218,9 @@ public class ClassesServlet extends BaseServlet {
 	
 	//班级下拉框
 	protected void select(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("-----正在获得班级下拉列表中----");
+		logger.info("-----正在获得班级下拉列表中----");
 		List<Classes> list = cs.classesList();
-		System.out.println("-----班级下拉列表获取成功----\n");
+		logger.info("-----班级下拉列表获取成功----\n");
 		Gson gson = new Gson();
 		String json = gson.toJson(list);
 		response.setContentType("text/html; charset=UTF-8");

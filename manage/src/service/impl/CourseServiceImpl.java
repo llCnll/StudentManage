@@ -31,7 +31,7 @@ public class CourseServiceImpl implements CourseService {
 		List<Course> list = cod.list((currentPage-1)*currentCount, currentCount, param);
 		pageBean.setList(list);
 		
-		System.out.println(pageBean);
+		//System.out.println(pageBean);
 		
 		return pageBean;
 	}

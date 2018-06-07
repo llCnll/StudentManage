@@ -9,13 +9,18 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import utils.DataSourceUtils;
+
+
 import dao.CourseDao;
 import dbtools.DB;
-import domain.Classes;
 import domain.Course;
 
 public class CourseDaoImpl implements CourseDao {
+	
+	private Logger logger = Logger.getLogger(CourseDaoImpl.class);
 	
 	private void courseBean(ResultSet rs, Course co) throws SQLException {
 		co.setId(rs.getInt("id"));
@@ -38,15 +43,15 @@ public class CourseDaoImpl implements CourseDao {
 			//System.out.println(pst.toString().split(": ")[1]);
 			
 			rs = pst.executeQuery();
-			System.out.println(sql);
+			logger.debug(sql);
 			if(rs.next()) {
 				count = rs.getInt("count(id)");
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}finally{
-			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {e.printStackTrace();}
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage());}
 		}
 		
 		return count;
@@ -94,7 +99,7 @@ public class CourseDaoImpl implements CourseDao {
 			DB.fillStatement(pst, param);
 			//System.out.println(pst.toString().split(": ")[1]);
 			rs = pst.executeQuery();
-			System.out.println(sql);
+			logger.debug(sql);
 			while(rs.next()) {
 				Course co = new Course();
 				this.courseBean(rs, co);
@@ -102,9 +107,9 @@ public class CourseDaoImpl implements CourseDao {
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}finally{
-			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {e.printStackTrace();}
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage());}
 		}
 		
 		return list.size()>0?list:null;
@@ -124,11 +129,11 @@ public class CourseDaoImpl implements CourseDao {
 			DB.fillStatement(pst, co.getId(), co.getName(), co.getCredithour(), co.getClasshour(), co.getPracticehour(), co.getRemark());
 			//System.out.println(pst.toString().split(": ")[1]);
 			row = pst.executeUpdate();
-			System.out.println(sql);
+			logger.debug(sql);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}finally{
-			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {e.printStackTrace();}
+			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {logger.error(e.getMessage());}
 		}
 		
 		return row > 0? true: false;
@@ -148,16 +153,16 @@ public class CourseDaoImpl implements CourseDao {
 			DB.fillStatement(pst, id);
 			//System.out.println(pst.toString().split(": ")[1]);
 			rs = pst.executeQuery();
-			System.out.println(sql);
+			logger.debug(sql);
 			while(rs.next()) {
 				co = new Course();
 				this.courseBean(rs, co);
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}finally{
-			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {e.printStackTrace();}
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage());}
 		}
 		return co;
 	}
@@ -176,11 +181,11 @@ public class CourseDaoImpl implements CourseDao {
 			DB.fillStatement(pst, co.getName(), co.getCredithour(), co.getClasshour(), co.getPracticehour(), co.getRemark(), co.getId());
 			//System.out.println(pst.toString().split(": ")[1]);
 			row = pst.executeUpdate();
-			System.out.println(sql);
+			logger.debug(sql);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}finally{
-			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {e.printStackTrace();}
+			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {logger.error(e.getMessage());}
 		}
 		
 		return row > 0? true: false;
@@ -198,11 +203,11 @@ public class CourseDaoImpl implements CourseDao {
 			DB.fillStatement(pst, id);
 			//System.out.println(pst.toString().split(": ")[1]);
 			row = pst.executeUpdate();
-			System.out.println(sql);
+			logger.debug(sql);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}finally{
-			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {e.printStackTrace();}
+			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {logger.error(e.getMessage());}
 		}
 		
 		return row > 0? true: false;
@@ -221,16 +226,16 @@ public class CourseDaoImpl implements CourseDao {
 			//System.out.println(pst.toString().split(": ")[1]);
 			
 			rs = pst.executeQuery();
-			System.out.println(sql);
+			logger.debug(sql);
 			if(rs.next()) {
 				course = new Course();
 				this.courseBean(rs,course);
 			}
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}finally{
-			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {e.printStackTrace();}
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage());}
 		}
 		
 		return course;
