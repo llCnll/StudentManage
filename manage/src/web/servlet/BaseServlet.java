@@ -8,8 +8,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.log4j.Logger;
+
+import utils.DataSourceUtils;
 @SuppressWarnings("all")
 public class BaseServlet extends HttpServlet {
+	
+	private Logger logger = Logger.getLogger(this.getClass());
 
 	protected void service(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
 
@@ -22,8 +28,11 @@ public class BaseServlet extends HttpServlet {
 			Method method = clazz.getDeclaredMethod(methodName, HttpServletRequest.class, HttpServletResponse.class);
 			
 			method.invoke(this, request,response);
+			
+			DataSourceUtils.closeConnection();
+			
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		} 
 	
 	}

@@ -62,6 +62,7 @@ public class DataSourceUtils {
 		Connection con = getConnection();
 		if (con != null) {
 			con.close();
+			tl.remove();// 从线程绑定中移除
 		}
 	}
 
@@ -77,8 +78,8 @@ public class DataSourceUtils {
 		}
 	}
 	public static void closeAll(Statement st, ResultSet rs) throws SQLException {
-		closeStatement(st);
 		closeResultSet(rs);
+		closeStatement(st);
 		//closeConnection();
 	}
 }

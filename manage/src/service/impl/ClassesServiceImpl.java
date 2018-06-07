@@ -31,7 +31,7 @@ public class ClassesServiceImpl implements ClassesSerivce {
 		List<Classes> list = cd.list((currentPage-1)*currentCount, currentCount, param);
 		pageBean.setList(list);
 		
-		System.out.println(pageBean);
+		//System.out.println(pageBean);
 		
 		return pageBean;
 	}

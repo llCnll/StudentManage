@@ -37,12 +37,6 @@ public class DB {
 		try {
 			Class.forName(driverClass);
 			conn =  DriverManager.getConnection(jdbcUrl, user, password);		
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

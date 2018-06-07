@@ -30,14 +30,6 @@ public class StudentServlet extends BaseServlet {
 	
 	private static Logger logger = Logger.getLogger(StudentServlet.class);
 	
-	@Test
-	public void fun1(){
-		MDC.put("stid", "16422010");
-		logger.debug("测试");
-		logger.error("测试");
-		logger.info("测试");
-	}
-	
 	//返回查询人的信息--> 修改选课信息 --> 转发到jsp/course/list.jsp
 	protected void returnSt(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
