@@ -82,7 +82,7 @@
 <BODY>
 	<FORM id="classesForm" name="classesForm"
 		action="${pageContext.request.contextPath }/jsp/system/log.jsp"
-		method=get>
+		method=post>
 		
 		<TABLE cellSpacing=0 cellPadding=0 width="98%" border=0>
 			<TBODY>

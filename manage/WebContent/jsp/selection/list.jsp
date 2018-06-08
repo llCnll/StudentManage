@@ -147,7 +147,7 @@
 <BODY>
 	<FORM id="customerForm" name="customerForm"
 		action="${pageContext.request.contextPath }/jsp/selection/list.jsp"
-		method=get>
+		method=post>
 		
 		<TABLE cellSpacing=0 cellPadding=0 width="98%" border=0>
 			<TBODY>

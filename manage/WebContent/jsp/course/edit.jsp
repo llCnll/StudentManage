@@ -16,9 +16,10 @@
 	$(function(){
 		
 		$.ajax({
-			url:"${pageContext.request.contextPath}/course?method=edit&id=<%=request.getParameter("id")%>",
+			url:"${pageContext.request.contextPath}/course",
+			data:{"method":"edit","id":"${param.id}"},
 			async:true,
-			type:"get",
+			type:"post",
 			success:function(student){
 				$("#id").val(student.id);
 				$("#name").val(student.name);
