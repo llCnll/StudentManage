@@ -127,6 +127,9 @@
 			},
 			dataType:"json"
 		});
+		$('#currentCount').change(function(){
+			document.classesForm.submit();
+		});
 	});
 	
 	

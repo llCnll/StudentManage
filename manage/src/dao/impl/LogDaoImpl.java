@@ -39,7 +39,7 @@ public class LogDaoImpl implements LogDao {
 		//[0]: stid  [1]: loglevel  [2]: createtime
 		ArrayList<Object> paramlist = new ArrayList<Object>(Arrays.asList(param));
 		if(param[0] != null && !("").equals(param[0])){
-			sql += "&& id = ?";
+			sql += "&& stid = ?";
 		}
 		if(param[1] != null && !("").equals(param[1]) &&!("-1").equals(param[1])){
 			sql += "&& loglevel like ?";
@@ -88,7 +88,7 @@ public class LogDaoImpl implements LogDao {
 		//[0]: stid  [1]: loglevel  [2]: createtime
 		ArrayList<Object> paramlist = new ArrayList<Object>(Arrays.asList(param));
 		if(param[0] != null && !("").equals(param[0])){
-			sql += "&& id = ?";
+			sql += "&& stid = ?";
 		}
 		if(param[1] != null && !("").equals(param[1]) &&!("-1").equals(param[1])){
 			sql += "&& loglevel like ?";

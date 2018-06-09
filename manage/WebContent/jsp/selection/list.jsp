@@ -110,6 +110,9 @@
 		$("#id").blur(function (){
 			checkId();
 		});
+		$('#currentCount').change(function(){
+			document.selectionForm.submit();
+		});
 	});
 	
 	
@@ -131,14 +134,14 @@
 				$("#page").val(1);
 			}
 		}
-		document.customerForm.submit();
+		document.selectionForm.submit();
 	}
 </SCRIPT>
 
 <META content="MSHTML 6.00.2900.3492" name=GENERATOR>
 </HEAD>
 <BODY>
-	<FORM id="customerForm" name="customerForm"
+	<FORM id="selectionForm" name="selectionForm"
 		action="${pageContext.request.contextPath }/jsp/selection/list.jsp"
 		method=post>
 		

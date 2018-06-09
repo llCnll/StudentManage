@@ -52,6 +52,9 @@
 			},
 			dataType:"json"
 		});
+		$('#currentCount').change(function(){
+			document.logForm.submit();
+		});
 	});
 	
 	
@@ -73,14 +76,14 @@
 				$("#page").val(1);
 			}
 		}
-		document.classesForm.submit();
+		document.logForm.submit();
 	}
 </SCRIPT>
 
 <META content="MSHTML 6.00.2900.3492" name=GENERATOR>
 </HEAD>
 <BODY>
-	<FORM id="classesForm" name="classesForm"
+	<FORM id="logForm" name="logForm"
 		action="${pageContext.request.contextPath }/jsp/system/log.jsp"
 		method=post>
 		
@@ -171,6 +174,7 @@
 												<select id="currentCount" name="currentCount">
 													<option value="5">5</option>
 													<option value="10">10</option>
+													<option value="20">20</option>
 												</select>
 												条
 												

@@ -133,6 +133,9 @@
 		$("#id").blur(function (){
 			checkId();
 		});
+		$('#currentCount').change(function(){
+			document.scoreForm.submit();
+		});
 	});
 	
 	
@@ -154,7 +157,7 @@
 				$("#page").val(1);
 			}
 		}
-		document.customerForm.submit();
+		document.scoreForm.submit();
 	}
 	
 	function update(id, cid, cname){
@@ -168,7 +171,7 @@
 <META content="MSHTML 6.00.2900.3492" name=GENERATOR>
 </HEAD>
 <BODY>
-	<FORM id="customerForm" name="customerForm"
+	<FORM id="scoreForm" name="scoreForm"
 		action="${pageContext.request.contextPath }/jsp/score/list.jsp"
 		method=post>
 		

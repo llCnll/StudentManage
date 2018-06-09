@@ -96,6 +96,9 @@
 		$("#id").blur(function (){
 			checkId();
 		});
+		$('#currentCount').change(function(){
+			document.gpaForm.submit();
+		});
 		
 		$('#export').click(function(){
 			//学生列表
@@ -136,7 +139,7 @@
 				$("#page").val(1);
 			}
 		}
-		document.customerForm.submit();
+		document.gpaForm.submit();
 	}
 	
 </SCRIPT>
@@ -144,7 +147,7 @@
 <META content="MSHTML 6.00.2900.3492" name=GENERATOR>
 </HEAD>
 <BODY>
-	<FORM id="customerForm" name="customerForm"
+	<FORM id="gpaForm" name="gpaForm"
 		action="${pageContext.request.contextPath }/jsp/score/gpa.jsp"
 		method=post>
 		

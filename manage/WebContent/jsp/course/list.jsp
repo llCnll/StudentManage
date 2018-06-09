@@ -139,6 +139,9 @@
 		$("#id").blur(function (){
 			checkId();
 		});
+		$('#currentCount').change(function(){
+			document.courseForm.submit();
+		});
 	});
 	function addSelectCourse(stid, cid){
 		$.ajax({
@@ -193,14 +196,14 @@
 				$("#page").val(1);
 			}
 		}
-		document.customerForm.submit();
+		document.courseForm.submit();
 	}
 </SCRIPT>
 
 <META content="MSHTML 6.00.2900.3492" name=GENERATOR>
 </HEAD>
 <BODY>
-	<FORM id="customerForm" name="customerForm"
+	<FORM id="courseForm" name="courseForm"
 		action="${pageContext.request.contextPath }/jsp/course/list.jsp"
 		method=post>
 		

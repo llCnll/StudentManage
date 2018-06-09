@@ -129,6 +129,9 @@
 		$("#id").blur(function (){
 			checkId();
 		});
+		$('#currentCount').change(function(){
+			document.customerForm.submit();
+		});
 	});
 	
 	
@@ -153,6 +156,7 @@
 		}
 		document.customerForm.submit();
 	}
+	
 </SCRIPT>
 
 <META content="MSHTML 6.00.2900.3492" name=GENERATOR>
@@ -274,7 +278,7 @@
 												<B id="currentPage"></B><!-- 初始化域id=page一致, 所以当前页数传page的值 -->
 												[<A id="currentPage_aft"href="javascript:to_page(${currentPage+1})">后一页</A>] 
 												到
-												<input type="text" size="3" id="page" name="page" />
+												<input type="text" size="3" id="page" name="page"/>
 												页
 												
 												<input type="button" value="Go" onclick="to_page()"/>
