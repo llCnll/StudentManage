@@ -71,12 +71,12 @@ public class StudentDaoImpl implements StudentDao {
 			}
 			
 		} catch (Exception e) {
-			logger.error(e.getMessage());
+			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
 			try {
 				DataSourceUtils.closeAll(pst, rs);
 			} catch (SQLException e) {
-				logger.error(e.getMessage());
+				logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 			}
 		}
 		
@@ -168,12 +168,12 @@ public class StudentDaoImpl implements StudentDao {
 			}
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage());
+			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
 			try {
 				DataSourceUtils.closeAll(pst, rs);
 			} catch (SQLException e) {
-				logger.error(e.getMessage());
+				logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 			}
 		}
 		
@@ -236,9 +236,9 @@ public class StudentDaoImpl implements StudentDao {
 			}
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage());
+			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
-			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage());}
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
 		
 		return list.size()>0?list:null;
@@ -260,9 +260,9 @@ public class StudentDaoImpl implements StudentDao {
 			logger.debug(sql);
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage());
+			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
-			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {logger.error(e.getMessage());}
+			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
 		
 		return row > 0? true: false;
@@ -283,9 +283,9 @@ public class StudentDaoImpl implements StudentDao {
 			row = pst.executeUpdate();
 			logger.debug(sql);
 		} catch (SQLException e) {
-			logger.error(e.getMessage());
+			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
-			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {logger.error(e.getMessage());}
+			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
 		
 		return row > 0? true: false;
@@ -312,9 +312,9 @@ public class StudentDaoImpl implements StudentDao {
 			}
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage());
+			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
-			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage());}
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
 		
 		return st;
@@ -336,9 +336,9 @@ public class StudentDaoImpl implements StudentDao {
 			row = pst.executeUpdate();
 			logger.debug(sql);
 		} catch (SQLException e) {
-			logger.error(e.getMessage());
+			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
-			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {logger.error(e.getMessage());}
+			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
 		
 		return row > 0? true: false;
@@ -363,9 +363,9 @@ public class StudentDaoImpl implements StudentDao {
 			}
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage());
+			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
-			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage());}
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
 		
 		return count;
@@ -421,9 +421,9 @@ public class StudentDaoImpl implements StudentDao {
 			}
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage());
+			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
-			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage());}
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
 		
 		return count;
@@ -448,9 +448,9 @@ public class StudentDaoImpl implements StudentDao {
 			}
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage());
+			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
-			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage());}
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
 		
 		return count;
@@ -503,9 +503,9 @@ public class StudentDaoImpl implements StudentDao {
 			}
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage());
+			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
-			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage());}
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
 		
 		return count;
@@ -565,12 +565,12 @@ public class StudentDaoImpl implements StudentDao {
 			}
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage());
+			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
 			try {
 				DataSourceUtils.closeAll(pst, rs);
 			} catch (SQLException e) {
-				logger.error(e.getMessage());
+				logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 			}
 		}
 		

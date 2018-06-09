@@ -203,7 +203,11 @@ public class ScoreServlet extends BaseServlet{
   		}
   		
   		List<String> successId = scs.scoreAddBatch(list);
-  		logger.info("-----批量录入课程成功----\n");
+  		logger.info("-----"+successId+"批量录入课程成功----\n");
+  		Gson gson = new Gson();
+		String json = gson.toJson(successId);
+		response.setCharacterEncoding("utf-8");
+		response.getWriter().write(json);
   	}	
     
     //保存一个学生的成绩

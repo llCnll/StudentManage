@@ -69,9 +69,7 @@ public class CourseServiceImpl implements CourseService {
 		for(Course co : list){
 			boolean flag = courseAdd(co);
 			if(flag){
-				successId.add(String.valueOf(co.getId()));
-			}else{
-				successId.add("0");
+				successId.add(String.valueOf(co.getName()));
 			}
 		}
 		

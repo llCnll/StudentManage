@@ -94,7 +94,11 @@
 	    		type:"post",
 	    		data:$('#addBatchForm').serialize(),
 	    		success:function(ids){
-					alert("添加成功!");
+	    			if(ids != "[]"){
+	    				$('#message').text(ids+"添加成功!");
+	    			}else{
+	    				$('#message').text("全部失败!");
+	    			}
 	    		},
 				error:function(){
 					alert("请求失败");
@@ -224,7 +228,7 @@
 						&times;
 					</button>
 					<h4 class="modal-title" id="myModalLabel">
-						批量添加学生信息
+						批量添加课程信息
 					</h4>
 				</div>
 				<form id="addBatchForm">
@@ -250,6 +254,7 @@
 						</div>
 					</div>
 					<div class="modal-footer">
+						<span id = 'message'></span>
 						<button type="button" class="btn btn-default" data-dismiss="modal">关闭
 						</button>
 						<button type="button" class="btn btn-primary" id="addBatchButton">

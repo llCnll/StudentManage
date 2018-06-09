@@ -55,12 +55,12 @@ public class ScoreDaoImpl implements ScoreDao {
 			}
 			
 		} catch (Exception e) {
-			logger.error(e.getMessage());
+			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
 			try {
 				DataSourceUtils.closeAll(pst, rs);
 			} catch (SQLException e) {
-				logger.error(e.getMessage());
+				logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 			}
 		}
 		return score;
@@ -83,9 +83,9 @@ public class ScoreDaoImpl implements ScoreDao {
 			row = pst.executeUpdate();
 			logger.debug(sql);
 		} catch (SQLException e) {
-			logger.error(e.getMessage());
+			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
-			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {logger.error(e.getMessage());}
+			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
 		
 		return row > 0? true: false;
@@ -107,9 +107,9 @@ public class ScoreDaoImpl implements ScoreDao {
 			row = pst.executeUpdate();
 			logger.debug(sql);
 		} catch (SQLException e) {
-			logger.error(e.getMessage());
+			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
-			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {logger.error(e.getMessage());}
+			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
 		
 		return row > 0? true: false;
@@ -130,9 +130,9 @@ public class ScoreDaoImpl implements ScoreDao {
 			row = pst.executeUpdate();
 			logger.debug(sql);
 		} catch (SQLException e) {
-			logger.error(e.getMessage());
+			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
-			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {logger.error(e.getMessage());}
+			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
 		
 		return row > 0? true: false;
@@ -165,9 +165,9 @@ public class ScoreDaoImpl implements ScoreDao {
 			}
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage());
+			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
-			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage());}
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
 		
 		return courses.size()>0?courses:null;

@@ -75,9 +75,9 @@ public class LogDaoImpl implements LogDao {
 			}
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage());
+			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
-			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage());}
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
 		
 		return count;
@@ -131,9 +131,9 @@ public class LogDaoImpl implements LogDao {
 			}
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage());
+			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
-			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage());}
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
 		
 		return list.size()>0?list:null;

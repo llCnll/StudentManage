@@ -44,8 +44,12 @@ public class ClassesServlet extends BaseServlet {
 		}
 		
 		List<String> successId = cs.classesAddBatch(list);
-		logger.info("-----批量添加班级成功----\n");
+		logger.info("-----"+successId+"批量添加班级成功----\n");
 		//添加成功的剩下操作还未补全
+		Gson gson = new Gson();
+		String json = gson.toJson(successId);
+		response.setCharacterEncoding("utf-8");
+		response.getWriter().write(json);
 	}	
 	
 	//批量删除
@@ -91,10 +95,10 @@ public class ClassesServlet extends BaseServlet {
 			
 		} catch (IllegalAccessException e) {
 			// TODO Auto-generated catch block
-			logger.error(e.getMessage());
+			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		} catch (InvocationTargetException e) {
 			// TODO Auto-generated catch block
-			logger.error(e.getMessage());
+			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}
 	}
 	
@@ -153,10 +157,10 @@ public class ClassesServlet extends BaseServlet {
 			}
 		} catch (IllegalAccessException e) {
 			// TODO Auto-generated catch block
-			logger.error(e.getMessage());
+			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		} catch (InvocationTargetException e) {
 			// TODO Auto-generated catch block
-			logger.error(e.getMessage());
+			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}
 	}
 

@@ -107,8 +107,6 @@ public class StudentServiceImpl implements StudentService {
 			boolean flag = studentAdd(st);
 			if(flag){
 				successId.add(st.getId());
-			}else{
-				successId.add("0");
 			}
 		}
 		

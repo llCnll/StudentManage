@@ -50,9 +50,9 @@ public class ClassesDaoImpl implements ClassesDao {
 			}
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage());
+			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
-			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage());}
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
 		
 		return classes;
@@ -81,9 +81,9 @@ public class ClassesDaoImpl implements ClassesDao {
 			}
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage());
+			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
-			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage());}
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
 		
 		return list.size()>0?list:null;
@@ -111,9 +111,9 @@ public class ClassesDaoImpl implements ClassesDao {
 			}
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage());
+			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
-			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage());}
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
 		
 		return classes;
@@ -138,9 +138,9 @@ public class ClassesDaoImpl implements ClassesDao {
 			}
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage());
+			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
-			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage());}
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
 		
 		return count;
@@ -195,9 +195,9 @@ public class ClassesDaoImpl implements ClassesDao {
 			}
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage());
+			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
-			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage());}
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
 		
 		return count;
@@ -256,9 +256,9 @@ public class ClassesDaoImpl implements ClassesDao {
 			}
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage());
+			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
-			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage());}
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
 		
 		return list.size()>0?list:null;
@@ -282,9 +282,9 @@ public class ClassesDaoImpl implements ClassesDao {
 			}
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage());
+			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
-			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage());}
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
 		
 		return list;
@@ -309,9 +309,9 @@ public class ClassesDaoImpl implements ClassesDao {
 			}
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage());
+			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
-			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage());}
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
 		
 		return list;
@@ -333,9 +333,9 @@ public class ClassesDaoImpl implements ClassesDao {
 			row = pst.executeUpdate();
 			logger.debug(sql);
 		} catch (SQLException e) {
-			logger.error(e.getMessage());
+			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
-			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {logger.error(e.getMessage());}
+			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
 		
 		return row > 0? true: false;
@@ -355,9 +355,9 @@ public class ClassesDaoImpl implements ClassesDao {
 			row = pst.executeUpdate();
 			logger.debug(sql);
 		} catch (SQLException e) {
-			logger.error(e.getMessage());
+			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
-			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {logger.error(e.getMessage());}
+			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
 		
 		return row > 0? true: false;
@@ -384,9 +384,9 @@ public class ClassesDaoImpl implements ClassesDao {
 			}
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage());
+			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
-			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage());}
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
 		
 		return cl;
@@ -408,9 +408,9 @@ public class ClassesDaoImpl implements ClassesDao {
 			row = pst.executeUpdate();
 			logger.debug(sql);
 		} catch (SQLException e) {
-			logger.error(e.getMessage());
+			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
-			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {logger.error(e.getMessage());}
+			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
 
 		return row > 0? true: false;

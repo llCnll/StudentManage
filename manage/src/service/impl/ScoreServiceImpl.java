@@ -34,9 +34,8 @@ public class ScoreServiceImpl implements ScoreService {
 			st.getCourses().get(0).setId(cod.getCourseByName(st.getCourses().get(0).getName()).getId());
 			boolean flag = saveScore(st);
 			if(flag){
-				successId.add(st.getId());
-			}else{
-				successId.add("0");
+				if(!successId.contains(st.getId()))
+					successId.add(st.getId());
 			}
 		}
 		return successId;

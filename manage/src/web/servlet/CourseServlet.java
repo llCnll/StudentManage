@@ -73,8 +73,11 @@ public class CourseServlet extends BaseServlet {
 		}
 		
 		List<String> successId = cos.courseAddBatch(list);
-		logger.info("-----批量添加课程成功----\n");
-		
+		logger.info("-----"+successId+"批量添加课程成功----\n");
+		Gson gson = new Gson();
+		String json = gson.toJson(successId);
+		response.setCharacterEncoding("utf-8");
+		response.getWriter().write(json);
 	}
 	
 	//删除课程
@@ -113,10 +116,10 @@ public class CourseServlet extends BaseServlet {
 			
 		} catch (IllegalAccessException e) {
 			// TODO Auto-generated catch block
-			logger.error(e.getMessage());
+			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		} catch (InvocationTargetException e) {
 			// TODO Auto-generated catch block
-			logger.error(e.getMessage());
+			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}
 	}
 	
@@ -160,10 +163,10 @@ public class CourseServlet extends BaseServlet {
 			}
 		} catch (IllegalAccessException e) {
 			// TODO Auto-generated catch block
-			logger.error(e.getMessage());
+			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		} catch (InvocationTargetException e) {
 			// TODO Auto-generated catch block
-			logger.error(e.getMessage());
+			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}
 	}
 	

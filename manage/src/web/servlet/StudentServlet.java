@@ -187,7 +187,11 @@ public class StudentServlet extends BaseServlet {
 		}
 		
 		List<String> successId = ss.studentAddBatch(list);
-		logger.info("-----批量添加用户成功----\n");
+		logger.info("-----"+successId+"批量添加用户成功----\n");
+		Gson gson = new Gson();
+		String json = gson.toJson(successId);
+		response.setCharacterEncoding("utf-8");
+		response.getWriter().write(json);
 	}	
 	//提交修改的用户
 	protected void editSumbit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -213,10 +217,10 @@ public class StudentServlet extends BaseServlet {
 			
 		} catch (IllegalAccessException e) {
 			// TODO Auto-generated catch block
-			logger.error(e.getMessage());
+			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		} catch (InvocationTargetException e) {
 			// TODO Auto-generated catch block
-			logger.error(e.getMessage());
+			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}
 	}
 	//查询修改的用户
@@ -259,7 +263,7 @@ public class StudentServlet extends BaseServlet {
 				response.setContentType("applicaion/json;charset=utf-8");
 				response.getWriter().write("{\"message\":"+"\""+message+"\"}");
 			} catch (Exception e) {
-				logger.error(e.getMessage());
+				logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 			}
 	}
 	//添加用户
@@ -286,10 +290,10 @@ public class StudentServlet extends BaseServlet {
 			
 		} catch (IllegalAccessException e) {
 			// TODO Auto-generated catch block
-			logger.error(e.getMessage());
+			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		} catch (InvocationTargetException e) {
 			// TODO Auto-generated catch block
-			logger.error(e.getMessage());
+			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}
 	}
 	//删除用户
