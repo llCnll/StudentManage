@@ -23,6 +23,7 @@
 			data:{"method":"selectCourseList","id":"${param.id}", "name":"${param.name}", "classes":"${param.classes}", "page":"${param.page}", "currentCount":"${param.currentCount}"},
 			success:function(pageBean){
 				var content = "";
+				var stid = ${student.id};
 				//pageBean.list.length;
 				for(var i = 0; pageBean.list!=null && i < pageBean.list.length; ++i){
 					content += "<TR style='FONT-WEIGHT: normal; FONT-STYLE: normal; BACKGROUND-COLOR: white; TEXT-DECORATION: none'>"
@@ -37,13 +38,15 @@
 									content += "<TD>"+pageBean.list[i].courses[0].name+"</TD>";
 								}
 					content +=	"<TD "+(pageBean.list[i].courses == undefined ? ("rowspan=1"):("rowspan="+pageBean.list[i].courses.length))+">"
-								+"<a ${student.roleId==1?"href='javascript:;'":""} onclick='update("+pageBean.list[i].id+")'>修改</a>"
+								+"${student.roleId==1?"<a href=\'myRoleEditAddress\'>修改</a>":"judgeUpdate"}"
 							+"</TR>";
 					if(pageBean.list[i].courses != undefined){
 						for(var j = 1; j < pageBean.list[i].courses.length; ++j){
 							content += "<Tr style='FONT-WEIGHT: normal; FONT-STYLE: normal; BACKGROUND-COLOR: white; TEXT-DECORATION: none'><td>"+pageBean.list[i].courses[j].name+"</td></Tr>";
 						}
 					}
+					pageBean.list[i].id == stid?content = content.replace("judgeUpdate", "<a href=\'myRoleEditAddress\'>修改</a>"):content = content.replace("judgeUpdate","");
+					content = content.replace('myRoleEditAddress',"${pageContext.request.contextPath}/student?method=returnSt&id="+pageBean.list[i].id);
 						
 				}
 				$('#grid').html($('#grid').html()+content);
@@ -130,17 +133,6 @@
 		}
 		document.customerForm.submit();
 	}
-	
-	function update(id){
-		if(${student.roleId} == 1){
-			window.location.href = "${pageContext.request.contextPath}/student?method=returnSt&id="+id;
-		}else if(${student.id} == id){
-			window.location.href = "${pageContext.request.contextPath}/student?method=returnSt&id="+id;
-		}else{
-			alert("修改权限不足!仅能修改个人信息");
-		}
-	}
-	
 </SCRIPT>
 
 <META content="MSHTML 6.00.2900.3492" name=GENERATOR>

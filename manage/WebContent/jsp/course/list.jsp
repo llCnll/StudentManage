@@ -195,13 +195,6 @@
 		}
 		document.customerForm.submit();
 	}
-	function roleDel(){
-		alert("删除权限不足!");
-	}
-	function roleEdit(){
-		
-		alert("修改权限不足!");
-	}
 </SCRIPT>
 
 <META content="MSHTML 6.00.2900.3492" name=GENERATOR>

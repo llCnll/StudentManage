@@ -25,6 +25,7 @@
 			data:{"method":"list","id":"${param.id}", "name":"${param.name}", "classes":"${param.classes}", "page":"${param.page}", "currentCount":"${param.currentCount}"},
 			success:function(pageBean){
 				var content = "";
+				var stid = ${student.id};
 				for(var i = 0; pageBean.list!=null && i < pageBean.list.length; ++i){
 					content += "<TR style='FONT-WEIGHT: normal; FONT-STYLE: normal; BACKGROUND-COLOR: white; TEXT-DECORATION: none'>"
 								+ "<TD style=\"width: 76px;\"><input type=\"checkbox\" name=\"select\" value=\""+pageBean.list[i].id+"\"/></TD>"
@@ -35,14 +36,13 @@
 								+ "<TD>"+(pageBean.list[i].roleId == 0?"普通用户":"管理员")+"</TD>"
 								+ "<TD>"
 								/* +"<a href='${pageContext.request.contextPath}/jsp/customer/edit.jsp?id="+pageBean.list[i].id+"'>修改</a>" */
-								+"${student.roleId==1?"<a href=\'myRoleEditAddress\'>修改</a>":"<a onclick=\'roleEdit(thisRowId, this)\'>修改</a>"}"
+								+"${student.roleId==1?"<a href=\'myRoleEditAddress\'>修改</a>":"judgeUpdate"}"
 								+"&nbsp;&nbsp;"
 								/* +"<a href='${pageContext.request.contextPath}/student?id="+pageBean.list[i].id+"&method=del'>删除</a>" */
-								+"${student.roleId==1?"<a href=\'myRoleDelAddress\'>删除</a>":"<a onclick=\'roleDel()\'>删除</a>"}"
+								+"${student.roleId==1?"<a href=\'myRoleDelAddress\'>删除</a>":""}"
 								+"</TD>"
 							+"</TR>";
-						
-						content = content.replace('thisRowId',pageBean.list[i].id);
+						pageBean.list[i].id == stid?content = content.replace("judgeUpdate", "<a href=\'myRoleEditAddress\'>修改</a>"):content = content.replace("judgeUpdate","");
 						content = content.replace('myRoleEditAddress',"${pageContext.request.contextPath}/jsp/customer/edit.jsp?id="+pageBean.list[i].id);
 						content = content.replace('myRoleDelAddress',"${pageContext.request.contextPath}/student?id="+pageBean.list[i].id+"&method=del");
 				}
@@ -152,17 +152,6 @@
 			}
 		}
 		document.customerForm.submit();
-	}
-	function roleDel(){
-		alert("删除权限不足!");
-	}
-	function roleEdit(id, obj){
-		
-		if(id == '${student.id}'){
-			$(obj).attr("href","${pageContext.request.contextPath}/jsp/customer/edit.jsp?id="+id);
-		}else{
-			alert("修改权限不足!仅能修改个人信息");
-		}
 	}
 </SCRIPT>
 

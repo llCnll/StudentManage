@@ -163,18 +163,6 @@
 		cname = encodeURI(cname).replace(/\+/g,'%2B');
 		window.location.href = "${pageContext.request.contextPath}/jsp/score/edit.jsp?stid="+id+"&cid="+cid+"&cname="+cname;
 	}
-	
-	/* function roleDel(){
-		alert("删除权限不足!");
-	} */
-	/* function roleEdit(id, obj){
-		
-		if(id == '${student.id}'){
-			$(obj).attr("href","${pageContext.request.contextPath}/jsp/customer/edit.jsp?id="+id);
-		}else{
-			alert("修改权限不足!仅能修改个人信息");
-		}
-	} */
 </SCRIPT>
 
 <META content="MSHTML 6.00.2900.3492" name=GENERATOR>

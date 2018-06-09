@@ -30,16 +30,10 @@
 								+ "<TD>"+pageBean.list[i].name+"</TD>"
 								+ "<TD>"+pageBean.list[i].grade+"</TD>"
 								+ "<TD>"+pageBean.list[i].major+"</TD>"
-								+ "<TD>"
 								/* +"<a href='${pageContext.request.contextPath}/jsp/customer/edit.jsp?id="+pageBean.list[i].id+"'>修改</a>" */
-								+"${student.roleId==1?"<a href=\'myRoleEditAddress\'>修改</a>":"<a onclick=\'roleEdit()\'>修改</a>"}"
-								+"&nbsp;&nbsp;"
-								/* +"<a href='${pageContext.request.contextPath}/student?id="+pageBean.list[i].id+"&method=del'>删除</a>" */
-								+"${student.roleId==1?"<a href=\'myRoleDelAddress\'>删除</a>":"<a onclick=\'roleDel()\'>删除</a>"}"
-								+"</TD>"
+								+"${student.roleId==1?"<TD><a href=\'myRoleEditAddress\'>修改</a>&nbsp;&nbsp;<a href=\'myRoleDelAddress\'>删除</a></TD>":""}"
 							+"</TR>";
 						
-						content = content.replace('thisRowId',pageBean.list[i].id);
 						content = content.replace('myRoleEditAddress',"${pageContext.request.contextPath}/jsp/system/edit.jsp?id="+pageBean.list[i].id);/* 待修改 */
 						content = content.replace('myRoleDelAddress',"${pageContext.request.contextPath}/classes?id="+pageBean.list[i].id+"&method=del");
 				}
@@ -156,12 +150,6 @@
 		}
 		document.classesForm.submit();
 	}
-	function roleDel(){
-		alert("删除权限不足!");
-	}
-	function roleEdit(id, obj){
-		alert("修改权限不足!");
-	}
 </SCRIPT>
 
 <META content="MSHTML 6.00.2900.3492" name=GENERATOR>
@@ -246,7 +234,9 @@
 													<TD>班级名称</TD>
 													<TD>班级年级</TD>
 													<TD>班级专业</TD>
-													<TD>操作</TD>
+													<c:if test="${student.roleId == 1 }">
+														<TD>操作</TD>
+													</c:if>
 												</TR>
 											</TBODY>
 										</TABLE>
