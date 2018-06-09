@@ -57,10 +57,11 @@ public class ScoreServiceImpl implements ScoreService {
 		pageBean.setTotalPage(totalPage);
 		//数据
 		List<Student> list = sd.listGetSt((currentPage-1)*currentCount, currentCount, param);
-		
-		for(Student st : list) {
-			Float gpa = getGpa(st.getCourses());
-			st.setGpa(gpa);
+		if(list != null){
+			for(Student st : list) {
+				Float gpa = getGpa(st.getCourses());
+				st.setGpa(gpa);
+			}
 		}
 		
 		pageBean.setList(list);

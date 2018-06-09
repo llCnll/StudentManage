@@ -45,9 +45,7 @@
 			success:function(pageBean){
 				var content = "";
 				var selected = "";
-				console.log("pageBean.list:"+pageBean.list);
-				console.log("pageBean.list.length:"+pageBean.list.length);
-				for(var i = 0; i < pageBean.list.length; ++i){
+				for(var i = 0; pageBean.list!=null && i < pageBean.list.length; ++i){
 					content += "<TR style='FONT-WEIGHT: normal; FONT-STYLE: normal; BACKGROUND-COLOR: white; TEXT-DECORATION: none'>"
 								+ "<TD style=\"width: 76px;\"><input type=\"checkbox\" name=\"select\" value=\""+pageBean.list[i].id+"\"/></TD>"
 								+ "<TD>"+pageBean.list[i].id+"</TD>"
@@ -77,9 +75,11 @@
 				}
 				//alert(courses);
 				//alert((courses.split("name=")).length);//0不算从1, 开始, 直到等于length-1
-				var arr = courses.split("name=");
-				for(var i = 1; i < arr.length; ++i){
-					selected += arr[i].split(",")[0]+", ";
+				if(pageBean.list!=null){
+					var arr = courses.split("name=");
+					for(var i = 1; i < arr.length; ++i){
+						selected += arr[i].split(",")[0]+", ";
+					}
 				}
 				$('#selectedCourses').text(selected);
 				$('#grid').html($('#grid').html()+content);

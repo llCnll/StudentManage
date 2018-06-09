@@ -27,7 +27,7 @@
 			success:function(pageBean){
 				var content = "";
 				//pageBean.list.length;
-				for(var i = 0; i < pageBean.list.length; ++i){
+				for(var i = 0; pageBean.list!=null && i < pageBean.list.length; ++i){
 					content += "<TR style='FONT-WEIGHT: normal; FONT-STYLE: normal; BACKGROUND-COLOR: white; TEXT-DECORATION: none'>"
 								+ "<TD "+(pageBean.list[i].courses == undefined ? ("rowspan=1"):("rowspan="+pageBean.list[i].courses.length))+"style=\"width: 76px;\"><input type=\"checkbox\" name=\"select\" value=\""+pageBean.list[i].id+"\"/></TD>"
 								+ "<TD "+(pageBean.list[i].courses == undefined ? ("rowspan=1"):("rowspan="+pageBean.list[i].courses.length))+">"+pageBean.list[i].id+"</TD>"

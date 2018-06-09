@@ -367,6 +367,64 @@ public class StudentDaoImpl implements StudentDao {
 		
 		return count;
 	}
+	//获得所有用户数量
+	public int getCount(Object... param) {
+		
+		String sql = "select count(id) from student where ";
+		
+		//[0]: id  [1]: name  [2]: classes
+		ArrayList<Object> paramlist = new ArrayList<Object>(Arrays.asList(param));
+		
+		if(param[0] != null && !("").equals(param[0])){
+			sql += "&& id = ?";
+			paramlist.remove(1);
+			paramlist.remove(1);
+		}else{
+			if(param[1] != null && !("").equals(param[1])){
+				paramlist.set(1, "%"+paramlist.get(1)+"%");
+				sql += "&& name like ?";
+			}
+			if(param[2] != null && !("").equals(param[2]) && Integer.parseInt((String) param[2]) > 0){
+				sql += "&& classesId = ?";
+			}
+		}
+		paramlist.removeAll(Collections.singleton(""));
+		paramlist.removeAll(Collections.singleton(null));
+		paramlist.removeAll(Collections.singleton("-1"));
+		
+		param = paramlist.toArray();
+		
+		//判断 where 和 where &&
+		if(sql.endsWith("where ")){
+			sql = sql.substring(0, sql.indexOf("where ")-1);
+		}
+		if(sql.contains("where &&")){
+			sql = sql.replaceAll("where &&", "where");
+		}
+		
+		Connection conn = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		int count = 0;
+		try {
+			conn = DataSourceUtils.getConnection();
+			pst = conn.prepareStatement(sql);
+			//System.out.println(pst.toString().split(": ")[1]);
+			DB.fillStatement(pst, param);
+			rs = pst.executeQuery();
+			logger.debug(sql);
+			if(rs.next()) {
+				count = rs.getInt("count(id)");
+			}
+			
+		} catch (SQLException e) {
+			logger.error(e.getMessage());
+		}finally{
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage());}
+		}
+		
+		return count;
+	}
 	//获得所有学生数量
 	public int getCountGetSt() {
 		

@@ -25,7 +25,9 @@
 			data:{"method":"getGpa","id":"${param.id}", "name":"${param.name}", "classes":"${param.classes}", "page":"${param.page}", "currentCount":"${param.currentCount}"},
 			success:function(pageBean){
 				var content = "";
-				for(var i = 0; i < pageBean.list.length; ++i){
+				console.log("pageBean:"+pageBean);
+				console.log("pageBean.list:"+pageBean.list);
+				for(var i = 0; pageBean.list!=null && i < pageBean.list.length; ++i){
 					content += "<TR style='FONT-WEIGHT: normal; FONT-STYLE: normal; BACKGROUND-COLOR: white; TEXT-DECORATION: none'>"
 								+ "<TD style=\"width: 76px;\"><input type=\"checkbox\" name=\"select\" value=\""+pageBean.list[i].id+"\"/></TD>"
 								+ "<TD>"+pageBean.list[i].id+"</TD>"

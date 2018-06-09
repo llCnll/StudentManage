@@ -145,6 +145,63 @@ public class ClassesDaoImpl implements ClassesDao {
 		
 		return count;
 	}
+	
+	public int getCount(Object... param) {
+		
+		String sql = "select count(id) from classes where ";
+		
+		//[0]: id  [1]: name  [2]: classes
+		ArrayList<Object> paramlist = new ArrayList<Object>(Arrays.asList(param));
+		
+		if(param[0] != null && !("").equals(param[0])){
+			sql += "&& name like ?";
+			paramlist.set(0, "%"+paramlist.get(0)+"%");
+		}
+		if(param[1] != null && !("").equals(param[1]) && Integer.parseInt((String) param[1]) > 0){
+			paramlist.set(1, paramlist.get(1));
+			sql += "&& grade = ?";
+		}
+		if(param[2] != null && !("").equals(param[2]) && !("-1").equals(param[2])){
+			sql += "&& major = ?";
+		}
+		
+		paramlist.removeAll(Collections.singleton(""));
+		paramlist.removeAll(Collections.singleton(null));
+		paramlist.removeAll(Collections.singleton("-1"));
+		
+		//判断 where 和 where &&
+		if(sql.endsWith("where ")){
+			sql = sql.substring(0, sql.indexOf("where ")-1);
+		}
+		if(sql.contains("where &&")){
+			sql = sql.replaceAll("where &&", "where");
+		}
+		
+		param = paramlist.toArray();
+		
+		Connection conn = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		int count = 0;
+		try {
+			conn = DataSourceUtils.getConnection();
+			pst = conn.prepareStatement(sql);
+			DB.fillStatement(pst, param);
+			//System.out.println(pst.toString().split(": ")[1]);
+			rs = pst.executeQuery();
+			logger.debug(sql);
+			if(rs.next()) {
+				count = rs.getInt("count(id)");
+			}
+			
+		} catch (SQLException e) {
+			logger.error(e.getMessage());
+		}finally{
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage());}
+		}
+		
+		return count;
+	}
 
 	public List<Classes> list(int index, Integer currentCount, Object[] param) {
 		String sql = "select * from classes where ";
@@ -152,17 +209,15 @@ public class ClassesDaoImpl implements ClassesDao {
 		ArrayList<Object> paramlist = new ArrayList<Object>(Arrays.asList(param));
 		
 		if(param[0] != null && !("").equals(param[0])){
-			sql += "&& name = ?";
-			paramlist.remove(1);
-			paramlist.remove(1);
-		}else{
-			if(param[1] != null && !("").equals(param[1]) && Integer.parseInt((String) param[1]) > 0){
-				paramlist.set(1, paramlist.get(1));
-				sql += "&& grade = ?";
-			}
-			if(param[2] != null && !("").equals(param[2]) && !("-1").equals(param[2])){
-				sql += "&& major = ?";
-			}
+			sql += "&& name like ? ";
+			paramlist.set(0, "%"+paramlist.get(0)+"%");
+		}
+		if(param[1] != null && !("").equals(param[1]) && Integer.parseInt((String) param[1]) > 0){
+			paramlist.set(1, paramlist.get(1));
+			sql += "&& grade = ?";
+		}
+		if(param[2] != null && !("").equals(param[2]) && !("-1").equals(param[2])){
+			sql += "&& major = ?";
 		}
 		paramlist.removeAll(Collections.singleton(""));
 		paramlist.removeAll(Collections.singleton(null));

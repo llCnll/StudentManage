@@ -56,6 +56,57 @@ public class CourseDaoImpl implements CourseDao {
 		
 		return count;
 	}
+	
+	public int getCount(Object[] param) {
+		String sql = "select count(id) from course where ";
+		
+		//[0]: id  [1]: name  [2]: classes
+		ArrayList<Object> paramlist = new ArrayList<Object>(Arrays.asList(param));
+		
+		if(param[0] != null && !("").equals(param[0])){
+			sql += "&& id = ?";
+			paramlist.remove(1);
+		}else{
+			if(param[1] != null && !("").equals(param[1])){
+				paramlist.set(1, "%"+paramlist.get(1)+"%");
+				sql += "&& name like ?";
+			}
+		}
+		paramlist.removeAll(Collections.singleton(""));
+		paramlist.removeAll(Collections.singleton(null));
+		
+		//判断 where 和 where &&
+		if(sql.endsWith("where ")){
+			sql = sql.substring(0, sql.indexOf("where ")-1);
+		}
+		if(sql.contains("where &&")){
+			sql = sql.replaceAll("where &&", "where");
+		}
+		param = paramlist.toArray();
+		
+		Connection conn = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		int count = 0;
+		try {
+			conn = DataSourceUtils.getConnection();
+			pst = conn.prepareStatement(sql);
+			//System.out.println(pst.toString().split(": ")[1]);
+			DB.fillStatement(pst, param);
+			rs = pst.executeQuery();
+			logger.debug(sql);
+			if(rs.next()) {
+				count = rs.getInt("count(id)");
+			}
+			
+		} catch (SQLException e) {
+			logger.error(e.getMessage());
+		}finally{
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage());}
+		}
+		
+		return count;
+	}
 
 	public List<Course> list(int index, Integer currentCount, Object[] param) {
 		String sql = "select * from course where ";

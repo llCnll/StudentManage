@@ -23,7 +23,7 @@
 			data:{"method":"list","name":"${param.name}", "grade":"${param.grade}", "major":"${param.major}", "page":"${param.page}", "currentCount":"${param.currentCount}"},
 			success:function(pageBean){
 				var content = "";
-				for(var i = 0; i < pageBean.list.length; ++i){
+				for(var i = 0; pageBean.list!=null && i < pageBean.list.length; ++i){
 					content += "<TR style='FONT-WEIGHT: normal; FONT-STYLE: normal; BACKGROUND-COLOR: white; TEXT-DECORATION: none'>"
 								+ "<TD style=\"width: 76px;\"><input type=\"checkbox\" name=\"select\" value=\""+pageBean.list[i].id+"\"/></TD>"
 								+ "<TD>"+pageBean.list[i].id+"</TD>"
@@ -132,22 +132,6 @@
 				alert("班级专业请求失败");
 			},
 			dataType:"json"
-		});
-		//name 和 (garde和major)
-		function checkId(){
-			var name = $("#name").val();
-			if(name.length != 0){
-				$("#grade").val('-1');
-				$("#grade").attr("disabled", true);
-				$("#major").val("-1");
-				$("#major").attr("disabled", true);
-			}else{
-				$("#grade").attr("disabled", false);
-				$("#major").attr("disabled", false);
-			}
-		}
-		$("#name").blur(function (){
-			checkId();
 		});
 	});
 	

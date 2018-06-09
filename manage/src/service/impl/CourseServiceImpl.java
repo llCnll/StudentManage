@@ -22,7 +22,7 @@ public class CourseServiceImpl implements CourseService {
 		//当前条数
 		pageBean.setCurrentPage(currentPage);
 		//总条数
-		int totalCount = cod.getCount();
+		int totalCount = cod.getCount(param);
 		pageBean.setTotalCount(totalCount);
 		//总页数
 		int totalPage = (int)Math.ceil(1.0*totalCount/currentCount);

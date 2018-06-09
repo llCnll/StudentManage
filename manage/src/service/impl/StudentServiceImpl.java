@@ -38,7 +38,7 @@ public class StudentServiceImpl implements StudentService {
 		//当前条数
 		pageBean.setCurrentPage(currentPage);
 		//总条数
-		int totalCount = sd.getCountGetSt();
+		int totalCount = sd.getCountGetSt(param);
 		pageBean.setTotalCount(totalCount);
 		//总页数
 		int totalPage = (int)Math.ceil(1.0*totalCount/currentCount);
@@ -58,7 +58,7 @@ public class StudentServiceImpl implements StudentService {
 		//当前条数
 		pageBean.setCurrentPage(currentPage);
 		//总条数
-		int totalCount = sd.getCount();
+		int totalCount = sd.getCount(param);
 		pageBean.setTotalCount(totalCount);
 		//总页数
 		int totalPage = (int)Math.ceil(1.0*totalCount/currentCount);

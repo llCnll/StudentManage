@@ -22,7 +22,7 @@ public class ClassesServiceImpl implements ClassesSerivce {
 		//当前条数
 		pageBean.setCurrentPage(currentPage);
 		//总条数
-		int totalCount = cd.getCount();
+		int totalCount = cd.getCount(param);
 		pageBean.setTotalCount(totalCount);
 		//总页数
 		int totalPage = (int)Math.ceil(1.0*totalCount/currentCount);

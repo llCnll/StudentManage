@@ -106,7 +106,7 @@ public class StudentServlet extends BaseServlet {
 		
 		request.setCharacterEncoding("UTF-8");
 		
-		String id = request.getParameter("cid");
+		String id = request.getParameter("id");
 		String name = request.getParameter("name");
 		String classes = request.getParameter("classes");
 		
@@ -243,7 +243,7 @@ public class StudentServlet extends BaseServlet {
 				Classes classes = new Classes();
 				classes.setId(Integer.parseInt(request.getParameter("classesId")));
 				st.setClasses(classes);
-				
+				MDC.put("stid", st.getId());
 				logger.info("-----正在注册学生信息中----");
 				boolean flag = ss.studentAdd(st);
 				String message = "";
@@ -254,7 +254,6 @@ public class StudentServlet extends BaseServlet {
 					logger.info("-----注册学生信息失败----\n");
 					message = "注册失败";
 				}
-				logger.info("{\"message\":"+"\""+message+"\"}");
 				response.setContentType("applicaion/json;charset=utf-8");
 				response.getWriter().write("{\"message\":"+"\""+message+"\"}");
 			} catch (Exception e) {

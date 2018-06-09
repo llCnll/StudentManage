@@ -13,6 +13,8 @@ public interface ClassesDao {
 	Classes getClassesByName(String name);
 
 	int getCount();
+	
+	int getCount(Object... param);
 
 	List<Classes> list(int i, Integer currentCount, Object[] param);
 

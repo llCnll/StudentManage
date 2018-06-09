@@ -36,7 +36,7 @@ $(function(){
 				alert(mess.message);
     		},
 			error:function(){
-				alert("请求失败");
+				alert("注册请求失败");
 			},
     		datatype:"json"
     	});
@@ -69,6 +69,31 @@ $(function(){
 		}
 		error.css("visibility", "hidden");
 		return true;
+	}
+	function selectClassesFunction(){
+		//班级下拉框
+		$.ajax({
+			url:"${pageContext.request.contextPath}/classes",
+			data:{"method":"select", "signup":"true"},
+			async:true,
+			type:"POST",
+			success:function(list){
+				var content = "<option value='-1'>--------请选择--------</option>";
+				for(var i = 0; i < list.length; ++i){
+					if(classes == list[i].id){
+						content += "<option value='"+list[i].id+"' selected>"+list[i].name+"</option>";
+					}else{
+						content += "<option value='"+list[i].id+"'>"+list[i].name+"</option>";
+					}
+				}
+				$("#classes").text('');
+				$('#classes').html($('#classes').html()+content);
+			},
+			error:function(){
+				alert("班级列表请求失败");
+			},
+			dataType:"json"
+		});
 	}
 
 </script>
@@ -122,7 +147,7 @@ $(function(){
 														<td>
 															<input id=signUp data-toggle="modal" data-target="#myModal"
 																style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px"
-																type=image src="images/regist_button.jpg" name=btn onclick="return false;">
+																type=image src="images/regist_button.jpg" name=btn onclick="selectClassesFunction(); return false;">
 														</td>
 														<td><input id=btn
 															style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px"
@@ -160,9 +185,10 @@ $(function(){
 				<form id="signupForm">
 					<div class="modal-body" style="text-align: center;">
 						<input type="hidden" name="method" value="signup">
+						<input type="hidden" name="signup" value="true"/>
 						<table cellspacing=0 cellpadding=5  border=0 >
 						  
-						    <tr><td><span style="color:red;">${addError }</span></td></tr>
+						    <tr><td><span style="color:red;">${error }</span></td></tr>
 							<tr>
 								<td style="color:black;">用户学号 ：</td>
 								<td>

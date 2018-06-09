@@ -8,6 +8,8 @@ import domain.Course;
 public interface CourseDao {
 
 	int getCount();
+	
+	int getCount(Object[] param);
 
 	List<Course> list(int i, Integer currentCount, Object[] param);
 
