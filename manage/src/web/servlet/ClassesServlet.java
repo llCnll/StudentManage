@@ -70,7 +70,7 @@ public class ClassesServlet extends BaseServlet {
 		response.getWriter().write("{\"message\":"+"\""+message+"\"}");
 	}
 	
-	//提交修改的用户
+	//提交修改的班级
 	protected void editSumbit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			Classes cl = new Classes();
@@ -81,11 +81,12 @@ public class ClassesServlet extends BaseServlet {
 			
 			if(flag){
 				logger.info("-----更改班级信息成功----\n");
-				response.sendRedirect(request.getContextPath()+"/jsp/system/list.jsp");
+				request.setAttribute("message", cl.getName()+"更改成功!");
+				request.getRequestDispatcher("/jsp/system/list.jsp").forward(request, response);;
 			}else{
 				request.setAttribute("error", "更改失败!");
 				logger.info("-----更改班级信息失败----\n");
-				request.getRequestDispatcher("/jsp/system/edit.jsp?id="+cl.getId()).forward(request, response);
+				request.getRequestDispatcher("/jsp/system/edit.jsp").forward(request, response);
 			}
 			
 		} catch (IllegalAccessException e) {
@@ -123,7 +124,8 @@ public class ClassesServlet extends BaseServlet {
 		boolean flag = cs.classesDel(id);
 		if(flag){
 			logger.info("-----删除班级成功----\n");
-			response.sendRedirect(request.getContextPath()+"/jsp/system/list.jsp");
+			request.setAttribute("message", "删除成功!");
+			request.getRequestDispatcher("/jsp/system/list.jsp").forward(request, response);
 		}else{
 			request.setAttribute("error", "删除失败!");
 			logger.info("-----删除班级失败----\n");
@@ -136,15 +138,16 @@ public class ClassesServlet extends BaseServlet {
 		try {
 			Classes cl = new Classes();
 			BeanUtils.populate(cl, request.getParameterMap());
-			logger.info("-----正在添加学生信息中----");
+			logger.info("-----正在添加班级信息中----");
 			
 			boolean flag = cs.classesAdd(cl);
 			
 			if(flag){
 				logger.info("-----添加班级信息成功----\n");
-				response.sendRedirect(request.getContextPath()+"/jsp/system/list.jsp");
+				request.setAttribute("error", cl.getName()+"添加成功!");
+				request.getRequestDispatcher("/jsp/system/list.jsp").forward(request, response);
 			}else{
-				request.setAttribute("addError", "添加失败!");
+				request.setAttribute("error", "添加失败!");
 				logger.info("-----添加班级信息失败----\n");
 				request.getRequestDispatcher("/jsp/system/add.jsp").forward(request, response);
 			}

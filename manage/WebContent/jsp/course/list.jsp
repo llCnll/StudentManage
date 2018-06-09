@@ -41,10 +41,12 @@
 			url:"${pageContext.request.contextPath}/course",
 			async:true,
 			type:"POST",
-			data:{"method":"list","cid":"${param.cid}", "name":"${param.name}", "classes":"${param.classes}", "page":"${param.page}", "currentCount":"${param.currentCount}"},
+			data:{"method":"list","cid":"${param.cid}", "name":"${param.name}", "page":"${param.page}", "currentCount":"${param.currentCount}"},
 			success:function(pageBean){
 				var content = "";
 				var selected = "";
+				console.log("pageBean.list:"+pageBean.list);
+				console.log("pageBean.list.length:"+pageBean.list.length);
 				for(var i = 0; i < pageBean.list.length; ++i){
 					content += "<TR style='FONT-WEIGHT: normal; FONT-STYLE: normal; BACKGROUND-COLOR: white; TEXT-DECORATION: none'>"
 								+ "<TD style=\"width: 76px;\"><input type=\"checkbox\" name=\"select\" value=\""+pageBean.list[i].id+"\"/></TD>"
@@ -247,12 +249,12 @@
 													
 													<TD>课程ID：</TD>
 													<TD><INPUT class=textbox id=id
-														style="WIDTH: 80px" maxLength=50 name="id" value="${param.cid}"></TD>
+														style="WIDTH: 80px" maxLength=50 name="cid" value="${param.cid}"></TD>
 													<TD>课程名：</TD>
 													<TD><INPUT class=textbox id=name
 														style="WIDTH: 80px" maxLength=50 name="name" value="${param.name}"></TD>
 													<TD><INPUT class=button id=sButton2 type=submit
-														value=" 筛选 " name=sButton2></TD>
+														value=" 筛选 " name=sButton2><span style="height: 18px;color: red;">${error }${message }</span></TD>
 												</TR>
 											</TBODY>
 										</TABLE>

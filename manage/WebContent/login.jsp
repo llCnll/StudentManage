@@ -70,8 +70,6 @@ $(function(){
 		error.css("visibility", "hidden");
 		return true;
 	}
-	
-	
 
 </script>
 
@@ -124,7 +122,7 @@ $(function(){
 														<td>
 															<input id=signUp data-toggle="modal" data-target="#myModal"
 																style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px"
-																type=image src="images/regist_button.jpg" name=btn>
+																type=image src="images/regist_button.jpg" name=btn onclick="return false;">
 														</td>
 														<td><input id=btn
 															style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px"

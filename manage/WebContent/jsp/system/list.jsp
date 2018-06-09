@@ -237,7 +237,7 @@
 													   </select>
 													</TD>
 													<TD><INPUT class=button id=sButton2 type=submit
-														value=" 筛选 " name=sButton2><span style="height: 18px;color: red;">${delError }</span></TD>
+														value=" 筛选 " name=sButton2><span style="height: 18px;color: red;">${error }${message }</span></TD>
 												</TR>
 											</TBODY>
 										</TABLE>

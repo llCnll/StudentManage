@@ -162,12 +162,12 @@
 								<td>班级名称：</td>
 								<td>
 								<input class=textbox id="name"
-														style="width: 180px" maxlength=50 name="name">
+														style="width: 180px" maxlength=50 name="name" value="${param.name }">
 								</td>
 								<td>班级年级 ：</td>
 								<td>
 								<input class=textbox id="grade"
-														style="width: 180px" maxlength=50 name="grade">
+														style="width: 180px" maxlength=50 name="grade" value="${param.grade }">
 								</td>
 							</tr>
 							
@@ -176,7 +176,7 @@
 								<td>班级专业 ：</td>
 								<td>
 								<input class=textbox id="major"
-														style="width: 180px" maxlength=50 name="major">
+														style="width: 180px" maxlength=50 name="major" value="${param.major }">
 								</td>
 							</tr>
 							

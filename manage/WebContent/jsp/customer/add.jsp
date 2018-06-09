@@ -168,12 +168,12 @@
 								<td>用户学号：</td>
 								<td>
 								<input class=textbox id="id"
-														style="width: 180px" maxlength=50 name="id">
+														style="width: 180px" maxlength=50 name="id" value="${param.id }">
 								</td>
 								<td>用户名称 ：</td>
 								<td>
 								<input class=textbox id="name"
-														style="width: 180px" maxlength=50 name="name">
+														style="width: 180px" maxlength=50 name="name" value="${param.name }">
 								</td>
 							</tr>
 							
@@ -182,12 +182,12 @@
 								<td>用户密码 ：</td>
 								<td>
 								<input class=textbox id="pwd"
-														style="width: 180px" maxlength=50 name="pwd">
+														style="width: 180px" maxlength=50 name="pwd" value="${param.pwd }">
 								</td>
 								<td>确认密码：</td>
 								<td>
 								<input class=textbox id="repwd"
-														style="width: 180px" maxlength=50 name="repwd">
+														style="width: 180px" maxlength=50 value="${param.pwd }">
 								</td>
 							</tr>
 							
@@ -197,7 +197,7 @@
 								<td>用户班级 ：</td>
 								<td>
 								<select class=textbox id="classes"
-														style="width: 180px; height: 24px;" name="classesId">
+														style="width: 180px; height: 24px;" name="classesId" >
 									<option value="-1">加载中...</option>
 								 </select>
 								</td>

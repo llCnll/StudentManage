@@ -103,11 +103,12 @@ public class CourseServlet extends BaseServlet {
 			
 			if(flag){
 				logger.info("-----更改课程信息成功----\n");
-				response.sendRedirect(request.getContextPath()+"/jsp/course/list.jsp");
+				request.setAttribute("message", co.getName()+"更改成功!");
+				request.getRequestDispatcher("/jsp/course/list.jsp").forward(request, response);
 			}else{
 				request.setAttribute("error", "更改失败!");
 				logger.info("-----更改课程信息失败----\n");
-				request.getRequestDispatcher("/jsp/course/edit.jsp?id="+co.getId()).forward(request, response);
+				request.getRequestDispatcher("/jsp/course/edit.jsp").forward(request, response);
 			}
 			
 		} catch (IllegalAccessException e) {
@@ -143,15 +144,17 @@ public class CourseServlet extends BaseServlet {
 		try {
 			Course co = new Course();
 			BeanUtils.populate(co, request.getParameterMap());
+			co.setId(Integer.parseInt(request.getParameter("cid")));
 			logger.info("-----正在添加课程信息中----");
 			
 			boolean flag = cos.courseAdd(co);
 			
 			if(flag){
 				logger.info("-----添加课程信息成功----\n");
-				response.sendRedirect(request.getContextPath()+"/jsp/course/list.jsp");
+				request.setAttribute("message", co.getName()+"添加成功!");
+				request.getRequestDispatcher("/jsp/course/list.jsp").forward(request, response);
 			}else{
-				request.setAttribute("addError", "添加失败!");
+				request.setAttribute("error", "添加失败!");
 				logger.info("-----添加课程信息失败----\n");
 				request.getRequestDispatcher("/jsp/course/add.jsp").forward(request, response);
 			}
@@ -171,7 +174,7 @@ public class CourseServlet extends BaseServlet {
 		
 		request.setCharacterEncoding("UTF-8");
 		
-		String id = request.getParameter("id");
+		String cid = request.getParameter("cid");
 		String name = request.getParameter("name");
 		
 		String currentPageStr = request.getParameter("page");
@@ -186,7 +189,7 @@ public class CourseServlet extends BaseServlet {
 		Integer currentCount = Integer.parseInt(currentCountStr);
 		System.out.println("currentPage:"+currentPage+" currentCount:"+ currentCount);
 		
-		paramList.add(id);
+		paramList.add(cid);
 		paramList.add(name);
 		
 		Object[] param = paramList.toArray();

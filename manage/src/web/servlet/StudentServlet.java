@@ -201,11 +201,12 @@ public class StudentServlet extends BaseServlet {
 			
 			if(flag){
 				logger.info("-----更改学生信息成功----\n");
-				response.sendRedirect(request.getContextPath()+"/jsp/customer/list.jsp");
+				request.setAttribute("message", st.getId()+"修改成功!");
+				request.getRequestDispatcher("/jsp/customer/list.jsp").forward(request, response);
 			}else{
 				request.setAttribute("error", "更改失败!");
 				logger.info("-----更改学生信息失败----\n");
-				request.getRequestDispatcher("/jsp/customer/edit.jsp?id="+st.getId()).forward(request, response);
+				request.getRequestDispatcher("/jsp/customer/edit.jsp").forward(request, response);
 			}
 			
 		} catch (IllegalAccessException e) {

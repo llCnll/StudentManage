@@ -150,12 +150,12 @@
 								<td>课程ID：</td>
 								<td>
 								<input class=textbox id="id"
-														style="width: 180px" maxlength=50 name="id">
+														style="width: 180px" maxlength=50 name="id" value="${param.id }">
 								</td>
 								<td>课程名 ：</td>
 								<td>
 								<input class=textbox id="name"
-														style="width: 180px" maxlength=50 name="name">
+														style="width: 180px" maxlength=50 name="name" value="${param.name }">
 								</td>
 							</tr>
 							
@@ -163,26 +163,26 @@
 								
 								<td>学分：</td>
 								<td>
-								<input class=textbox id="pwd"
-														style="width: 180px" maxlength=50 name="credithour">
+								<input class=textbox id="credithour"
+														style="width: 180px" maxlength=50 name="credithour" value="${param.credithour }">
 								</td>
 								<td>讲授学时：</td>
 								<td>
-								<input class=textbox id="repwd"
-														style="width: 180px" maxlength=50 name="classhour">
+								<input class=textbox id="classhour"
+														style="width: 180px" maxlength=50 name="classhour" value="${param.classhour }">
 								</td>
 							</tr>
 							
 							<tr>
 								<td>实验学时 ：</td>
 								<td>
-								<input class=textbox id="name"
-													style="width: 180px" maxlength=50 name="practicehour">
+								<input class=textbox id="practicehour"
+													style="width: 180px" maxlength=50 name="practicehour" value="${param.practicehour }">
 								</td>
 								<td>备注 ：</td>
 								<td>
-								<input class=textbox id="name"
-														style="width: 180px" maxlength=50 name="remark">
+								<input class=textbox id="remark"
+														style="width: 180px" maxlength=50 name="remark" value="${param.remark }">
 								</td>
 							</tr>
 							
