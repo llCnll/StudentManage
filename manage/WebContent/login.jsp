@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
-<title>用户管理系统</title>
+<title>用户登陆系统</title>
 <style type=text/css>
 body {
 	font-size: 12px;

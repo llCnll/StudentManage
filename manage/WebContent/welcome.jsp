@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>模板</title>
+<title>欢迎模板</title>
 <link href="css/Style.css" type=text/css rel=stylesheet>
 <link href="css/Manage.css" type=text/css
 	rel=stylesheet>

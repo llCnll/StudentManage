@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>菜单栏</title>
 <style type=text/css>
 body {
 	padding-right: 0px;
