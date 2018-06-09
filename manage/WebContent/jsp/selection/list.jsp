@@ -26,28 +26,54 @@
 				var stid = ${student.id};
 				//pageBean.list.length;
 				for(var i = 0; pageBean.list!=null && i < pageBean.list.length; ++i){
-					content += "<TR style='FONT-WEIGHT: normal; FONT-STYLE: normal; BACKGROUND-COLOR: white; TEXT-DECORATION: none'>"
-								+ "<TD "+(pageBean.list[i].courses == undefined ? ("rowspan=1"):("rowspan="+pageBean.list[i].courses.length))+"style=\"width: 76px;\"><input type=\"checkbox\" name=\"select\" value=\""+pageBean.list[i].id+"\"/></TD>"
-								+ "<TD "+(pageBean.list[i].courses == undefined ? ("rowspan=1"):("rowspan="+pageBean.list[i].courses.length))+">"+pageBean.list[i].id+"</TD>"
-								+ "<TD "+(pageBean.list[i].courses == undefined ? ("rowspan=1"):("rowspan="+pageBean.list[i].courses.length))+">"+pageBean.list[i].name+"</TD>"
-								+ "<TD "+(pageBean.list[i].courses == undefined ? ("rowspan=1"):("rowspan="+pageBean.list[i].courses.length))+">"+pageBean.list[i].classes.name+"</TD>";
-								/* 选课情况 */
-								if(pageBean.list[i].courses == undefined){
-									content  += "<td>未选课</td>";
-								}else{
-									content += "<TD>"+pageBean.list[i].courses[0].name+"</TD>";
+						if(${student.roleId == 1}){
+							content += "<TR style='FONT-WEIGHT: normal; FONT-STYLE: normal; BACKGROUND-COLOR: white; TEXT-DECORATION: none'>"
+										+ "<TD "+(pageBean.list[i].courses == undefined ? ("rowspan=1"):("rowspan="+pageBean.list[i].courses.length))+"style=\"width: 76px;\"><input type=\"checkbox\" name=\"select\" value=\""+pageBean.list[i].id+"\"/></TD>"
+										+ "<TD "+(pageBean.list[i].courses == undefined ? ("rowspan=1"):("rowspan="+pageBean.list[i].courses.length))+">"+pageBean.list[i].id+"</TD>"
+										+ "<TD "+(pageBean.list[i].courses == undefined ? ("rowspan=1"):("rowspan="+pageBean.list[i].courses.length))+">"+pageBean.list[i].name+"</TD>"
+										+ "<TD "+(pageBean.list[i].courses == undefined ? ("rowspan=1"):("rowspan="+pageBean.list[i].courses.length))+">"+pageBean.list[i].classes.name+"</TD>";
+										/* 选课情况 */
+										if(pageBean.list[i].courses == undefined){
+											content  += "<td>未选课</td>";
+										}else{
+											content += "<TD>"+pageBean.list[i].courses[0].name+"</TD>";
+										}
+							content +=	"<TD "+(pageBean.list[i].courses == undefined ? ("rowspan=1"):("rowspan="+pageBean.list[i].courses.length))+">"
+										+"${student.roleId==1?"<a href=\'myRoleEditAddress\'>修改</a>":"judgeUpdate"}"
+									+"</TR>";
+							if(pageBean.list[i].courses != undefined){
+								for(var j = 1; j < pageBean.list[i].courses.length; ++j){
+									content += "<Tr style='FONT-WEIGHT: normal; FONT-STYLE: normal; BACKGROUND-COLOR: white; TEXT-DECORATION: none'><td>"+pageBean.list[i].courses[j].name+"</td></Tr>";
 								}
-					content +=	"<TD "+(pageBean.list[i].courses == undefined ? ("rowspan=1"):("rowspan="+pageBean.list[i].courses.length))+">"
-								+"${student.roleId==1?"<a href=\'myRoleEditAddress\'>修改</a>":"judgeUpdate"}"
-							+"</TR>";
-					if(pageBean.list[i].courses != undefined){
-						for(var j = 1; j < pageBean.list[i].courses.length; ++j){
-							content += "<Tr style='FONT-WEIGHT: normal; FONT-STYLE: normal; BACKGROUND-COLOR: white; TEXT-DECORATION: none'><td>"+pageBean.list[i].courses[j].name+"</td></Tr>";
+							}
+							pageBean.list[i].id == stid?content = content.replace("judgeUpdate", "<a href=\'myRoleEditAddress\'>修改</a>"):content = content.replace("judgeUpdate","");
+							content = content.replace('myRoleEditAddress',"${pageContext.request.contextPath}/student?method=returnSt&id="+pageBean.list[i].id);
+					}else{
+						if(pageBean.list[i].id == stid){
+							content += "<TR style='FONT-WEIGHT: normal; FONT-STYLE: normal; BACKGROUND-COLOR: white; TEXT-DECORATION: none'>"
+										+ "<TD "+(pageBean.list[i].courses == undefined ? ("rowspan=1"):("rowspan="+pageBean.list[i].courses.length))+"style=\"width: 76px;\"><input type=\"checkbox\" name=\"select\" value=\""+pageBean.list[i].id+"\"/></TD>"
+										+ "<TD "+(pageBean.list[i].courses == undefined ? ("rowspan=1"):("rowspan="+pageBean.list[i].courses.length))+">"+pageBean.list[i].id+"</TD>"
+										+ "<TD "+(pageBean.list[i].courses == undefined ? ("rowspan=1"):("rowspan="+pageBean.list[i].courses.length))+">"+pageBean.list[i].name+"</TD>"
+										+ "<TD "+(pageBean.list[i].courses == undefined ? ("rowspan=1"):("rowspan="+pageBean.list[i].courses.length))+">"+pageBean.list[i].classes.name+"</TD>";
+										/* 选课情况 */
+										if(pageBean.list[i].courses == undefined){
+											content  += "<td>未选课</td>";
+										}else{
+											content += "<TD>"+pageBean.list[i].courses[0].name+"</TD>";
+										}
+							content +=	"<TD "+(pageBean.list[i].courses == undefined ? ("rowspan=1"):("rowspan="+pageBean.list[i].courses.length))+">"
+										+"${student.roleId==1?"<a href=\'myRoleEditAddress\'>修改</a>":"judgeUpdate"}"
+									+"</TR>";
+							if(pageBean.list[i].courses != undefined){
+								for(var j = 1; j < pageBean.list[i].courses.length; ++j){
+									content += "<Tr style='FONT-WEIGHT: normal; FONT-STYLE: normal; BACKGROUND-COLOR: white; TEXT-DECORATION: none'><td>"+pageBean.list[i].courses[j].name+"</td></Tr>";
+								}
+							}
+							pageBean.list[i].id == stid?content = content.replace("judgeUpdate", "<a href=\'myRoleEditAddress\'>修改</a>"):content = content.replace("judgeUpdate","");
+							content = content.replace('myRoleEditAddress',"${pageContext.request.contextPath}/student?method=returnSt&id="+pageBean.list[i].id);
+							
 						}
 					}
-					pageBean.list[i].id == stid?content = content.replace("judgeUpdate", "<a href=\'myRoleEditAddress\'>修改</a>"):content = content.replace("judgeUpdate","");
-					content = content.replace('myRoleEditAddress',"${pageContext.request.contextPath}/student?method=returnSt&id="+pageBean.list[i].id);
-						
 				}
 				$('#grid').html($('#grid').html()+content);
 				$("#totalCount").text(pageBean.totalCount);
@@ -221,7 +247,7 @@
 										</TABLE>
 									</TD>
 								</TR>
-								
+								<c:if test="${student.roleId == 1 }">
 								<TR>
 									<TD><SPAN id=pagelink>
 											<div style="LINE-HEIGHT: 20px; HEIGHT: 20px; TEXT-ALIGN: right">
@@ -243,6 +269,7 @@
 											</div>
 									</SPAN></TD>
 								</TR>
+								</c:if>
 							</TBODY>
 						</TABLE>
 					</TD>

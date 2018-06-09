@@ -26,9 +26,58 @@
 			data:{"method":"selectCourseList","id":"${param.id}", "name":"${param.name}", "classes":"${param.classes}", "page":"${param.page}", "currentCount":"${param.currentCount}"},
 			success:function(pageBean){
 				var content = "";
+				var stid = ${student.id};
 				//pageBean.list.length;
 				for(var i = 0; pageBean.list!=null && i < pageBean.list.length; ++i){
-					content += "<TR style='FONT-WEIGHT: normal; FONT-STYLE: normal; BACKGROUND-COLOR: white; TEXT-DECORATION: none'>"
+					if(${student.roleId == 1}){
+						content += "<TR style='FONT-WEIGHT: normal; FONT-STYLE: normal; BACKGROUND-COLOR: white; TEXT-DECORATION: none'>"
+									+ "<TD "+(pageBean.list[i].courses == undefined ? ("rowspan=1"):("rowspan="+pageBean.list[i].courses.length))+"style=\"width: 76px;\"><input type=\"checkbox\" name=\"select\" value=\""+pageBean.list[i].id+"\"/></TD>"
+									+ "<TD "+(pageBean.list[i].courses == undefined ? ("rowspan=1"):("rowspan="+pageBean.list[i].courses.length))+">"+pageBean.list[i].id+"</TD>"
+									+ "<TD "+(pageBean.list[i].courses == undefined ? ("rowspan=1"):("rowspan="+pageBean.list[i].courses.length))+">"+pageBean.list[i].name+"</TD>"
+									+ "<TD "+(pageBean.list[i].courses == undefined ? ("rowspan=1"):("rowspan="+pageBean.list[i].courses.length))+">"+pageBean.list[i].classes.name+"</TD>";
+									/* 选课情况 */
+									if(pageBean.list[i].courses == undefined){
+										content  += "<td>未选课</td>";
+										content += "<TD>--</TD><TD>--</TD><TD>--</TD>";
+										if(roleId == 1)
+											content +=	"<TD>未选课";
+									}else{
+										content += "<TD>"+pageBean.list[i].courses[0].name+"</TD>";
+										if(pageBean.list[i].courses[0].score != null){
+											content += "<TD>"+(pageBean.list[i].courses[0].score.score1==null?"--":pageBean.list[i].courses[0].score.score1)+"</TD>";
+											content += "<TD>"+(pageBean.list[i].courses[0].score.score2==null?"--":pageBean.list[i].courses[0].score.score2)+"</TD>";
+											content += "<TD>"+(pageBean.list[i].courses[0].score.score3==null?"--":pageBean.list[i].courses[0].score.score3)+"</TD>";
+											if(roleId == 1)
+												content +=	"<TD><a href='javascript:;' onclick=\"update('"+pageBean.list[i].id+"', '"+pageBean.list[i].courses[0].id+"', '"+pageBean.list[i].courses[0].name+"')\">修改</a>"
+										}else{
+											content += "<TD>--</TD><TD>--</TD><TD>--</TD>";
+											if(roleId == 1)
+											content +=	"<TD><a href='javascript:;' onclick=\"update('"+pageBean.list[i].id+"', '"+pageBean.list[i].courses[0].id+"', '"+pageBean.list[i].courses[0].name+"')\">录入</a>"
+										}
+									}
+								+"</TR>";
+						if(pageBean.list[i].courses != undefined){
+							for(var j = 1; j < pageBean.list[i].courses.length; ++j){
+								content += "<Tr style='FONT-WEIGHT: normal; FONT-STYLE: normal; BACKGROUND-COLOR: white; TEXT-DECORATION: none'>"
+										+ "<td>"+pageBean.list[i].courses[j].name+"</td>";
+										if(pageBean.list[i].courses[j].score != null){
+											content += "<TD>"+(pageBean.list[i].courses[j].score.score1==null?"--":pageBean.list[i].courses[j].score.score1)+"</TD>"
+													+  "<TD>"+(pageBean.list[i].courses[j].score.score2==null?"--":pageBean.list[i].courses[j].score.score2)+"</TD>"
+													+  "<TD>"+(pageBean.list[i].courses[j].score.score3==null?"--":pageBean.list[i].courses[j].score.score3)+"</TD>";
+											if(roleId == 1)
+												content +=	"<TD><a href='javascript:;' onclick=\"update('"+pageBean.list[i].id+"', '"+pageBean.list[i].courses[j].id+"', '"+pageBean.list[i].courses[j].name+"')\">修改</a>"
+										}else{
+											content += "<TD>--</TD><TD>--</TD><TD>--</TD>";
+											if(roleId == 1)
+												content +=	"<TD><a href='javascript:;' onclick=\"update('"+pageBean.list[i].id+"', '"+pageBean.list[i].courses[j].id+"', '"+pageBean.list[i].courses[j].name+"')\">录入</a>"
+										}
+								content += "</Tr>";
+							}
+						}
+					}
+					else{
+						if(pageBean.list[i].id == stid){
+							content += "<TR style='FONT-WEIGHT: normal; FONT-STYLE: normal; BACKGROUND-COLOR: white; TEXT-DECORATION: none'>"
 								+ "<TD "+(pageBean.list[i].courses == undefined ? ("rowspan=1"):("rowspan="+pageBean.list[i].courses.length))+"style=\"width: 76px;\"><input type=\"checkbox\" name=\"select\" value=\""+pageBean.list[i].id+"\"/></TD>"
 								+ "<TD "+(pageBean.list[i].courses == undefined ? ("rowspan=1"):("rowspan="+pageBean.list[i].courses.length))+">"+pageBean.list[i].id+"</TD>"
 								+ "<TD "+(pageBean.list[i].courses == undefined ? ("rowspan=1"):("rowspan="+pageBean.list[i].courses.length))+">"+pageBean.list[i].name+"</TD>"
@@ -70,6 +119,8 @@
 											content +=	"<TD><a href='javascript:;' onclick=\"update('"+pageBean.list[i].id+"', '"+pageBean.list[i].courses[j].id+"', '"+pageBean.list[i].courses[j].name+"')\">录入</a>"
 									}
 							content += "</Tr>";
+						}
+					}
 						}
 					}
 				}
