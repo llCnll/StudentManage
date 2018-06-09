@@ -30,7 +30,7 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	public PageBean<Student> studentList(Integer currentPage, Integer currentCount, Object... param) {
-
+		
 		//封装pageBean
 		PageBean<Student> pageBean = new PageBean<Student>();
 		//当前页数
@@ -45,6 +45,7 @@ public class StudentServiceImpl implements StudentService {
 		pageBean.setTotalPage(totalPage);
 		//数据
 		List<Student> list = sd.listGetSt((currentPage-1)*currentCount, currentCount, param);
+		
 		pageBean.setList(list);
 		
 		return pageBean;

@@ -139,7 +139,7 @@ public class CourseServlet extends BaseServlet {
 		}
 	}
 	
-	//添加班级
+	//添加课程
 	protected void add(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			Course co = new Course();
@@ -167,7 +167,7 @@ public class CourseServlet extends BaseServlet {
 		}
 	}
 	
-	//用户列表
+	//课程列表
 	protected void list(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		List<Object> paramList = new ArrayList<Object>();
@@ -202,6 +202,15 @@ public class CourseServlet extends BaseServlet {
 		response.setContentType("text/html; charset=UTF-8");
 		response.getWriter().write(json);
 	}
-	
+	//课程下拉框
+	protected void select(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		logger.info("-----正在获得课程下拉列表中----");
+		List<Course> list = cos.coursesSelectList();
+		logger.info("-----课程下拉列表获取成功----\n");
+		Gson gson = new Gson();
+		String json = gson.toJson(list);
+		response.setContentType("text/json; charset=UTF-8");
+		response.getWriter().write(json);
+	}
 	
 }

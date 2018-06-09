@@ -3,12 +3,11 @@ package service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import service.CourseService;
 import dao.CourseDao;
 import dao.impl.CourseDaoImpl;
 import domain.Course;
 import domain.PageBean;
-import domain.Student;
-import service.CourseService;
 
 public class CourseServiceImpl implements CourseService {
 	
@@ -77,6 +76,13 @@ public class CourseServiceImpl implements CourseService {
 		}
 		
 		return successId;
+	}
+
+	public List<Course> coursesSelectList() {
+		
+		List<Course> list = cod.list();
+		
+		return list;
 	}
 
 }

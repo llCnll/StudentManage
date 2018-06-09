@@ -12,8 +12,6 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import utils.DataSourceUtils;
-
-
 import dao.CourseDao;
 import dbtools.DB;
 import domain.Course;
@@ -290,6 +288,36 @@ public class CourseDaoImpl implements CourseDao {
 		}
 		
 		return course;
+	}
+
+	public List<Course> list() {
+		
+		String sql = "select * from course";
+		
+		Connection conn = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		List<Course> list = new ArrayList<Course>();
+		
+		try {
+			conn = DataSourceUtils.getConnection();
+			pst = conn.prepareStatement(sql);
+			//System.out.println(pst.toString().split(": ")[1]);
+			rs = pst.executeQuery();
+			logger.debug(sql);
+			while(rs.next()) {
+				Course c = new Course();
+				this.courseBean(rs, c);
+				list.add(c);
+			}
+			
+		} catch (SQLException e) {
+			logger.error(e.getMessage());
+		}finally{
+			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage());}
+		}
+		
+		return list.size()>0?list:null;
 	}
 
 }

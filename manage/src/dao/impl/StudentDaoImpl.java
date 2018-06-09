@@ -12,8 +12,6 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import utils.DataSourceUtils;
-
-
 import dao.ClassesDao;
 import dao.ScoreDao;
 import dao.StudentDao;
@@ -108,21 +106,26 @@ public class StudentDaoImpl implements StudentDao {
 	//获得非管理用户信息 分页 
 	public List<Student> listGetSt(Integer index, Integer currentCount, Object... param) {
 
-		String sql = "select * from student where ";
-		//[0]: id  [1]: name  [2]: classes
+		String sql = "select * from student s where ";
+		//[0]: id  [1]: courses [2]: name  [3]: classes
 		ArrayList<Object> paramlist = new ArrayList<Object>(Arrays.asList(param));
 		
 		if(param[0] != null && !("").equals(param[0])){
-			sql += "&& id = ?";
+			sql += "&& s.id = ?";
+			paramlist.remove(1);
 			paramlist.remove(1);
 			paramlist.remove(1);
 		}else{
-			if(param[1] != null && !("").equals(param[1])){
-				paramlist.set(1, "%"+paramlist.get(1)+"%");
-				sql += "&& name like ?";
+			if(param[1] != null && !("").equals(param[1]) && Integer.parseInt((String) param[1]) > 0){
+				sql = sql.substring(0, 24);
+				sql += ", score sc where s.id = sc.studentid && sc.courseId = ?";
 			}
-			if(param[2] != null && !("").equals(param[2]) && Integer.parseInt((String) param[2]) > 0){
-				sql += "&& classesId = ?";
+			if(param[2] != null && !("").equals(param[2])){
+				paramlist.set(2, "%"+paramlist.get(2)+"%");
+				sql += "&& s.name like ?";
+			}
+			if(param[3] != null && !("").equals(param[3]) && Integer.parseInt((String) param[3]) > 0){
+				sql += "&& s.classesId = ?";
 			}
 		}
 		paramlist.removeAll(Collections.singleton(""));
@@ -455,7 +458,7 @@ public class StudentDaoImpl implements StudentDao {
 	//获得所有学生数量 按条件
 	public int getCountGetSt(Object[] param) {
 		
-		String sql = "select count(id) from student where roleId = 0 ";
+		String sql = "select count(name) from student s where roleId = 0 ";
 		
 		//[0]: id  [1]: name  [2]: classes
 		ArrayList<Object> paramlist = new ArrayList<Object>(Arrays.asList(param));
@@ -464,13 +467,18 @@ public class StudentDaoImpl implements StudentDao {
 			sql += "&& id = ?";
 			paramlist.remove(1);
 			paramlist.remove(1);
+			paramlist.remove(1);
 		}else{
-			if(param[1] != null && !("").equals(param[1])){
-				paramlist.set(1, "%"+paramlist.get(1)+"%");
-				sql += "&& name like ?";
+			if(param[1] != null && !("").equals(param[1]) && Integer.parseInt((String) param[1]) > 0){
+				sql = sql.substring(0, 34);
+				sql += ", score sc where s.id = sc.studentid && sc.courseId = ? && s.roleId = 0 ";
 			}
-			if(param[2] != null && !("").equals(param[2]) && Integer.parseInt((String) param[2]) > 0){
-				sql += "&& classesId = ?";
+			if(param[2] != null && !("").equals(param[2])){
+				paramlist.set(2, "%"+paramlist.get(2)+"%");
+				sql += "&& s.name like ?";
+			}
+			if(param[3] != null && !("").equals(param[3]) && Integer.parseInt((String) param[3]) > 0){
+				sql += "&& s.classesId = ?";
 			}
 		}
 		paramlist.removeAll(Collections.singleton(""));
@@ -489,8 +497,9 @@ public class StudentDaoImpl implements StudentDao {
 			//System.out.println(pst.toString().split(": ")[1]);
 			DB.fillStatement(pst, param);
 			rs = pst.executeQuery();
+			logger.debug(sql);
 			if(rs.next()) {
-				count = rs.getInt("count(id)");
+				count = rs.getInt("count(name)");
 			}
 			
 		} catch (SQLException e) {

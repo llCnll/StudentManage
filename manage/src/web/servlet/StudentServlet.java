@@ -109,6 +109,7 @@ public class StudentServlet extends BaseServlet {
 		String id = request.getParameter("id");
 		String name = request.getParameter("name");
 		String classes = request.getParameter("classes");
+		String courses = request.getParameter("courses");
 		
 		String currentPageStr = request.getParameter("page");
 		String currentCountStr = request.getParameter("currentCount");
@@ -123,6 +124,7 @@ public class StudentServlet extends BaseServlet {
 		System.out.println("currentPage:"+currentPage+" currentCount:"+ currentCount);
 		
 		paramList.add(id);
+		paramList.add(courses);
 		paramList.add(name);
 		paramList.add(classes);
 		

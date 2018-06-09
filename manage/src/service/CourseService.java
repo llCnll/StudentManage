@@ -19,4 +19,6 @@ public interface CourseService {
 
 	List<String> courseAddBatch(List<Course> list);
 
+	List<Course> coursesSelectList();
+
 }

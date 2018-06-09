@@ -16,14 +16,15 @@
 		
 		checkId();
 		
-		var classes = <%=request.getParameter("classes")%>;
-		var roleId = ${student.roleId};
+		var classes = '${param.classes}';
+		var courses = '${param.courses}';
+		var roleId = '${student.roleId}';
 		//学生列表
 		$.ajax({
 			url:"${pageContext.request.contextPath}/student",
 			async:true,
 			type:"POST",
-			data:{"method":"selectCourseList","id":"${param.id}", "name":"${param.name}", "classes":"${param.classes}", "page":"${param.page}", "currentCount":"${param.currentCount}"},
+			data:{"method":"selectCourseList","id":"${param.id}", "name":"${param.name}", "classes":"${param.classes}", "courses":"${param.courses}", "page":"${param.page}", "currentCount":"${param.currentCount}"},
 			success:function(pageBean){
 				var content = "";
 				var stid = ${student.id};
@@ -168,6 +169,29 @@
 			},
 			dataType:"json"
 		});
+		//课程下拉框
+		$.ajax({
+			url:"${pageContext.request.contextPath}/course",
+			data:{"method":"select"},
+			async:true,
+			type:"POST",
+			success:function(list){
+				var content = "<option value='-1'>--------请选择--------</option>";
+				for(var i = 0; i < list.length; ++i){
+					if(courses == list[i].id){
+						content += "<option value='"+list[i].id+"' selected>"+list[i].name+"</option>";
+					}else{
+						content += "<option value='"+list[i].id+"'>"+list[i].name+"</option>";
+					}
+				}
+				$("#courses").text('');
+				$('#courses').html($('#courses').html()+content);
+			},
+			error:function(){
+				alert("课程列表请求失败");
+			},
+			dataType:"json"
+		});
 		//id 和 (姓名和班级)
 		function checkId(){
 			var id = $("#id").val();
@@ -176,9 +200,12 @@
 				$("#name").attr("disabled", true);
 				$("#classes").val("-1");
 				$("#classes").attr("disabled", true);
+				$("#courses").val("-1");
+				$("#courses").attr("disabled", true);
 			}else{
 				$("#name").attr("disabled", false);
 				$("#classes").attr("disabled", false);
+				$("#courses").attr("disabled", false);
 			}
 		}
 		$("#id").blur(function (){
@@ -269,6 +296,12 @@
 													<TD>班级：</TD>
 													<TD>
 													   <select name="classes" id="classes">
+													       <option value="-1">加载中...</option>
+													   </select>
+													</TD>
+													<TD>课程名：</TD>
+													<TD>
+													   <select name="courses" id="courses">
 													       <option value="-1">加载中...</option>
 													   </select>
 													</TD>
