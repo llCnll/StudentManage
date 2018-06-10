@@ -51,6 +51,16 @@ public class LoginFilter implements Filter {
         		chain.doFilter(request, response);
         		return ;
         	}
+        	//放行css下文件
+        	if(targetURL.startsWith("/css")){
+        		chain.doFilter(request, response);
+        		return ;
+        	}
+        	//放行js下文件
+        	if(targetURL.startsWith("/js")){
+        		chain.doFilter(request, response);
+        		return ;
+        	}
         	//放行signup true的情况
         	if(signup != null && signup.equals("true")){
         		chain.doFilter(request, response);
