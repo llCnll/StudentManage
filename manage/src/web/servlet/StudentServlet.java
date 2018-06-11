@@ -205,6 +205,11 @@ public class StudentServlet extends BaseServlet {
 			
 			if(flag){
 				logger.info("-----更改学生信息成功----\n");
+				
+				//如果操作的是个人信息, 需要更新session的值直接set
+				HttpSession session = request.getSession();
+				updateSession(session, st.getId());
+				
 				request.setAttribute("message", st.getId()+"修改成功!");
 				request.getRequestDispatcher("/jsp/customer/list.jsp").forward(request, response);
 			}else{

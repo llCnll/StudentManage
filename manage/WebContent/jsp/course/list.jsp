@@ -245,7 +245,7 @@
 													
 													<TD>课程ID：</TD>
 													<TD><INPUT class=textbox id=id
-														style="WIDTH: 80px" maxLength=50 name="cid" value="${param.id}"></TD>
+														style="WIDTH: 80px" maxLength=50 name="cid" value="${param.cid}"></TD>
 													<TD>课程名：</TD>
 													<TD><INPUT class=textbox id=name
 														style="WIDTH: 80px" maxLength=50 name="name" value="${param.name}"></TD>

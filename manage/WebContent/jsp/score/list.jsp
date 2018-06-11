@@ -24,7 +24,7 @@
 			url:"${pageContext.request.contextPath}/student",
 			async:true,
 			type:"POST",
-			data:{"method":"selectCourseList","id":"${param.id}", "name":"${param.name}", "classes":"${param.classes}", "courses":"${param.courses}", "page":"${param.page}", "currentCount":"${param.currentCount}"},
+			data:{"method":"selectCourseList"<c:if test="${student.roleId==1 }">,"id":"${param.id}", "name":"${param.name}", "classes":"${param.classes}", "courses":"${param.courses}", "page":"${param.page}", "currentCount":"${param.currentCount}"</c:if><c:if test="${student.roleId!=1 }">,"id":"${student.id }"</c:if>},
 			success:function(pageBean){
 				var content = "";
 				var stid = ${student.id};
@@ -287,26 +287,31 @@
 										<TABLE cellSpacing=0 cellPadding=2 border=0>
 											<TBODY>
 												<TR>
-													<TD>用户学号：</TD>
-													<TD><INPUT class=textbox id=id
-														style="WIDTH: 80px" maxLength=50 name="id" value="${param.id}"></TD>
-													<TD>用户姓名：</TD>
-													<TD><INPUT class=textbox id=name
-														style="WIDTH: 80px" maxLength=50 name="name" value="${param.name}"></TD>
-													<TD>班级：</TD>
-													<TD>
-													   <select name="classes" id="classes">
-													       <option value="-1">加载中...</option>
-													   </select>
-													</TD>
-													<TD>课程名：</TD>
-													<TD>
-													   <select name="courses" id="courses">
-													       <option value="-1">加载中...</option>
-													   </select>
-													</TD>
-													<TD><INPUT class=button id=sButton2 type=submit
-														value=" 筛选 " name=sButton2><span style="height: 18px;color: red;">${error }</span></TD>
+													<c:if test="${student.roleId == 1 }">
+														<TD>用户学号：</TD>
+														<TD><INPUT class=textbox id=id
+															style="WIDTH: 80px" maxLength=50 name="id" value="${param.id}"></TD>
+														<TD>用户姓名：</TD>
+														<TD><INPUT class=textbox id=name
+															style="WIDTH: 80px" maxLength=50 name="name" value="${param.name}"></TD>
+														<TD>班级：</TD>
+														<TD>
+														   <select name="classes" id="classes">
+														       <option value="-1">加载中...</option>
+														   </select>
+														</TD>
+														<TD>课程名：</TD>
+														<TD>
+														   <select name="courses" id="courses">
+														       <option value="-1">加载中...</option>
+														   </select>
+														</TD>
+														<TD><INPUT class=button id=sButton2 type=submit
+															value=" 筛选 " name=sButton2><span style="height: 18px;color: red;">${error }</span></TD>
+													</c:if>
+													<c:if test="${student.roleId != 1 }">
+														<input id=id name="id" value="${student.id }" type="hidden">
+													</c:if>
 												</TR>
 											</TBODY>
 										</TABLE>
@@ -339,7 +344,7 @@
 										</TABLE>
 									</TD>
 								</TR>
-								
+								<c:if test="${student.roleId == 1 }">
 								<TR>
 									<TD><SPAN id=pagelink>
 											<div style="LINE-HEIGHT: 20px; HEIGHT: 20px; TEXT-ALIGN: right">
@@ -360,6 +365,7 @@
 											</div>
 									</SPAN></TD>
 								</TR>
+								</c:if>
 							</TBODY>
 						</TABLE>
 					</TD>

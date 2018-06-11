@@ -22,7 +22,7 @@
 			url:"${pageContext.request.contextPath}/score",
 			async:true,
 			type:"POST",
-			data:{"method":"getGpa","id":"${param.id}", "name":"${param.name}", "classes":"${param.classes}", "page":"${param.page}", "currentCount":"${param.currentCount}"},
+			data:{"method":"getGpa"<c:if test="${student.roleId==1 }">,"id":"${param.id}", "name":"${param.name}", "classes":"${param.classes}", "page":"${param.page}", "currentCount":"${param.currentCount}"</c:if><c:if test="${student.roleId!=1 }">,"id":"${student.id }"</c:if>},
 			success:function(pageBean){
 				var content = "";
 				for(var i = 0; pageBean.list!=null && i < pageBean.list.length; ++i){
@@ -183,26 +183,31 @@
 										<TABLE cellSpacing=0 cellPadding=2 border=0>
 											<TBODY>
 												<TR>
-													<TD>用户学号：</TD>
-													<TD><INPUT class=textbox id=id
-														style="WIDTH: 80px" maxLength=50 name="id" value="${param.id}"></TD>
-													<TD>用户姓名：</TD>
-													<TD><INPUT class=textbox id=name
-														style="WIDTH: 80px" maxLength=50 name="name" value="${param.name}"></TD>
-													<TD>班级：</TD>
-													<TD>
-													   <select name="classes" id="classes">
-													       <option value="-1">加载中...</option>
-													   </select>
-													</TD>
-													<TD><INPUT class=button id=sButton2 type=submit
-														value=" 筛选 " name=sButton2>
-														&nbsp;&nbsp;
-														<c:if test="${student.roleId==1 }">
-															<INPUT class=button id=export type=button
-															value=" 打印当前条件下的学生 " name=sButton2>
-														</c:if>
-														<span style="height: 18px;color: red;">${error }${message }</span></TD>
+													<c:if test="${student.roleId == 1 }">
+														<TD>用户学号：</TD>
+														<TD><INPUT class=textbox id=id
+															style="WIDTH: 80px" maxLength=50 name="id" value="${param.id}"></TD>
+														<TD>用户姓名：</TD>
+														<TD><INPUT class=textbox id=name
+															style="WIDTH: 80px" maxLength=50 name="name" value="${param.name}"></TD>
+														<TD>班级：</TD>
+														<TD>
+														   <select name="classes" id="classes">
+														       <option value="-1">加载中...</option>
+														   </select>
+														</TD>
+														<TD><INPUT class=button id=sButton2 type=submit
+															value=" 筛选 " name=sButton2>
+															&nbsp;&nbsp;
+															<c:if test="${student.roleId==1 }">
+																<INPUT class=button id=export type=button
+																value=" 打印当前条件下的学生 " name=sButton2>
+															</c:if>
+															<span style="height: 18px;color: red;">${error }${message }</span></TD>
+													</c:if>
+													<c:if test="${student.roleId != 1 }">
+														<input id=id name="id" value="${student.id }" type="hidden">
+													</c:if>
 												</TR>
 											</TBODY>
 										</TABLE>
@@ -230,7 +235,7 @@
 										</TABLE>
 									</TD>
 								</TR>
-								
+								<c:if test="${student.roleId == 1 }">
 								<TR>
 									<TD><SPAN id=pagelink>
 											<div style="LINE-HEIGHT: 20px; HEIGHT: 20px; TEXT-ALIGN: right">
@@ -252,6 +257,7 @@
 											</div>
 									</SPAN></TD>
 								</TR>
+								</c:if>
 							</TBODY>
 						</TABLE>
 					</TD>
