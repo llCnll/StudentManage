@@ -10,4 +10,8 @@ public interface LogDao {
 
 	List<Log> list(int i, Integer currentCount, Object... param);
 
+	boolean logDel(String id);
+
+	boolean del(Object[] param);
+
 }

@@ -33,4 +33,19 @@ public class LogServiceImpl implements LogService {
 		return pageBean;
 	}
 
+	public boolean logDel(String id) {
+		
+		boolean flag = ld.logDel(id);
+		
+		return flag;
+	}
+
+	public boolean del(Object[] param) {
+		
+		boolean flag = ld.del(param);
+		
+		return flag;
+		
+	}
+
 }

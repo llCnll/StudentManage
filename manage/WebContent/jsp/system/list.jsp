@@ -59,7 +59,7 @@
 			 		});
 			 		
 			 		$.ajax({
-						url:"${pageContext.request.contextPath}/classes",
+						url:"${pageContext.request.contextPath}/log",
 						data:{"method":"delBactch", "ids":ids},
 						async:true,
 						type:"POST",

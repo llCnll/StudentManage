@@ -139,5 +139,77 @@ public class LogDaoImpl implements LogDao {
 		return list.size()>0?list:null;
 	}
 
+	public boolean logDel(String id) {
+		String sql = "delete from log where id = ?"; 
+		Connection conn = null;
+		PreparedStatement pst = null;
+		int row = 0;
+		try {
+			conn = DataSourceUtils.getConnection();
+			pst = conn.prepareStatement(sql);
+			
+			DB.fillStatement(pst, id);
+			//System.out.println(pst.toString().split(": ")[1]);
+			row = pst.executeUpdate();
+			logger.debug(sql);
+		} catch (SQLException e) {
+			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
+		}finally{
+			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
+		}
+		
+		return row > 0? true: false;
+	}
+
+	public boolean del(Object[] param) {
+
+		String sql = "delete from log where "; 
+		
+		//[0]: stid  [1]: loglevel  [2]: createtime
+		ArrayList<Object> paramlist = new ArrayList<Object>(Arrays.asList(param));
+		if(param[0] != null && !("").equals(param[0])){
+			sql += "&& stid = ?";
+		}
+		if(param[1] != null && !("").equals(param[1]) &&!("-1").equals(param[1])){
+			sql += "&& loglevel like ?";
+		}
+		if(param[2] != null && !("").equals(param[2])){
+			paramlist.set(2, "%"+paramlist.get(2)+"%");
+			sql += "&& createtime like ?";
+		}
+		paramlist.removeAll(Collections.singleton(""));
+		paramlist.removeAll(Collections.singleton(null));
+		paramlist.removeAll(Collections.singleton("-1"));
+		
+		//判断 where 和 where &&
+		if(sql.contains("where &&")){
+			sql = sql.replaceAll("where &&", "where");
+		}
+		if(sql.endsWith("where ")){
+			sql = sql.replaceAll("where ", "");
+		}
+		param = paramlist.toArray();
+		
+		Connection conn = null;
+		PreparedStatement pst = null;
+		int row = 0;
+		try {
+			conn = DataSourceUtils.getConnection();
+			pst = conn.prepareStatement(sql);
+			
+			DB.fillStatement(pst, param);
+			//System.out.println(pst.toString().split(": ")[1]);
+			row = pst.executeUpdate();
+			logger.debug(sql);
+		} catch (SQLException e) {
+			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
+		}finally{
+			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
+		}
+		
+		return row > 0? true: false;
+		
+	}
+
 
 }

@@ -46,6 +46,30 @@
 			     $subBox.click(function(){
 			    	 $("#checkAll").prop("checked" , $subBox.length == $subBox.filter(":checked").length ? true :false);
 			     });
+			     
+			     $('#delBnt').click(function(){
+				 		var ids ="";
+				 		$("input[name='select']:checkbox:checked").each(function(){ 
+				 			ids+=$(this).val()+",";
+				 		});
+				 		
+				 		$.ajax({
+							url:"${pageContext.request.contextPath}/log",
+							data:{"method":"delBactch", "ids":ids},
+							async:true,
+							type:"POST",
+							success:function(message){
+								alert(message.message);
+								window.location.reload();
+							},
+							error:function(){
+								alert("删除请求失败");
+								window.location.reload();
+							},
+							dataType:"json"
+						});
+				 		
+				 	});
 			},
 			error:function(){
 				alert("日志加载失败");
@@ -54,6 +78,22 @@
 		});
 		$('#currentCount').change(function(){
 			document.logForm.submit();
+		});
+		$('#delAll').click(function(){
+			$.ajax({
+				url:"${pageContext.request.contextPath}/log",
+				async:true,
+				type:"POST",
+				data:{"method":"del","stid":"${param.stid}", "loglevel":"${param.loglevel}", "createtime":"${param.createtime}"},
+				success:function(message){
+					alert(message.message);
+					window.location.reload();
+				},
+				error:function(){
+					alert("日志清空失败");
+				},
+				dataType:"json"
+			});
 		});
 	});
 	
@@ -78,6 +118,7 @@
 		}
 		document.logForm.submit();
 	}
+	
 </SCRIPT>
 
 <META content="MSHTML 6.00.2900.3492" name=GENERATOR>
@@ -136,7 +177,8 @@
 													   </select>
 													</TD>
 													<TD><INPUT class=button id=sButton2 type=submit
-														value=" 筛选 " name=sButton2><span style="height: 18px;color: red;">${error }</span></TD>
+														value=" 筛选 " name=sButton2><span style="height: 18px;color: red;">${error }${message }</span></TD>
+													<TD style="width:250px;"><input type="button" class=button id=delAll style="float:right;" value="清空当前条件下日志"></TD>
 												</TR>
 											</TBODY>
 										</TABLE>
@@ -152,9 +194,7 @@
 												<TR
 													style="FONT-WEIGHT: bold; FONT-STYLE: normal; BACKGROUND-COLOR: #eeeeee; TEXT-DECORATION: none">
 													<TD style="width:76px">
-													<%-- <c:if test="${student.roleId==1 }">
 														<input type="button" id="delBnt" value="批量删除">
-													</c:if> --%>
 														<input type="checkbox" id="checkAll" name="checkAll">
 													</TD>
 													<TD>时间</TD>

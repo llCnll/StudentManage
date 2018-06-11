@@ -11,9 +11,9 @@ public class Log4jTest {
 	@Test
 	public void fun1(){
 		MDC.put("stid", "16422010");
-		logger.debug("测试");
+		//logger.debug("测试");
 		logger.error("测试");
-		logger.info("测试");
+		//logger.info("测试");
 	}
 
 }
