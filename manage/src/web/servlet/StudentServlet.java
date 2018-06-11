@@ -104,8 +104,6 @@ public class StudentServlet extends BaseServlet {
 		//1.获得该页的用户信息
 		List<Object> paramList = new ArrayList<Object>();
 		
-		request.setCharacterEncoding("UTF-8");
-		
 		String id = request.getParameter("id");
 		String name = request.getParameter("name");
 		String classes = request.getParameter("classes");
@@ -315,8 +313,6 @@ public class StudentServlet extends BaseServlet {
 	protected void list(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		List<Object> paramList = new ArrayList<Object>();
-		
-		request.setCharacterEncoding("UTF-8");
 		
 		String id = request.getParameter("id");
 		String name = request.getParameter("name");

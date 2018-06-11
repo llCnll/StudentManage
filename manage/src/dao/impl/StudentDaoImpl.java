@@ -460,7 +460,7 @@ public class StudentDaoImpl implements StudentDao {
 		
 		String sql = "select count(name) from student s where roleId = 0 ";
 		
-		//[0]: id  [1]: name  [2]: classes
+		//[0]: id  [1]: courses [2]: name  [3]: classes
 		ArrayList<Object> paramlist = new ArrayList<Object>(Arrays.asList(param));
 		
 		if(param[0] != null && !("").equals(param[0])){

@@ -64,7 +64,7 @@ class MyRequest extends HttpServletRequestWrapper {
 			// get请求
 			Map<String, String[]> parameterMap = request.getParameterMap();
 			if (!hasEncode) { // 确保get手动编码逻辑只运行一次
-				for (String parameterName : parameterMap.keySet()) {
+				/*for (String parameterName : parameterMap.keySet()) {
 					String[] values = parameterMap.get(parameterName);
 					if (values != null) {
 						for (int i = 0; i < values.length; i++) {
@@ -76,7 +76,7 @@ class MyRequest extends HttpServletRequestWrapper {
 							}
 						}
 					}
-				}
+				}*/
 				hasEncode = true;
 			}
 			return parameterMap;

@@ -169,8 +169,6 @@ public class ClassesServlet extends BaseServlet {
 		
 		List<Object> paramList = new ArrayList<Object>();
 		
-		request.setCharacterEncoding("UTF-8");
-		
 		String name = request.getParameter("name");
 		String grade = request.getParameter("grade");
 		String major = request.getParameter("major");

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.junit.Test;
 
 import utils.DataSourceUtils;
 @SuppressWarnings("all")
@@ -20,7 +21,6 @@ public class BaseServlet extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
 
 		try {
-			request.setCharacterEncoding("utf-8");
 			
 			String methodName = request.getParameter("method");
 			Class clazz = this.getClass();
@@ -32,9 +32,10 @@ public class BaseServlet extends HttpServlet {
 			DataSourceUtils.closeConnection();
 			
 		} catch (Exception e) {
+			System.out.println(e.getMessage());
 			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		} 
 	
 	}
-
+	
 }

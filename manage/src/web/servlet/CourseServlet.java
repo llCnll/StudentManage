@@ -147,7 +147,6 @@ public class CourseServlet extends BaseServlet {
 		try {
 			Course co = new Course();
 			BeanUtils.populate(co, request.getParameterMap());
-			co.setId(Integer.parseInt(request.getParameter("cid")));
 			logger.info("-----正在添加课程信息中----");
 			
 			boolean flag = cos.courseAdd(co);
@@ -174,8 +173,6 @@ public class CourseServlet extends BaseServlet {
 	protected void list(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		List<Object> paramList = new ArrayList<Object>();
-		
-		request.setCharacterEncoding("UTF-8");
 		
 		String cid = request.getParameter("cid");
 		String name = request.getParameter("name");

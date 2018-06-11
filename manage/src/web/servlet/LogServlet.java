@@ -27,7 +27,6 @@ public class LogServlet extends BaseServlet {
 	protected void del(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		List<Object> paramList = new ArrayList<Object>();
-		request.setCharacterEncoding("UTF-8");
 		String stid = request.getParameter("stid");
 		String loglevel = request.getParameter("loglevel");
 		String createtime = request.getParameter("createtime");
@@ -78,8 +77,6 @@ public class LogServlet extends BaseServlet {
 		
 		//1.获得该页的用户信息
 		List<Object> paramList = new ArrayList<Object>();
-		
-		request.setCharacterEncoding("UTF-8");
 		
 		String stid = request.getParameter("stid");
 		String loglevel = request.getParameter("loglevel");

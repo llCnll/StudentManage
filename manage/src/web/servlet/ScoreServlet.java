@@ -75,8 +75,6 @@ public class ScoreServlet extends BaseServlet{
     //打印绩点
     protected void exportGpa(HttpServletRequest request, HttpServletResponse response) throws Exception {
     	
-    	
-    	request.setCharacterEncoding("UTF-8");
     	//获得要下载的文件名
     	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
     	String fileName = "gpa"+format.format(new Date())+".csv";
@@ -136,11 +134,10 @@ public class ScoreServlet extends BaseServlet{
     	
     	List<Object> paramList = new ArrayList<Object>();
 		
-		request.setCharacterEncoding("UTF-8");
-		
 		String id = request.getParameter("id");
 		String name = request.getParameter("name");
 		String classes = request.getParameter("classes");
+		String courses = request.getParameter("courses");//尽管没有, 为了通用
 		
 		String currentPageStr = request.getParameter("page");
 		String currentCountStr = request.getParameter("currentCount");
@@ -155,6 +152,7 @@ public class ScoreServlet extends BaseServlet{
 		System.out.println("currentPage:"+currentPage+" currentCount:"+ currentCount);
 		
 		paramList.add(id);
+		paramList.add(courses);
 		paramList.add(name);
 		paramList.add(classes);
 		
