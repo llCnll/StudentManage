@@ -30,15 +30,17 @@ public class CourseServlet extends BaseServlet {
 		String idStr = request.getParameter("ids");
 		String[] ids = idStr.split(",");
 		StringBuffer sb = new StringBuffer();
+		logger.info("-----正在批量删除课程中----");
 		for(String id: ids){
-			logger.info("-----正在删除课程中----");
 			boolean flag = cos.courseDel(id);
 			if(flag){
-				logger.info("-----删除课程成功----\n");
+				logger.info("-----"+id+"删除课程成功----");
 			}else{
+				logger.info("-----"+id+"删除课程失败----");
 				sb.append(id+"删除失败!");
 			}
 		}
+		logger.info("-----批量删除课程完成----\n");
 		if("".equals(sb.toString())){
 			sb.append("删除成功!");
 		}
@@ -83,14 +85,14 @@ public class CourseServlet extends BaseServlet {
 	//删除课程
 	protected void del(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String id = request.getParameter("id");
-		logger.info("-----正在删除课程中----");
+		logger.info("-----"+id+"正在删除课程中----");
 		boolean flag = cos.courseDel(id);
 		if(flag){
-			logger.info("-----删除课程成功----\n");
+			logger.info("-----"+id+"删除课程成功----\n");
 			response.sendRedirect(request.getContextPath()+"/jsp/course/list.jsp");
 		}else{
 			request.setAttribute("error", "删除失败!");
-			logger.info("-----删除课程失败----\n");
+			logger.info("-----"+id+"删除课程失败----\n");
 			request.getRequestDispatcher("/jsp/course/list.jsp").forward(request, response);
 		}
 	}
@@ -101,24 +103,22 @@ public class CourseServlet extends BaseServlet {
 			Course co = new Course();
 			BeanUtils.populate(co, request.getParameterMap());
 			
-			logger.info("-----正在更改课程信息中----");
+			logger.info("-----"+co.getId()+"正在更改课程信息中----");
 			boolean flag = cos.courseEditSubmit(co);
 			
 			if(flag){
-				logger.info("-----更改课程信息成功----\n");
+				logger.info("-----"+co.getId()+"更改课程信息成功----\n");
 				request.setAttribute("message", co.getName()+"更改成功!");
 				request.getRequestDispatcher("/jsp/course/list.jsp").forward(request, response);
 			}else{
 				request.setAttribute("error", "更改失败!");
-				logger.info("-----更改课程信息失败----\n");
+				logger.info("-----"+co.getId()+"更改课程信息失败----\n");
 				request.getRequestDispatcher("/jsp/course/edit.jsp").forward(request, response);
 			}
 			
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
 			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
 			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}
 	}
@@ -126,18 +126,18 @@ public class CourseServlet extends BaseServlet {
 	//查询修改的课程
 	protected void edit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String id = request.getParameter("id");
-		logger.info("-----正在查找课程中----");
+		logger.info("-----"+id+"正在查找课程中----");
 		Course co = cos.courseEdit(id);
 		
 		if(co != null){
 			Gson gson = new Gson();
 			String json = gson.toJson(co);
-			logger.info("-----查找课程成功----\n");
+			logger.info("-----"+co.getId()+"查找课程成功----\n");
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(json);
 		}else{
 			request.setAttribute("checkError", "课程查找失败!");
-			logger.info("-----查找课程失败----\n");
+			logger.info("-----"+id+"查找课程失败----\n");
 			request.getRequestDispatcher("/jsp/course/add.jsp").forward(request, response);
 		}
 	}
@@ -147,17 +147,17 @@ public class CourseServlet extends BaseServlet {
 		try {
 			Course co = new Course();
 			BeanUtils.populate(co, request.getParameterMap());
-			logger.info("-----正在添加课程信息中----");
+			logger.info("-----"+co.getId()+"正在添加课程信息中----");
 			
 			boolean flag = cos.courseAdd(co);
 			
 			if(flag){
-				logger.info("-----添加课程信息成功----\n");
+				logger.info("-----"+co.getId()+"添加课程信息成功----\n");
 				request.setAttribute("message", co.getName()+"添加成功!");
 				request.getRequestDispatcher("/jsp/course/list.jsp").forward(request, response);
 			}else{
 				request.setAttribute("error", "添加失败!");
-				logger.info("-----添加课程信息失败----\n");
+				logger.info("-----"+co.getId()+"添加课程信息失败----\n");
 				request.getRequestDispatcher("/jsp/course/add.jsp").forward(request, response);
 			}
 		} catch (IllegalAccessException e) {

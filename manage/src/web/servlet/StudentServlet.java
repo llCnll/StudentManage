@@ -35,12 +35,12 @@ public class StudentServlet extends BaseServlet {
 		
 		String id = request.getParameter("id");
 		
-		logger.info("-----查询学生中----");
+		logger.info("-----"+id+"查询学生中----");
 		Student st = ss.studentEdit(id);
 		
 		if(st != null){
 			request.setAttribute("selectStudent", st);
-			logger.info("-----查询学生成功----\n");
+			logger.info("-----"+st.getId()+"查询学生成功----\n");
 			String choose = request.getParameter("goto");
 			if("score".equals(choose)){
 				request.getRequestDispatcher("jsp/score/edit.jsp").forward(request, response);
@@ -49,6 +49,7 @@ public class StudentServlet extends BaseServlet {
 			}
 		}else{
 			;//若不存在
+			logger.info("-----"+id+"查询学生失败----\n");
 		}
 		
 	}
@@ -59,15 +60,15 @@ public class StudentServlet extends BaseServlet {
 		String cid = request.getParameter("cid");
 		String stid = request.getParameter("stid");
 		
-		logger.info("-----学生退课中----");
+		logger.info("-----"+stid+"学生退课中"+cid+"----");
 		boolean flag = ss.delSelectCourse(stid, cid);
 		
 		response.setContentType("application/json; charset=utf-8");
 		if(flag){
-			logger.info("-----学生退课成功----\n");
+			logger.info("-----"+stid+"学生退课成功"+cid+"----\n");
 			response.getWriter().write("{\"message\":"+"\"退课成功!\"}");
 		}else{
-			logger.info("-----学生退课失败----\n");
+			logger.info("-----"+stid+"学生退课失败"+cid+"----\n");
 			response.getWriter().write("{\"message\":"+"\"退课失败!\"}");
 		}
 		//如果操作的是个人信息, 需要更新session的值直接set
@@ -81,16 +82,16 @@ public class StudentServlet extends BaseServlet {
 		String stid = request.getParameter("stid");
 		String cid = request.getParameter("cid");
 		
-		logger.info("-----学生选课中----\n");
+		logger.info("-----"+stid+"学生选课中"+cid+"----\n");
 		
 		boolean flag = ss.addSelectCourse(stid, cid);
 		
 		response.setContentType("application/json; charset=utf-8");
 		if(flag){
-			logger.info("-----学生选课成功----\n");
+			logger.info("-----"+stid+"学生选课成功"+cid+"----\n");
 			response.getWriter().write("{\"message\":"+"\"选课成功!\"}");
 		}else{
-			logger.info("-----学生选课失败, 查看学分是否已选满15分----\n");
+			logger.info("-----"+stid+"学生选课失败"+cid+", 查看学分是否已选满15分----\n");
 			response.getWriter().write("{\"message\":"+"\"选课失败, 查看学分是否已选满15分或者其他原因!\"}");
 		}
 		
@@ -143,18 +144,20 @@ public class StudentServlet extends BaseServlet {
 		String idStr = request.getParameter("ids");
 		String[] ids = idStr.split(",");
 		StringBuffer sb = new StringBuffer();
+		logger.info("-----正在批量删除学生中----");
 		for(String id: ids){
-			logger.info("-----正在删除学生中----");
 			boolean flag = ss.studentDel(id);
 			if(flag){
-				logger.info("-----删除学生成功----\n");
+				logger.info("-----"+id+"删除学生成功----");
 			}else{
+				logger.info("-----"+id+"删除学生失败----");
 				sb.append(id+"删除失败!");
 			}
 		}
 		if("".equals(sb.toString())){
 			sb.append("删除成功!");
 		}
+		logger.info("-----批量删除学生完成----\n");
 		String message = sb.toString();
 		response.setCharacterEncoding("utf-8");
 		response.getWriter().write("{\"message\":"+"\""+message+"\"}");
@@ -200,11 +203,11 @@ public class StudentServlet extends BaseServlet {
 			classes.setId(Integer.parseInt(request.getParameter("classesId")));
 			st.setClasses(classes);
 			
-			logger.info("-----正在更改学生信息中----");
+			logger.info("-----"+st.getId()+"正在更改学生信息中----");
 			boolean flag = ss.studentEditSubmit(st);
 			
 			if(flag){
-				logger.info("-----更改学生信息成功----\n");
+				logger.info("-----"+st.getId()+"更改学生信息成功----\n");
 				
 				//如果操作的是个人信息, 需要更新session的值直接set
 				HttpSession session = request.getSession();
@@ -214,7 +217,7 @@ public class StudentServlet extends BaseServlet {
 				request.getRequestDispatcher("/jsp/customer/list.jsp").forward(request, response);
 			}else{
 				request.setAttribute("error", "更改失败!");
-				logger.info("-----更改学生信息失败----\n");
+				logger.info("-----"+st.getId()+"更改学生信息失败----\n");
 				request.getRequestDispatcher("/jsp/customer/edit.jsp").forward(request, response);
 			}
 			
@@ -229,18 +232,18 @@ public class StudentServlet extends BaseServlet {
 	//查询修改的用户
 	protected void edit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String id = request.getParameter("id");
-		logger.info("-----正在查找学生中----");
+		logger.info("-----"+id+"正在查找学生中----");
 		Student st = ss.studentEdit(id);
 		
 		if(st != null){
 			Gson gson = new Gson();
 			String json = gson.toJson(st);
-			logger.info("-----查找学生成功----\n");
+			logger.info("-----"+st.getId()+"查找学生成功----\n");
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(json);
 		}else{
 			request.setAttribute("error", "用户查找失败!");
-			logger.info("-----查找学生失败----\n");
+			logger.info("-----"+id+"查找学生失败----\n");
 			request.getRequestDispatcher("/jsp/customer/add.jsp").forward(request, response);
 		}
 	}
@@ -253,14 +256,14 @@ public class StudentServlet extends BaseServlet {
 				classes.setId(Integer.parseInt(request.getParameter("classesId")));
 				st.setClasses(classes);
 				MDC.put("stid", st.getId());
-				logger.info("-----正在注册学生信息中----");
+				logger.info("-----"+st.getId()+"正在注册学生信息中----");
 				boolean flag = ss.studentAdd(st);
 				String message = "";
 				if(flag){
-					logger.info("-----注册学生信息成功----\n");
+					logger.info("-----"+st.getId()+"注册学生信息成功----\n");
 					message = "注册成功";
 				}else{
-					logger.info("-----注册学生信息失败----\n");
+					logger.info("-----"+st.getId()+"注册学生信息失败----\n");
 					message = "注册失败";
 				}
 				response.setContentType("applicaion/json;charset=utf-8");
@@ -278,34 +281,32 @@ public class StudentServlet extends BaseServlet {
 			classes.setId(Integer.parseInt(request.getParameter("classesId")));
 			st.setClasses(classes);
 			
-			logger.info("-----正在添加学生信息中----");
+			logger.info("-----"+st.getId()+"正在添加学生信息中----");
 			boolean flag = ss.studentAdd(st);
 			
 			if(flag){
-				logger.info("-----添加学生信息成功----\n");
+				logger.info("-----"+st.getId()+"添加学生信息成功----\n");
 				request.setAttribute("message", st.getId()+"添加成功!");
 				request.getRequestDispatcher("/jsp/customer/list.jsp").forward(request, response);
 			}else{
 				request.setAttribute("error", "添加失败!");
-				logger.info("-----添加学生信息失败----\n");
+				logger.info("-----"+st.getId()+"添加学生信息失败----\n");
 				request.getRequestDispatcher("/jsp/customer/add.jsp").forward(request, response);
 			}
 			
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
 			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
 			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}
 	}
 	//删除用户
 	protected void del(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String id = request.getParameter("id");
-		logger.info("-----正在删除学生中----");
+		logger.info("-----"+id+"正在删除学生中----");
 		boolean flag = ss.studentDel(id);
 		if(flag){
-			logger.info("-----删除学生成功----\n");
+			logger.info("-----"+id+"删除学生成功----\n");
 			request.setAttribute("message", id+"删除成功!");
 			request.getRequestDispatcher("/jsp/customer/list.jsp").forward(request, response);;
 		}else{

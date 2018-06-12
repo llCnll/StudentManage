@@ -57,15 +57,17 @@ public class ClassesServlet extends BaseServlet {
 		String idStr = request.getParameter("ids");
 		String[] ids = idStr.split(",");
 		StringBuffer sb = new StringBuffer();
+		logger.info("-----正在批量删除班级中----");
 		for(String id: ids){
-			logger.info("-----正在删除班级中----");
 			boolean flag = cs.classesDel(id);
 			if(flag){
-				logger.info("-----删除班级成功----\n");
+				logger.info("-----"+id+"删除班级成功----");
 			}else{
+				logger.info("-----"+id+"删除班级失败----");
 				sb.append(id+"删除失败!");
 			}
 		}
+		logger.info("-----批量删除班级完成----\n");
 		if("".equals(sb.toString())){
 			sb.append("删除成功!");
 		}
@@ -80,16 +82,16 @@ public class ClassesServlet extends BaseServlet {
 			Classes cl = new Classes();
 			BeanUtils.populate(cl, request.getParameterMap());
 			
-			logger.info("-----正在更改学生信息中----");
+			logger.info("-----正在更改班级信息中----");
 			boolean flag = cs.classesEditSubmit(cl);
 			
 			if(flag){
-				logger.info("-----更改班级信息成功----\n");
+				logger.info("-----"+cl.getName()+"更改班级信息成功----\n");
 				request.setAttribute("message", cl.getName()+"更改成功!");
 				request.getRequestDispatcher("/jsp/system/list.jsp").forward(request, response);;
 			}else{
 				request.setAttribute("error", "更改失败!");
-				logger.info("-----更改班级信息失败----\n");
+				logger.info("-----"+cl.getName()+"更改班级信息失败----\n");
 				request.getRequestDispatcher("/jsp/system/edit.jsp").forward(request, response);
 			}
 			
@@ -105,18 +107,18 @@ public class ClassesServlet extends BaseServlet {
 	//查询修改的班级
 	protected void edit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String id = request.getParameter("id");
-		logger.info("-----正在查找班级中----");
+		logger.info("-----"+id+"正在查找班级中----");
 		Classes cl = cs.classesEdit(id);
 		
 		if(cl != null){
 			Gson gson = new Gson();
 			String json = gson.toJson(cl);
-			logger.info("-----查找班级成功----\n");
+			logger.info("-----"+cl.getName()+"查找班级成功----\n");
 			response.setCharacterEncoding("UTF-8");
 			response.getWriter().write(json);
 		}else{
 			request.setAttribute("error", "班级查找失败!");
-			logger.info("-----查找班级失败----\n");
+			logger.info("-----"+id+"查找班级失败----\n");
 			request.getRequestDispatcher("/jsp/system/add.jsp").forward(request, response);
 		}
 	}
@@ -124,15 +126,15 @@ public class ClassesServlet extends BaseServlet {
 	//删除班级
 	protected void del(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String id = request.getParameter("id");
-		logger.info("-----正在删除班级中----");
+		logger.info("-----"+id+"正在删除班级中----");
 		boolean flag = cs.classesDel(id);
 		if(flag){
-			logger.info("-----删除班级成功----\n");
+			logger.info("-----"+id+"删除班级成功----\n");
 			request.setAttribute("message", "删除成功!");
 			request.getRequestDispatcher("/jsp/system/list.jsp").forward(request, response);
 		}else{
 			request.setAttribute("error", "删除失败!");
-			logger.info("-----删除班级失败----\n");
+			logger.info("-----"+id+"删除班级失败----\n");
 			request.getRequestDispatcher("/jsp/system/list.jsp").forward(request, response);
 		}
 	}
@@ -142,24 +144,22 @@ public class ClassesServlet extends BaseServlet {
 		try {
 			Classes cl = new Classes();
 			BeanUtils.populate(cl, request.getParameterMap());
-			logger.info("-----正在添加班级信息中----");
+			logger.info("-----"+cl.getName()+"正在添加班级信息中----");
 			
 			boolean flag = cs.classesAdd(cl);
 			
 			if(flag){
-				logger.info("-----添加班级信息成功----\n");
+				logger.info("-----"+cl.getName()+"添加班级信息成功----\n");
 				request.setAttribute("error", cl.getName()+"添加成功!");
 				request.getRequestDispatcher("/jsp/system/list.jsp").forward(request, response);
 			}else{
 				request.setAttribute("error", "添加失败!");
-				logger.info("-----添加班级信息失败----\n");
+				logger.info("-----"+cl.getName()+"添加班级信息失败----\n");
 				request.getRequestDispatcher("/jsp/system/add.jsp").forward(request, response);
 			}
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
 			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
 			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}
 	}

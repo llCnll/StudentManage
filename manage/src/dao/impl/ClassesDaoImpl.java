@@ -50,7 +50,7 @@ public class ClassesDaoImpl implements ClassesDao {
 			}
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
+			logger.error("获得班级信息byId: "+e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
 			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
@@ -81,7 +81,7 @@ public class ClassesDaoImpl implements ClassesDao {
 			}
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
+			logger.error("班级列表: "+e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
 			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
@@ -111,7 +111,7 @@ public class ClassesDaoImpl implements ClassesDao {
 			}
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
+			logger.error("获得班级信息byName: "+e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
 			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
@@ -138,7 +138,7 @@ public class ClassesDaoImpl implements ClassesDao {
 			}
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
+			logger.error("班级数量: "+e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
 			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
@@ -195,7 +195,7 @@ public class ClassesDaoImpl implements ClassesDao {
 			}
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
+			logger.error("班级数量按条件: "+e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
 			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
@@ -256,7 +256,7 @@ public class ClassesDaoImpl implements ClassesDao {
 			}
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
+			logger.error("班级列表按条件: "+e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
 			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
@@ -282,7 +282,7 @@ public class ClassesDaoImpl implements ClassesDao {
 			}
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
+			logger.error("班级年级下拉框: "+e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
 			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
@@ -309,7 +309,7 @@ public class ClassesDaoImpl implements ClassesDao {
 			}
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
+			logger.error("班级专业下拉框: "+e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
 			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
@@ -317,7 +317,7 @@ public class ClassesDaoImpl implements ClassesDao {
 		return list;
 	}
 
-	public boolean studentAdd(Classes cl) {
+	public boolean classesAdd(Classes cl) {
 		
 		String sql = "insert into classes values(null,?,?,?)";
 		Connection conn = null;
@@ -333,7 +333,7 @@ public class ClassesDaoImpl implements ClassesDao {
 			row = pst.executeUpdate();
 			logger.debug(sql);
 		} catch (SQLException e) {
-			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
+			logger.error("班级添加: "+e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
 			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
@@ -355,7 +355,7 @@ public class ClassesDaoImpl implements ClassesDao {
 			row = pst.executeUpdate();
 			logger.debug(sql);
 		} catch (SQLException e) {
-			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
+			logger.error("删除班级: "+e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
 			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
@@ -363,7 +363,7 @@ public class ClassesDaoImpl implements ClassesDao {
 		return row > 0? true: false;
 	}
 
-	public Classes studentEdit(String id) {
+	public Classes classesEdit(String id) {
 		
 		String sql = "select * from classes where id = ?";
 		Connection conn = null;
@@ -384,7 +384,7 @@ public class ClassesDaoImpl implements ClassesDao {
 			}
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
+			logger.error("获得班级信息byId: "+e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
 			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
@@ -392,7 +392,7 @@ public class ClassesDaoImpl implements ClassesDao {
 		return cl;
 	}
 
-	public boolean studentEditSubmit(Classes cl) {
+	public boolean classesEditSubmit(Classes cl) {
 		
 		String sql = "update classes set name = ?, grade = ?, major = ? where id = ?";
 		Connection conn = null;
@@ -408,7 +408,7 @@ public class ClassesDaoImpl implements ClassesDao {
 			row = pst.executeUpdate();
 			logger.debug(sql);
 		} catch (SQLException e) {
-			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
+			logger.error("修改班级信息: "+e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
 			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}

@@ -32,7 +32,6 @@ public class BaseServlet extends HttpServlet {
 			DataSourceUtils.closeConnection();
 			
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
 			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		} 
 	

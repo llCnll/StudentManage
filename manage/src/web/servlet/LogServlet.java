@@ -59,15 +59,16 @@ public class LogServlet extends BaseServlet {
 		for(String id: ids){
 			boolean flag = ls.logDel(id);
 			if(flag){
-				logger.info("-----删除日志成功----\n");
+				logger.info("-----"+id+"删除日志成功----\n");
 			}else{
+				logger.info("-----"+id+"删除日志失败----\n");
 				sb.append(id+"删除失败!");
 			}
 		}
 		if("".equals(sb.toString())){
 			sb.append("删除成功!");
 		}
-		logger.info("-----批量删除日志完成----");
+		logger.info("-----批量删除日志完成----\n");
 		String message = sb.toString();
 		response.setCharacterEncoding("utf-8");
 		response.getWriter().write("{\"message\":"+"\""+message+"\"}");

@@ -22,12 +22,12 @@ public interface ClassesDao {
 
 	List<String> classesMajorSelect();
 
-	boolean studentAdd(Classes cl);
+	boolean classesAdd(Classes cl);
 
 	boolean classesDel(String id);
 
-	Classes studentEdit(String id);
+	Classes classesEdit(String id);
 
-	boolean studentEditSubmit(Classes cl);
+	boolean classesEditSubmit(Classes cl);
 
 }

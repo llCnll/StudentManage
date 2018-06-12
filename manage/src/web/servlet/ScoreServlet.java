@@ -227,16 +227,16 @@ public class ScoreServlet extends BaseServlet{
 		c.setScore(sc);
 		st.setCourses(new ArrayList<Course>());
 		st.getCourses().add(c);
-		logger.info("-----正在录入学生成绩中----");
+		logger.info("-----"+st.getId()+"正在录入学生成绩中----");
 		boolean flag = scs.saveScore(st);
 		
 		if(flag){
-			logger.info("-----录入学生成绩成功----\n");
+			logger.info("-----"+st.getId()+"录入学生成绩成功----\n");
 			request.setAttribute("message", "录入成绩成功!");
 			request.getRequestDispatcher("/jsp/score/list.jsp").forward(request, response);;
 		}else{
 			request.setAttribute("error", "录入成绩失败!");
-			logger.info("-----录入学生成绩失败----\n");
+			logger.info("-----"+st.getId()+"录入学生成绩失败----\n");
 			request.getRequestDispatcher("/jsp/score/edit.jsp").forward(request, response);
 		}
 	}

@@ -71,7 +71,7 @@ public class StudentDaoImpl implements StudentDao {
 			}
 			
 		} catch (Exception e) {
-			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
+			logger.error("用户登陆: "+e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
 			try {
 				DataSourceUtils.closeAll(pst, rs);
@@ -168,7 +168,7 @@ public class StudentDaoImpl implements StudentDao {
 			}
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
+			logger.error("获得非管理用户信息 分页: "+e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
 			try {
 				DataSourceUtils.closeAll(pst, rs);
@@ -236,7 +236,7 @@ public class StudentDaoImpl implements StudentDao {
 			}
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
+			logger.error("所有用户信息: "+e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
 			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
@@ -260,7 +260,7 @@ public class StudentDaoImpl implements StudentDao {
 			logger.debug(sql);
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
+			logger.error("添加用户: "+e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
 			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
@@ -283,7 +283,7 @@ public class StudentDaoImpl implements StudentDao {
 			row = pst.executeUpdate();
 			logger.debug(sql);
 		} catch (SQLException e) {
-			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
+			logger.error("删除用户: "+e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
 			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
@@ -312,7 +312,7 @@ public class StudentDaoImpl implements StudentDao {
 			}
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
+			logger.error("获得用户信息byId: "+e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
 			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
@@ -336,7 +336,7 @@ public class StudentDaoImpl implements StudentDao {
 			row = pst.executeUpdate();
 			logger.debug(sql);
 		} catch (SQLException e) {
-			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
+			logger.error("修改用户信息: "+e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
 			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
@@ -363,7 +363,7 @@ public class StudentDaoImpl implements StudentDao {
 			}
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
+			logger.error("获得所有用户数量: "+e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
 			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
@@ -421,7 +421,7 @@ public class StudentDaoImpl implements StudentDao {
 			}
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
+			logger.error("所有用户数量: "+e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
 			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
@@ -448,7 +448,7 @@ public class StudentDaoImpl implements StudentDao {
 			}
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
+			logger.error("获得所有学生数量: "+e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
 			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
@@ -503,7 +503,7 @@ public class StudentDaoImpl implements StudentDao {
 			}
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
+			logger.error("获得所有学生数量 按条件: "+e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
 			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
@@ -565,7 +565,7 @@ public class StudentDaoImpl implements StudentDao {
 			}
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
+			logger.error("所有学生信息:"+e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
 			try {
 				DataSourceUtils.closeAll(pst, rs);

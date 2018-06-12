@@ -55,7 +55,7 @@ public class ScoreDaoImpl implements ScoreDao {
 			}
 			
 		} catch (Exception e) {
-			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
+			logger.error("获得学生成绩byStidCid: "+e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
 			try {
 				DataSourceUtils.closeAll(pst, rs);
@@ -83,7 +83,7 @@ public class ScoreDaoImpl implements ScoreDao {
 			row = pst.executeUpdate();
 			logger.debug(sql);
 		} catch (SQLException e) {
-			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
+			logger.error("学生成绩保存: "+e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
 			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
@@ -107,7 +107,7 @@ public class ScoreDaoImpl implements ScoreDao {
 			row = pst.executeUpdate();
 			logger.debug(sql);
 		} catch (SQLException e) {
-			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
+			logger.error("学生选课添加: "+e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
 			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
@@ -130,7 +130,7 @@ public class ScoreDaoImpl implements ScoreDao {
 			row = pst.executeUpdate();
 			logger.debug(sql);
 		} catch (SQLException e) {
-			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
+			logger.error("学生退选: "+e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
 			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
@@ -165,7 +165,7 @@ public class ScoreDaoImpl implements ScoreDao {
 			}
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
+			logger.error("获得学生成绩byStid: "+e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
 			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}

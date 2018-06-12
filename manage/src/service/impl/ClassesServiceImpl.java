@@ -60,7 +60,7 @@ public class ClassesServiceImpl implements ClassesSerivce {
 
 	public boolean classesAdd(Classes cl) {
 		
-		boolean flag = cd.studentAdd(cl);
+		boolean flag = cd.classesAdd(cl);
 		
 		return flag;
 	}
@@ -74,14 +74,14 @@ public class ClassesServiceImpl implements ClassesSerivce {
 
 	public Classes classesEdit(String id) {
 		
-		Classes cl = cd.studentEdit(id);
+		Classes cl = cd.classesEdit(id);
 		
 		return cl;
 	}
 
 	public boolean classesEditSubmit(Classes cl) {
 		
-		boolean flag = cd.studentEditSubmit(cl);
+		boolean flag = cd.classesEditSubmit(cl);
 		
 		return flag;
 	}

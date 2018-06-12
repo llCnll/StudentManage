@@ -47,7 +47,7 @@ public class CourseDaoImpl implements CourseDao {
 			}
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
+			logger.error("课程数量: "+e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
 			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
@@ -98,7 +98,7 @@ public class CourseDaoImpl implements CourseDao {
 			}
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
+			logger.error("课程数量按条件: "+e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
 			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
@@ -156,7 +156,7 @@ public class CourseDaoImpl implements CourseDao {
 			}
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
+			logger.error("课程列表按条件: "+e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
 			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
@@ -180,7 +180,7 @@ public class CourseDaoImpl implements CourseDao {
 			row = pst.executeUpdate();
 			logger.debug(sql);
 		} catch (SQLException e) {
-			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
+			logger.error("课程添加: "+e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
 			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
@@ -209,7 +209,7 @@ public class CourseDaoImpl implements CourseDao {
 			}
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
+			logger.error("获得课程信息byId: "+e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
 			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
@@ -232,7 +232,7 @@ public class CourseDaoImpl implements CourseDao {
 			row = pst.executeUpdate();
 			logger.debug(sql);
 		} catch (SQLException e) {
-			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
+			logger.error("修改课程信息: "+e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
 			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
@@ -254,7 +254,7 @@ public class CourseDaoImpl implements CourseDao {
 			row = pst.executeUpdate();
 			logger.debug(sql);
 		} catch (SQLException e) {
-			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
+			logger.error("课程删除: "+e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
 			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}

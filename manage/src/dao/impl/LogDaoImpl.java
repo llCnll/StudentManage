@@ -75,7 +75,7 @@ public class LogDaoImpl implements LogDao {
 			}
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
+			logger.error("日志数量按条件: "+e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
 			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
@@ -131,7 +131,7 @@ public class LogDaoImpl implements LogDao {
 			}
 			
 		} catch (SQLException e) {
-			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
+			logger.error("日志数量按条件: "+e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
 			try {DataSourceUtils.closeAll(pst, rs);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
@@ -153,7 +153,7 @@ public class LogDaoImpl implements LogDao {
 			row = pst.executeUpdate();
 			logger.debug(sql);
 		} catch (SQLException e) {
-			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
+			logger.error("日志删除byId: "+e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
 			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
@@ -202,7 +202,7 @@ public class LogDaoImpl implements LogDao {
 			row = pst.executeUpdate();
 			logger.debug(sql);
 		} catch (SQLException e) {
-			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
+			logger.error("日志删除按条件: "+e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}finally{
 			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
 		}
