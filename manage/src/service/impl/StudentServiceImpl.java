@@ -78,6 +78,12 @@ public class StudentServiceImpl implements StudentService {
 		return flag;
 	}
 
+	public boolean studentDelBack(String id) {
+		
+		boolean flag = sd.studentDelBack(id);
+		
+		return flag;
+	}
 	public boolean studentDel(String id) {
 
 		boolean flag = sd.studentDel(id);

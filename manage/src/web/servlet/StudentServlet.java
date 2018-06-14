@@ -300,6 +300,21 @@ public class StudentServlet extends BaseServlet {
 			logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));
 		}
 	}
+	//激活删除用户
+	protected void delBack(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String id = request.getParameter("id");
+		logger.info("-----"+id+"正在激活被删除学生中----");
+		boolean flag = ss.studentDelBack(id);
+		if(flag){
+			logger.info("-----"+id+"激活被删除学生成功----\n");
+			request.setAttribute("message", id+"激活成功!");
+			request.getRequestDispatcher("/jsp/customer/list.jsp").forward(request, response);;
+		}else{
+			request.setAttribute("error", id+"激活失败!");
+			logger.info("-----"+id+"激活失败----\n");
+			request.getRequestDispatcher("/jsp/customer/list.jsp").forward(request, response);
+		}
+	}
 	//删除用户
 	protected void del(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String id = request.getParameter("id");

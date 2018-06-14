@@ -268,10 +268,33 @@ public class StudentDaoImpl implements StudentDao {
 		
 		return row > 0? true: false;
 	}
+	//激活删除用户
+	public boolean studentDelBack(String id) {
+		
+		String sql = "update student set flag = 1 where id = ?"; 
+		Connection conn = null;
+		PreparedStatement pst = null;
+		int row = 0;
+		try {
+			conn = DataSourceUtils.getConnection();
+			pst = conn.prepareStatement(sql);
+			
+			DB.fillStatement(pst, id);
+			//System.out.println(pst.toString().split(": ")[1]);
+			row = pst.executeUpdate();
+			logger.debug(sql);
+		} catch (SQLException e) {
+			logger.error("删除用户: "+e.getMessage().replaceAll("'", "\\\\\\\'"));
+		}finally{
+			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
+		}
+		
+		return row > 0? true: false;
+	}
 	//删除用户
 	public boolean studentDel(String id) {
 
-		String sql = "delete from student where id = ?"; 
+		String sql = "update student set flag = 0 where id = ?"; 
 		Connection conn = null;
 		PreparedStatement pst = null;
 		int row = 0;

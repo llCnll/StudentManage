@@ -39,15 +39,21 @@
 								+ "<TD>"+(pageBean.list[i].roleId == 0?"普通用户":"管理员")+"</TD>"
 								+ "<TD>"
 								/* +"<a href='${pageContext.request.contextPath}/jsp/customer/edit.jsp?id="+pageBean.list[i].id+"'>修改</a>" */
-								+"${student.roleId==1?"<a href=\'myRoleEditAddress\'>修改</a>":"judgeUpdate"}"
+								+"${student.roleId==1?"<a href='myRoleEditAddress'>修改</a>":"judgeUpdate"}"
 								+"&nbsp;&nbsp;"
 								/* +"<a href='${pageContext.request.contextPath}/student?id="+pageBean.list[i].id+"&method=del'>删除</a>" */
-								+"${student.roleId==1?"<a href=\'myRoleDelAddress\'>删除</a>":""}"
+								+"${student.roleId==1?"<a href='myRoleDelAddress'>myRoleDelMess</a>":""}"
 								+"</TD>"
 							+"</TR>";
 						pageBean.list[i].id == stid?content = content.replace("judgeUpdate", "<a href=\'myRoleEditAddress\'>修改</a>"):content = content.replace("judgeUpdate","");
 						content = content.replace('myRoleEditAddress',"${pageContext.request.contextPath}/jsp/customer/edit.jsp?id="+pageBean.list[i].id);
-						content = content.replace('myRoleDelAddress',"${pageContext.request.contextPath}/student?id="+pageBean.list[i].id+"&method=del");
+						if(pageBean.list[i].flag == 1){
+							content = content.replace('myRoleDelAddress',"${pageContext.request.contextPath}/student?id="+pageBean.list[i].id+"&method=del");
+							content = content.replace('myRoleDelMess',"注销");
+						}else{
+							content = content.replace('myRoleDelAddress',"${pageContext.request.contextPath}/student?id="+pageBean.list[i].id+"&method=delBack");
+							content = content.replace('myRoleDelMess',"激活");
+						}
 				}
 				$('#grid').html($('#grid').html()+content);
 				$("#totalCount").text(pageBean.totalCount);
