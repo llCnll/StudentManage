@@ -11,6 +11,13 @@
 	rel=stylesheet>
 
 <script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery-1.7.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery.validate.min.js"></script>
+
+<style type="text/css">
+.error{
+	color:red;
+}
+</style>
 <script type="text/javascript">
 	
 	$(function(){
@@ -53,7 +60,55 @@
 			dataType:"json"
 		});
 		
-	})
+		$('#form1').validate({
+			rules:{
+				"id":{
+					"required":true,
+					"rangelength":[8,8]
+				},
+				"name":{
+					"required":true
+				},
+				"pwd":{
+					"required":true
+				},
+				"repwd":{
+					"required":true,
+					"equalTo":"#pwd"
+				},
+				"classesId":{
+					"min":0
+				},
+				"roleId":{
+					"min":0
+				}
+			},
+			messages:{
+				"id":{
+					"required":"请输入学号",
+					"rangelength":"学号为8位"
+				},
+				"name":{
+					"required":"请输入名称",
+				},
+				"pwd":{
+					"required":"请输入密码",
+				},
+				"repwd":{
+					"required":"请输入确认密码",
+					"equalTo":"两次密码不一致"
+				},
+				"classesId":{
+					"min":"请选择班级"
+				},
+				"roleId":{
+					"min":"请选择权限"
+				}
+			}
+			
+		});
+		
+	});
 	
 </script>
 

@@ -12,6 +12,13 @@
 <script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath }/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath }/js/xlsx.full.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery.validate.min.js"></script>
+<style type="text/css">
+.error{
+	color:red;
+}
+</style>
+
 <script type="text/javascript">
 
 	var wb;//��ȡ��ɵ�����
@@ -126,6 +133,54 @@
 	    	
 	    });
 		
+		$('#form1').validate({
+			rules:{
+				"id":{
+					"required":true,
+					"rangelength":[8,8]
+				},
+				"name":{
+					"required":true
+				},
+				"pwd":{
+					"required":true
+				},
+				"repwd":{
+					"required":true,
+					"equalTo":"#pwd"
+				},
+				"classesId":{
+					"min":0
+				},
+				"roleId":{
+					"min":0
+				}
+			},
+			messages:{
+				"id":{
+					"required":"请输入学号",
+					"rangelength":"学号为8位"
+				},
+				"name":{
+					"required":"请输入名称",
+				},
+				"pwd":{
+					"required":"请输入密码",
+				},
+				"repwd":{
+					"required":"请输入确认密码",
+					"equalTo":"两次密码不一致"
+				},
+				"classesId":{
+					"min":"请选择班级"
+				},
+				"roleId":{
+					"min":"请选择权限"
+				}
+			}
+			
+		});
+		
 	});
     
 </script>
@@ -174,13 +229,14 @@
 								<input class=textbox id="id"
 														style="width: 180px" maxlength=50 name="id" value="${param.id }">
 								</td>
+							</tr>
+							<tr>
 								<td>用户名称 ：</td>
 								<td>
 								<input class=textbox id="name"
 														style="width: 180px" maxlength=50 name="name" value="${param.name }">
 								</td>
 							</tr>
-							
 							<tr>
 								
 								<td>用户密码 ：</td>
@@ -188,13 +244,14 @@
 								<input class=textbox id="pwd"
 														style="width: 180px" maxlength=50 name="pwd" value="${param.pwd }">
 								</td>
+							</tr>
+							<tr>
 								<td>确认密码：</td>
 								<td>
-								<input class=textbox id="repwd"
+								<input class=textbox id="repwd" name="repwd"
 														style="width: 180px" maxlength=50 value="${param.pwd }">
 								</td>
 							</tr>
-							
 							<tr>
 								
 								
@@ -205,6 +262,8 @@
 									<option value="-1">加载中...</option>
 								 </select>
 								</td>
+							</tr>
+							<tr>
 								<td>用户权限 ：</td>
 								<td>
 								<select class=textbox id="st_roleId"
@@ -213,8 +272,7 @@
 									<option value="0">普通用户</option>
 									<option value="1">管理员</option>
 								</select>
-							</tr>
-							
+							</td>
 							<tr>
 								<td rowspan=2>
 								<input class=button id=save type=submit

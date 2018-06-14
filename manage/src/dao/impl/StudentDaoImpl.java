@@ -247,7 +247,7 @@ public class StudentDaoImpl implements StudentDao {
 	//添加用户
 	public boolean studentAdd(Student st) {
 
-		String sql = "insert into student values(?,?,?,?,?)";
+		String sql = "insert into student values(?,?,?,?,?,'1')";
 		Connection conn = null;
 		PreparedStatement pst = null;
 		int row = 0;

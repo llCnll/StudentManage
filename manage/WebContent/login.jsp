@@ -17,58 +17,91 @@ td {
 	color: #ffffff;
 	font-family: 宋体
 }
+.error{
+	color:red;
+}
 </style>
 <LINK href="${pageContext.request.contextPath }/css/bootstrap.min.css" type=text/css rel=stylesheet>
 <LINK href="${pageContext.request.contextPath }/css/Style.css" type=text/css rel=stylesheet>
 <LINK href="${pageContext.request.contextPath }/css/Manage.css" type=text/css rel=stylesheet>
 <script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath }/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery.validate.min.js"></script>
 
 <script type="text/javascript">
 
 $(function(){
 	$('#signupButton').click(function(){
-    	$.ajax({
-    		url:"${pageContext.request.contextPath }/student",
-    		type:"post",
-    		data:$('#signupForm').serialize(),
-    		success:function(mess){
-				alert(mess.message);
-    		},
-			error:function(){
-				alert("注册请求失败");
-			},
-    		datatype:"json"
-    	});
+		if(valContent()){
+	    	$.ajax({
+	    		url:"${pageContext.request.contextPath }/student",
+	    		type:"post",
+	    		data:$('#signupForm').serialize(),
+	    		success:function(mess){
+					alert(mess.message);
+	    		},
+				error:function(){
+					alert("注册请求失败");
+				},
+	    		datatype:"json"
+	    	});
+		}
     });
+	
+	$('#loginForm').validate({
+		rules:{
+			"id":{
+				"required":true
+			},
+			"pwd":{
+				"required":true
+			}
+		}
+	});
+	
 });
-	
-	function check(){
-		return checkId()&&checkPwd();
-	}
-	
-	function checkId(){
-		var id = $("#id").val();
-		
-		var error = $("#idError");
-		if(id==""){
-			error.css("visibility", "visible");
-			return false;
-		}
-		error.css("visibility", "hidden");
-		return true;
-	}
-	function checkPwd(){
-		
-		var pwd = $("#pwd").val();
-		var error =  $("#pwdError");
-		
-		if(pwd==""){
-			error.css("visibility", "visible");
-			return false;
-		}
-		error.css("visibility", "hidden");
-		return true;
+	function valContent(){
+		return $('#signupForm').validate({
+			rules:{
+				"id":{
+					"required":true,
+					"rangelength":[8,8]
+				},
+				"name":{
+					"required":true
+				},
+				"pwd":{
+					"required":true
+				},
+				"repwd":{
+					"required":true,
+					"equalTo":"#rpwd"
+				},
+				"classesId":{
+					"min":0
+				}
+			},
+			messages:{
+				"id":{
+					"required":"请输入学号",
+					"rangelength":"学号为8位"
+				},
+				"name":{
+					"required":"请输入名称",
+				},
+				"pwd":{
+					"required":"请输入密码",
+				},
+				"repwd":{
+					"required":"请输入确认密码",
+					"equalTo":"两次密码不一致"
+				},
+				"classesId":{
+					"min":"不能为0"
+				}
+			}
+			
+		}).form();
 	}
 	function selectClassesFunction(){
 		//班级下拉框
@@ -101,7 +134,7 @@ $(function(){
 </head>
 <body style="    BACKGROUND-COLOR: #ffffff;">
 
-	<form action="${pageContext.request.contextPath }/student" onsubmit="return check();" method="post">
+	<form action="${pageContext.request.contextPath }/student"  method="post" id="loginForm">
 		<input type="hidden" name="method" value="login"/>
 		<div>&nbsp;&nbsp;</div>
 		<div>
@@ -126,18 +159,17 @@ $(function(){
 													<tr>
 														<td style="height: 28px" width=100>登 录 号：</td>
 														<td style="height: 28px" width=150>
-															<input id="id" type="text" style="width: 130px; color:black;" name="id" onblur="checkId()" value="${param.id }"></td>
+															<input id="id" type="text" style="width: 130px; color:black;" name="id" value="${param.id }"></td>
 														<td style="height: 28px" width=370>
-															<span id="idError"
-															style="font-weight: bold; visibility: hidden; color: white" >请输入登录号</span></td>
+															<label for="id" class="error" style="font-weight: bold; color: white;display:none;">请输入登陆号</label></td>
 													</tr>
 													<tr>
 														<td style="height: 28px">登录密码：</td>
 														<td style="height: 28px">
 															<input id="pwd" style="width: 130px; color:black;" type="password" name="pwd" ></td>
 														<td style="height: 28px">
-															<span id="pwdError"
-															style="font-weight: bold; visibility: hidden; color: white">请输入密码</span></td>
+															<label for="pwd" class="error" style="font-weight: bold; color: white;display:none;">请输入密码</label></td>
+															
 													</tr>
 													<tr>
 														<td style="height: 18px;color: red;" colspan="2">${error }</td>
@@ -195,6 +227,9 @@ $(function(){
 								<input class=textbox id="id"
 														style="width: 180px" maxlength=50 name="id">
 								</td>
+															
+							</tr>
+							<tr>
 								<td style="color:black;">用户名称 ：</td>
 								<td>
 								<input class=textbox id="name"
@@ -206,18 +241,18 @@ $(function(){
 								
 								<td style="color:black;">用户密码 ：</td>
 								<td>
-								<input class=textbox id="pwd"
+								<input class=textbox id="rpwd"
 														style="width: 180px" maxlength=50 name="pwd">
 								</td>
+							</tr>
+							<tr>
 								<td style="color:black;">确认密码：</td>
 								<td>
 								<input class=textbox id="repwd"
 														style="width: 180px" maxlength=50 name="repwd">
 								</td>
 							</tr>
-							
 							<tr>
-								
 								
 								<td style="color:black;">用户班级 ：</td>
 								<td>
@@ -225,9 +260,6 @@ $(function(){
 														style="width: 180px; height: 24px;" name="classesId">
 									<option value="-1">加载中...</option>
 								 </select>
-								</td>
-								<td> </td>
-								<td>
 								<input type="hidden" name="roleId" value="0">
 								</td>
 							</tr>

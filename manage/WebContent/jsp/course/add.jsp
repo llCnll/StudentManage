@@ -12,6 +12,12 @@
 <script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath }/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath }/js/xlsx.full.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery.validate.min.js"></script>
+<style type="text/css">
+.error{
+	color:red;
+}
+</style>
 <script type="text/javascript">
 
 	var wb;//��ȡ��ɵ�����
@@ -107,6 +113,44 @@
 	    	});
 	    	
 	    });
+		
+		$('#form1').validate({
+			rules:{
+				"id":{
+					"required":true,
+				},
+				"name":{
+					"required":true
+				},
+				"credithour":{
+					"required":true
+				},
+				"classhour":{
+					"required":true,
+				},
+				"practicehour":{
+					"required":true
+				}
+			},
+			messages:{
+				"id":{
+					"required":"请输入课程ID",
+				},
+				"name":{
+					"required":"请输入课程名",
+				},
+				"credithour":{
+					"required":"请输入学分",
+				},
+				"classhour":{
+					"required":"请输入讲授学时",
+				},
+				"practicehour":{
+					"required":"请输入实验学时",
+				}
+			}
+			
+		});
 		
 	});
     

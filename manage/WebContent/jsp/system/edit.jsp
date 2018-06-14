@@ -11,6 +11,12 @@
 	rel=stylesheet>
 
 <script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery-1.7.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery.validate.min.js"></script>
+<style type="text/css">
+.error{
+	color:red;
+}
+</style>
 <script type="text/javascript">
 	
 	$(function(){
@@ -50,6 +56,32 @@
 			},
 			dataType:"json"
 		}); */
+		
+		$('#form1').validate({
+			rules:{
+				"name":{
+					"required":true
+				},
+				"grade":{
+					"required":true
+				},
+				"major":{
+					"required":true,
+				}
+			},
+			messages:{
+				"name":{
+					"required":"请输入班级名称",
+				},
+				"grade":{
+					"required":"请输入班级年级",
+				},
+				"major":{
+					"required":"请输入班级专业",
+				}
+			}
+			
+		});
 		
 	})
 	
