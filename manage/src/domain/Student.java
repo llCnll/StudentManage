@@ -2,16 +2,16 @@ package domain;
 
 import java.util.List;
 
-/*create table
-CREATE TABLE `student` (
-   `id` varchar(8) NOT NULL COMMENT '学号',
-   `name` varchar(20) NOT NULL COMMENT '姓名',
-   `pwd` varchar(20) NOT NULL COMMENT '密码',
-   `classesId` int(11) unsigned NOT NULL COMMENT '班级Id',
-   `roleId` int(4) unsigned NOT NULL default '0' COMMENT '0-一般用户 1-管理员',
-   PRIMARY KEY  (`id`),
-   KEY `FK_student` (`classesId`),
-   CONSTRAINT `FK_student` FOREIGN KEY (`classesId`) REFERENCES `classes` (`id`)
+/*
+create table
+CREATE TABLE `course` (
+   `id` varchar(10) NOT NULL COMMENT '课程id',
+   `name` varchar(30) default NULL COMMENT '课程名',
+   `credithour` float default NULL COMMENT '学分',
+   `classhour` int(11) default NULL COMMENT '讲授学时',
+   `practicehour` int(11) default NULL COMMENT '实验学时',
+   `remark` text COMMENT '备注',
+   PRIMARY KEY  (`id`)
  ) ENGINE=InnoDB DEFAULT CHARSET=utf8*/
 public class Student {
 	
@@ -22,6 +22,8 @@ public class Student {
 	private Integer roleId;
 	
 	private Float gpa;
+	
+	private Integer flag;
 	
 	private List<Course> courses;
 	
@@ -55,7 +57,6 @@ public class Student {
 	public void setRoleId(int roleId) {
 		this.roleId = roleId;
 	}
-	
 	public List<Course> getCourses() {
 		return courses;
 	}
@@ -67,6 +68,12 @@ public class Student {
 	}
 	public void setGpa(Float gpa) {
 		this.gpa = gpa;
+	}
+	public Integer getFlag() {
+		return flag;
+	}
+	public void setFlag(Integer flag) {
+		this.flag = flag;
 	}
 	@Override
 	public String toString() {

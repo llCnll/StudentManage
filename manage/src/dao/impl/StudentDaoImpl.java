@@ -34,6 +34,7 @@ public class StudentDaoImpl implements StudentDao {
 		Classes classes = cd.getClassesByCid(rs.getString("classesId"));
 		st.setClasses(classes);
 		st.setRoleId(rs.getInt("roleId"));
+		st.setFlag(rs.getInt("flag"));
 		
 		//封装选课信息
 		List<Course> courses = scd.stduentCourse(st.getId());

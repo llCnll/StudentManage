@@ -369,9 +369,16 @@ public class StudentServlet extends BaseServlet {
 		logger.info("-----正在登录中-----");
 		Student st = ss.login(id, pwd);
 		if(st != null){
-			session.setAttribute("student", st);
-			logger.info("-----登录成功-----\n");
-			response.sendRedirect(request.getContextPath()+"/index.jsp");
+			if(st.getFlag() == 1){
+				session.setAttribute("student", st);
+				logger.info("-----登录成功-----\n");
+				response.sendRedirect(request.getContextPath()+"/index.jsp");
+			}else{
+				request.setAttribute("error", "用户已被注销, 请联系管理员激活!");
+				logger.info("-----登录失败(用户已被注销)-----\n");
+				request.getRequestDispatcher("/login.jsp").forward(request, response);
+				
+			}
 		}else{
 			request.setAttribute("error", "登陆失败用户或密码错误!");
 			logger.info("-----登录失败-----\n");
