@@ -12,6 +12,7 @@
 <LINK href="${pageContext.request.contextPath }/css/Manage.css" type=text/css
 	rel=stylesheet>
 <script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery-1.7.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath }/js/common.js"></script>
 <SCRIPT language=javascript>
 
 	$(function (){
@@ -182,22 +183,7 @@
 	
 	function to_page(page){
 
-		if(page){//通过上一页下一页执行
-			$("#page").val(page);
-			if(1*page >= 1*$('#totalPage').text()){
-				$("#page").val($('#totalPage').text());
-			}else if(1*page <= 1){
-				$("#page").val(1);
-			}
-		}else{
-			var toPage = $('#page').val();
-			
-			if(1*toPage > 1*$('#totalPage').text()){
-				$("#page").val($('#totalPage').text());
-			}else if(1*toPage < 1){
-				$("#page").val(1);
-			}
-		}
+		judgePage(page);
 		document.courseForm.submit();
 	}
 </SCRIPT>
