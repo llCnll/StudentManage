@@ -82,6 +82,8 @@
 				$("#currentPage_pre").attr("href", "javascript:to_page("+(pageBean.currentPage-1)+")");
 				$("#currentPage").text(pageBean.currentPage);
 				$("#currentPage_aft").attr("href", "javascript:to_page("+(pageBean.currentPage+1)+")");
+				$("#firstPage").attr("href", "javascript:to_page(1)");
+				$("#lastPage").attr("href", "javascript:to_page("+(pageBean.totalPage)+")");
 				
 				$("#checkAll").click(function() {
 			         $('input[name="select"]').prop("checked",this.checked); 
@@ -219,7 +221,7 @@
 													   </select>
 													</TD>
 													<TD><INPUT class=button id=sButton2 type=submit
-														value=" 筛选 " name=sButton2><span style="height: 18px;color: red;">${error }</span></TD>
+														value=" 筛选 " name=sButton2><span style="height: 18px;color: red;">${error }${message }</span></TD>
 												</c:if>
 												<c:if test="${student.roleId != 1 }">
 													<input id=id name="id" value="${student.id }" type="hidden">
@@ -262,10 +264,11 @@
 													<option value="10">10</option>
 												</select>
 												条
-												
+												[<A id="firstPage" href="">首页</A>]
 												[<A id="currentPage_pre" href="javascript:to_page(${currentPage-1})">前一页</A>]
 												<B id="currentPage"></B><!-- 初始化域id=page一致, 所以当前页数传page的值 -->
 												[<A id="currentPage_aft"href="javascript:to_page(${currentPage+1})">后一页</A>] 
+												[<A id="lastPage" href="">尾页</A>] 
 												到
 												<input type="text" size="3" id="page" name="page" />
 												页
