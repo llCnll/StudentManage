@@ -17,6 +17,7 @@ import org.junit.Test;
 
 import service.StudentService;
 import service.impl.StudentServiceImpl;
+import utils.MD5Utils;
 
 import com.google.gson.Gson;
 
@@ -277,6 +278,8 @@ public class StudentServlet extends BaseServlet {
 		try {
 			Student st = new Student();
 			BeanUtils.populate(st, request.getParameterMap());
+			//加密密码
+			st.setPwd(MD5Utils.md5(st.getPwd()));
 			Classes classes = new Classes();
 			classes.setId(Integer.parseInt(request.getParameter("classesId")));
 			st.setClasses(classes);
@@ -382,7 +385,7 @@ public class StudentServlet extends BaseServlet {
 		String npwd = request.getParameter("npwd");
 		
 		logger.info("-----"+id+"正在修改学生密码中----");
-		boolean flag = ss.studenteditPwd(id, opwd, npwd);
+		boolean flag = ss.studenteditPwd(id, opwd==null?null:MD5Utils.md5(opwd), MD5Utils.md5(npwd));
 		
 		if(flag){
 			logger.info("-----"+id+"删除学生密码成功----\n");
@@ -403,7 +406,7 @@ public class StudentServlet extends BaseServlet {
 		HttpSession session = request.getSession();
 		MDC.put("stid", id);
 		logger.info("-----正在登录中-----");
-		Student st = ss.login(id, pwd);
+		Student st = ss.login(id, MD5Utils.md5(pwd));
 		if(st != null){
 			if(st.getFlag() == 1){
 				session.setAttribute("student", st);
