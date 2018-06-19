@@ -16,3 +16,29 @@
 			}
 		}
  }
+ 
+ //班级下拉框
+ function getClassesSelect(webContent){
+	$.ajax({
+		url:webContent+"/classes",
+		data:{"method":"select"},
+		async:true,
+		type:"POST",
+		success:function(list){
+			var content = "<option value='-1'>--------请选择--------</option>";
+			for(var i = 0; i < list.length; ++i){
+				if(classes == list[i].id){
+					content += "<option value='"+list[i].id+"' selected>"+list[i].name+"</option>";
+				}else{
+					content += "<option value='"+list[i].id+"'>"+list[i].name+"</option>";
+				}
+			}
+			$("#classes").text('');
+			$('#classes').html($('#classes').html()+content);
+		},
+		error:function(){
+			alert("班级列表请求失败");
+		},
+		dataType:"json"
+	});
+ }
