@@ -144,6 +144,10 @@ a.active {
 													<td class=menuSmall><A class=style2 href="${pageContext.request.contextPath}/jsp/customer/edit.jsp?id=${student.id}"
 														target=main>－ 修改个人信息</a></td>
 												</tr>
+												<tr> 
+													<td class=menuSmall><A class=style2 href="${pageContext.request.contextPath}/jsp/customer/editPwd.jsp?id=${student.id}"
+														target=main>－ 修改密码</a></td>
+												</tr>
 												
 											</tbody>
 										</table>

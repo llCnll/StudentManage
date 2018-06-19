@@ -59,7 +59,7 @@ p {
 										&nbsp;&nbsp;&nbsp;&nbsp;
 										权限: ${student.roleId==1?"管理员":"普通用户" }
 										&nbsp;&nbsp;&nbsp;&nbsp;
-										<a href="${pageContext.request.contextPath}/jsp/customer/edit.jsp?id=${student.id}" target=main><font color=red>修改密码</font></a>
+										<a href="${pageContext.request.contextPath}/jsp/customer/editPwd.jsp?id=${student.id}" target=main><font color=red>修改密码</font></a>
 										&nbsp;&nbsp;&nbsp;&nbsp;
 										<a href="${pageContext.request.contextPath}/student?method=exit" target=_top><font color=red>安全退出</font></a>
 									</td>

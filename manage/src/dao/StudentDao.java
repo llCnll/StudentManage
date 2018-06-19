@@ -35,4 +35,6 @@ public interface StudentDao {
 
 	List<Student> listGetSt(Object[] param);
 
+	boolean editPwd(String id, String npwd);
+
 }

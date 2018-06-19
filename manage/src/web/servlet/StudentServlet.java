@@ -374,6 +374,27 @@ public class StudentServlet extends BaseServlet {
 		logger.info("-----退出成功-----\n");
 		response.sendRedirect(request.getContextPath()+"/login.jsp");
 	}
+	//修改密码
+	protected void editPwd(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		String id = request.getParameter("id");
+		String opwd = request.getParameter("opwd");
+		String npwd = request.getParameter("npwd");
+		
+		logger.info("-----"+id+"正在修改学生密码中----");
+		boolean flag = ss.studenteditPwd(id, opwd, npwd);
+		
+		if(flag){
+			logger.info("-----"+id+"删除学生密码成功----\n");
+			request.setAttribute("message", id+"修改密码成功!");
+			request.getRequestDispatcher("/jsp/customer/editPwd.jsp").forward(request, response);;
+		}else{
+			request.setAttribute("error", id+"删除密码失败! 原密码错误!");
+			logger.info("-----"+id+"删除学生密码失败----\n");
+			request.getRequestDispatcher("/jsp/customer/editPwd.jsp").forward(request, response);
+		}
+		
+	}
 	//用户登陆
 	protected void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String id = request.getParameter("id");

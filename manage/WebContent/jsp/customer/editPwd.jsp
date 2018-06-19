@@ -1,4 +1,4 @@
-﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -23,72 +23,29 @@
 	
 	$(function(){
 		
-		$.ajax({
-			url:"${pageContext.request.contextPath}/student?method=edit&id=<%=request.getParameter("id")%>",
-			async:true,
-			type:"get",
-			success:function(student){
-				$("#id").val(student.id);
-				$("#name").val(student.name);
-				$("#pwd").val(student.pwd);
-				$("#repwd").val(student.pwd);
-				$("#classes").val(student.classes.id);
-				$("#roleId").val(student.roleId);
-				$("#editPwd").attr('onclick','javascript:window.location.href=\'${pageContext.request.contextPath}/jsp/customer/editPwd.jsp?id='+student.id+'\';');
-				
-			},
-			error:function(){
-				alert("请求失败");
-			},
-			dataType:"json"
-		});
-		
-		//班级下拉框
-		getClassesSelect('${pageContext.request.contextPath}');
-		
 		$('#form1').validate({
 			rules:{
-				"id":{
-					"required":true,
-					"rangelength":[8,8]
-				},
-				"name":{
+				"opwd":{
 					"required":true
 				},
-				"pwd":{
+				"npwd":{
 					"required":true
 				},
 				"repwd":{
 					"required":true,
-					"equalTo":"#pwd"
-				},
-				"classesId":{
-					"min":0
-				},
-				"roleId":{
-					"min":0
+					"equalTo":"#npwd"
 				}
 			},
 			messages:{
-				"id":{
-					"required":"请输入学号",
-					"rangelength":"学号为8位"
+				"opwd":{
+					"required":"请输入原密码",
 				},
-				"name":{
-					"required":"请输入名称",
-				},
-				"pwd":{
-					"required":"请输入密码",
+				"npwd":{
+					"required":"请输入新密码",
 				},
 				"repwd":{
 					"required":"请输入确认密码",
 					"equalTo":"两次密码不一致"
-				},
-				"classesId":{
-					"min":"请选择班级"
-				},
-				"roleId":{
-					"min":"请选择权限"
 				}
 			}
 			
@@ -104,7 +61,8 @@
 	<FORM id=form1 name=form1
 		action="${pageContext.request.contextPath }/student"
 		method=post>
-		<input type="hidden" name="method" value="editSumbit"/>
+		<input type="hidden" name="id" value="${param.id }"/>
+		<input type="hidden" name="method" value="editPwd"/>
 
 		<TABLE cellSpacing=0 cellPadding=0 width="98%" border=0>
 			<TBODY>
@@ -126,7 +84,7 @@
 					<TD vAlign=top width="100%" bgColor=#ffffff>
 						<TABLE cellSpacing=0 cellPadding=5 width="100%" border=0>
 							<TR>
-								<TD class=manageHead>当前位置：用户管理 &gt; 修改用户</TD>
+								<TD class=manageHead>当前位置：用户管理 &gt; 修改密码</TD>
 							</TR>
 							<TR>
 								<TD height=2></TD>
@@ -134,27 +92,26 @@
 						</TABLE>
 						<table cellspacing=0 cellpadding=5  border=0>
 						
-							<tr><td><span style="color:red;">${error }</span></td></tr>
+							<tr><td colspan="2"><span style="color:red;">${error }${message }</span></td></tr>
+							<c:if test="${param.id == student.id || student.roleId != 1 }">
+								<tr>
+									<td>原密码：</td>
+									<td>
+									<input class=textbox id="opwd"
+															style="width: 180px" maxlength=50 name="opwd">
+									</td>
+								</tr>
+							</c:if>
 							<tr>
-								<td>用户学号：</td>
+								
+								<td>新密码 ：</td>
 								<td>
-								<input class=textbox id="id"
-														style="width: 180px" maxlength=50 name="id" readonly>
-								</td>
-								<td>用户名称 ：</td>
-								<td>
-								<input class=textbox id="name"
-														style="width: 180px" maxlength=50 name="name">
+								<input class=textbox id="npwd"
+														style="width: 180px" maxlength=50 name="npwd">
 								</td>
 							</tr>
 							
 							<tr>
-								
-								<td>用户密码 ：</td>
-								<td>
-								<input class=textbox id="pwd"
-														style="width: 180px" maxlength=50 name="pwd">
-								</td>
 								<td>确认密码：</td>
 								<td>
 								<input class=textbox id="repwd"
@@ -163,38 +120,18 @@
 							</tr>
 							
 							<tr>
-								<td>用户班级 ：</td>
-								<td>
-								<select class=textbox id="classes"
-														style="width: 180px; height: 24px;" name="classesId">
-									<option value="-1">加载中...</option>
-								</select>
-								</td>
-								<td>用户权限 ：</td>
-								<td>
-								<c:if test="${student.roleId == 0 }">
-									<select class=textbox id="roleId"
-															style="width: 180px; height: 24px;" name="roleId" onfocus="this.defaultIndex=this.selectedIndex;" onchange="this.selectedIndex=this.defaultIndex;">
+								<c:if test="${param.id == student.id}">
+									<td rowspan=2>
+									<input class=button id=save type=submit
+															value=" 保存 " name=sbutton2>
+									</td>
 								</c:if>
-								<c:if test="${student.roleId == 1 }">
-									<select class=textbox id="roleId"
-															style="width: 180px; height: 24px;" name="roleId">
+								<c:if test="${param.id != student.id && student.roleId == 1 }">
+									<td rowspan=2>
+									<input class=button id=qsave type=submit
+															value=" 强制修改 " name=sbutton2>
+									</td>
 								</c:if>
-									<option value="-1" selected>--------请选择--------</option>
-									<option value="0">普通用户</option>
-									<option value="1">管理员</option>
-								</select>
-							</tr>
-							
-							<tr>
-								<td rowspan=2>
-								<input class=button id=save type=submit
-														value=" 保存 " name=sbutton2>
-								</td>
-								<td rowspan=2>
-								<input class=button id=editPwd type=button
-														value=" 修改密码" name=sbutton3>
-								</td>
 							</tr>
 						</table>
 						

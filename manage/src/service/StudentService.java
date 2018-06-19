@@ -30,4 +30,6 @@ public interface StudentService {
 
 	boolean delSelectCourse(String stid, String cid);
 
+	boolean studenteditPwd(String id, String opwd, String npwd);
+
 }

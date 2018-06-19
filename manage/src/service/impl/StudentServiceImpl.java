@@ -147,6 +147,18 @@ public class StudentServiceImpl implements StudentService {
 		
 		return flag;
 	}
-	
 
+	public boolean studenteditPwd(String id, String opwd, String npwd) {
+		
+		//查询该用户
+		Student st = sd.studentEdit(id);
+		//判断opwd是否为null, 是null直接修改
+		if(opwd == null || st.getPwd().equals(opwd)){
+			boolean flag = sd.editPwd(id, npwd);
+			return flag;
+		}else{
+			return false;
+		}
+	}
 }
+		

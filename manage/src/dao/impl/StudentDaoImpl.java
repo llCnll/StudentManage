@@ -600,4 +600,27 @@ public class StudentDaoImpl implements StudentDao {
 		
 		return list.size()>0?list:null;
 	}
+
+	public boolean editPwd(String id, String npwd) {
+		String sql = "update student set pwd = ? where id = ?";
+		Connection conn =null;
+		PreparedStatement pst = null;
+		int row = 0;
+
+		try {
+			conn = DataSourceUtils.getConnection();
+			pst = conn.prepareStatement(sql);
+			
+			DB.fillStatement(pst,npwd, id);
+			//System.out.println(pst.toString().split(": ")[1]);
+			row = pst.executeUpdate();
+			logger.debug(sql);
+		} catch (SQLException e) {
+			logger.error("修改用户密码: "+e.getMessage().replaceAll("'", "\\\\\\\'"));
+		}finally{
+			try {DataSourceUtils.closeAll(pst, null);} catch (SQLException e) {logger.error(e.getMessage().replaceAll("'", "\\\\\\\'"));}
+		}
+		
+		return row > 0? true: false;
+	}
 }
