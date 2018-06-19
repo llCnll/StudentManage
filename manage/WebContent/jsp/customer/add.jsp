@@ -13,6 +13,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath }/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath }/js/xlsx.full.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath }/js/common.js"></script>
 <style type="text/css">
 .error{
 	color:red;
