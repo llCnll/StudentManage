@@ -346,7 +346,7 @@ public class StudentDaoImpl implements StudentDao {
 	//更改用户信息
 	public boolean studentEditSubmit(Student st) {
 		
-		String sql = "update student set name = ?, pwd = ?, classesId = ?, roleId = ? where id = ?";
+		String sql = "update student set name = ?, classesId = ?, roleId = ? where id = ?";
 		Connection conn =null;
 		PreparedStatement pst = null;
 		int row = 0;
@@ -355,7 +355,7 @@ public class StudentDaoImpl implements StudentDao {
 			conn = DataSourceUtils.getConnection();
 			pst = conn.prepareStatement(sql);
 			
-			DB.fillStatement(pst, st.getName(), st.getPwd(), st.getClasses().getId(), st.getRoleId(), st.getId());
+			DB.fillStatement(pst, st.getName(), st.getClasses().getId(), st.getRoleId(), st.getId());
 			//System.out.println(pst.toString().split(": ")[1]);
 			row = pst.executeUpdate();
 			logger.debug(sql);

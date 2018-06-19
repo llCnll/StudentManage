@@ -55,13 +55,6 @@
 				"name":{
 					"required":true
 				},
-				"pwd":{
-					"required":true
-				},
-				"repwd":{
-					"required":true,
-					"equalTo":"#pwd"
-				},
 				"classesId":{
 					"min":0
 				},
@@ -76,13 +69,6 @@
 				},
 				"name":{
 					"required":"请输入名称",
-				},
-				"pwd":{
-					"required":"请输入密码",
-				},
-				"repwd":{
-					"required":"请输入确认密码",
-					"equalTo":"两次密码不一致"
 				},
 				"classesId":{
 					"min":"请选择班级"
@@ -145,20 +131,6 @@
 								<td>
 								<input class=textbox id="name"
 														style="width: 180px" maxlength=50 name="name">
-								</td>
-							</tr>
-							
-							<tr>
-								
-								<td>用户密码 ：</td>
-								<td>
-								<input class=textbox id="pwd"
-														style="width: 180px" maxlength=50 name="pwd">
-								</td>
-								<td>确认密码：</td>
-								<td>
-								<input class=textbox id="repwd"
-														style="width: 180px" maxlength=50 name="repwd">
 								</td>
 							</tr>
 							
