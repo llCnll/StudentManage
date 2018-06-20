@@ -180,7 +180,7 @@ public class StudentServlet extends BaseServlet {
 			Student st = new Student();
 			st.setId(ids[i]);
 			st.setName(names[i]);
-			st.setPwd(pwds[i]);
+			st.setPwd(MD5Utils.md5(pwds[i]));
 			st.setRoleId("普通用户".equals(roleIds[i])?0:1);
 			Classes classes = new Classes();
 			classes.setName(classesNames[i]);
