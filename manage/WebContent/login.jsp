@@ -39,6 +39,7 @@ $(function(){
 	    		data:$('#signupForm').serialize(),
 	    		success:function(mess){
 					alert(mess.message);
+					$('#myModal').modal('hide');
 	    		},
 				error:function(){
 					alert("注册请求失败");

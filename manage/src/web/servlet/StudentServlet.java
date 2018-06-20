@@ -256,6 +256,7 @@ public class StudentServlet extends BaseServlet {
 				Classes classes = new Classes();
 				classes.setId(Integer.parseInt(request.getParameter("classesId")));
 				st.setClasses(classes);
+				st.setPwd(MD5Utils.md5(request.getParameter("pwd")));
 				MDC.put("stid", st.getId());
 				logger.info("-----"+st.getId()+"正在注册学生信息中----");
 				boolean flag = ss.studentAdd(st);
