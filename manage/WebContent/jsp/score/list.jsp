@@ -40,7 +40,7 @@
 									/* 选课情况 */
 									if(pageBean.list[i].courses == undefined){
 										content  += "<td>未选课</td>";
-										content += "<TD>--</TD><TD>--</TD><TD>--</TD>";
+										content += "<TD>--</TD><TD>--</TD>";
 										if(roleId == 1)
 											content +=	"<TD>未选课";
 									}else{
@@ -48,11 +48,10 @@
 										if(pageBean.list[i].courses[0].score != null){
 											content += "<TD>"+(pageBean.list[i].courses[0].score.score1==null?"--":pageBean.list[i].courses[0].score.score1)+"</TD>";
 											content += "<TD>"+(pageBean.list[i].courses[0].score.score2==null?"--":pageBean.list[i].courses[0].score.score2)+"</TD>";
-											content += "<TD>"+(pageBean.list[i].courses[0].score.score3==null?"--":pageBean.list[i].courses[0].score.score3)+"</TD>";
 											if(roleId == 1)
 												content +=	"<TD><a href='javascript:;' onclick=\"update('"+pageBean.list[i].id+"', '"+pageBean.list[i].courses[0].id+"', '"+pageBean.list[i].courses[0].name+"')\">修改</a>"
 										}else{
-											content += "<TD>--</TD><TD>--</TD><TD>--</TD>";
+											content += "<TD>--</TD><TD>--</TD>";
 											if(roleId == 1)
 											content +=	"<TD><a href='javascript:;' onclick=\"update('"+pageBean.list[i].id+"', '"+pageBean.list[i].courses[0].id+"', '"+pageBean.list[i].courses[0].name+"')\">录入</a>"
 										}
@@ -65,11 +64,10 @@
 										if(pageBean.list[i].courses[j].score != null){
 											content += "<TD>"+(pageBean.list[i].courses[j].score.score1==null?"--":pageBean.list[i].courses[j].score.score1)+"</TD>"
 													+  "<TD>"+(pageBean.list[i].courses[j].score.score2==null?"--":pageBean.list[i].courses[j].score.score2)+"</TD>"
-													+  "<TD>"+(pageBean.list[i].courses[j].score.score3==null?"--":pageBean.list[i].courses[j].score.score3)+"</TD>";
 											if(roleId == 1)
 												content +=	"<TD><a href='javascript:;' onclick=\"update('"+pageBean.list[i].id+"', '"+pageBean.list[i].courses[j].id+"', '"+pageBean.list[i].courses[j].name+"')\">修改</a>"
 										}else{
-											content += "<TD>--</TD><TD>--</TD><TD>--</TD>";
+											content += "<TD>--</TD><TD>--</TD>";
 											if(roleId == 1)
 												content +=	"<TD><a href='javascript:;' onclick=\"update('"+pageBean.list[i].id+"', '"+pageBean.list[i].courses[j].id+"', '"+pageBean.list[i].courses[j].name+"')\">录入</a>"
 										}
@@ -87,7 +85,7 @@
 								/* 选课情况 */
 								if(pageBean.list[i].courses == undefined){
 									content  += "<td>未选课</td>";
-									content += "<TD>--</TD><TD>--</TD><TD>--</TD>";
+									content += "<TD>--</TD><TD>--</TD>";
 									if(roleId == 1)
 										content +=	"<TD>未选课";
 								}else{
@@ -95,11 +93,10 @@
 									if(pageBean.list[i].courses[0].score != null){
 										content += "<TD>"+(pageBean.list[i].courses[0].score.score1==null?"--":pageBean.list[i].courses[0].score.score1)+"</TD>";
 										content += "<TD>"+(pageBean.list[i].courses[0].score.score2==null?"--":pageBean.list[i].courses[0].score.score2)+"</TD>";
-										content += "<TD>"+(pageBean.list[i].courses[0].score.score3==null?"--":pageBean.list[i].courses[0].score.score3)+"</TD>";
 										if(roleId == 1)
 											content +=	"<TD><a href='javascript:;' onclick=\"update('"+pageBean.list[i].id+"', '"+pageBean.list[i].courses[0].id+"', '"+pageBean.list[i].courses[0].name+"')\">修改</a>"
 									}else{
-										content += "<TD>--</TD><TD>--</TD><TD>--</TD>";
+										content += "<TD>--</TD><TD>--</TD>";
 										if(roleId == 1)
 										content +=	"<TD><a href='javascript:;' onclick=\"update('"+pageBean.list[i].id+"', '"+pageBean.list[i].courses[0].id+"', '"+pageBean.list[i].courses[0].name+"')\">录入</a>"
 									}
@@ -112,11 +109,10 @@
 									if(pageBean.list[i].courses[j].score != null){
 										content += "<TD>"+(pageBean.list[i].courses[j].score.score1==null?"--":pageBean.list[i].courses[j].score.score1)+"</TD>"
 												+  "<TD>"+(pageBean.list[i].courses[j].score.score2==null?"--":pageBean.list[i].courses[j].score.score2)+"</TD>"
-												+  "<TD>"+(pageBean.list[i].courses[j].score.score3==null?"--":pageBean.list[i].courses[j].score.score3)+"</TD>";
 										if(roleId == 1)
 											content +=	"<TD><a href='javascript:;' onclick=\"update('"+pageBean.list[i].id+"', '"+pageBean.list[i].courses[j].id+"', '"+pageBean.list[i].courses[j].name+"')\">修改</a>"
 									}else{
-										content += "<TD>--</TD><TD>--</TD><TD>--</TD>";
+										content += "<TD>--</TD><TD>--</TD>";
 										if(roleId == 1)
 											content +=	"<TD><a href='javascript:;' onclick=\"update('"+pageBean.list[i].id+"', '"+pageBean.list[i].courses[j].id+"', '"+pageBean.list[i].courses[j].name+"')\">录入</a>"
 									}
@@ -301,7 +297,6 @@
 													<TD>课程</TD>
 													<TD>一考</TD>
 													<TD>二考</TD>
-													<TD>三考</TD>
 													<c:if test="${student.roleId == 1 }">
 														<TD>操作</TD>
 													</c:if>

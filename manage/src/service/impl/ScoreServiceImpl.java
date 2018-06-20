@@ -79,14 +79,11 @@ public class ScoreServiceImpl implements ScoreService {
 				//计算已得绩点
 				Float score1 = course.getScore().getScore1();
 				Float score2 = course.getScore().getScore2();
-				Float score3 = course.getScore().getScore3();
 	
 				if(score1 != null && score1 >= 60) {
 					gpa += course.getCredithour()*(score1-50);
 				}else if(score2 != null && score2 >= 60){
 					gpa += course.getCredithour()*(score2-50);
-				}else if(score3 != null && score3 >= 60) {
-					gpa += course.getCredithour()*(score3-50);
 				}
 			}
 		}

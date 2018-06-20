@@ -45,20 +45,10 @@
 					        		var score2 = student.courses[i].score.score2;
 					        		if(score2 != null){
 					        			$("#score2").val(score2);
-					        			if(score2 < 60){
-					        				var score3 = student.courses[i].score.score3;
-					        				if(score3 != null){
-					        					$("#score3").val(score3);
-					        				}
-					        			}else{
-					        				//禁用score3
-					        				$("#score3").prop("disabled", "true");
-					        			}
 					        		}
 					        	}else{
-					        		//禁用score2 score3
+					        		//禁用score2
 					        		$("#score2").prop("disabled", "true");
-					        		$("#score3").prop("disabled", "true");
 					        	}
 					        }
 				        	break;
@@ -73,48 +63,15 @@
 			dataType:"json"
 		});
 		
-		/* $.ajax({
-			url:"${pageContext.request.contextPath}/classes",
-			data:{"method":"select"},
-			async:true,
-			type:"POST",
-			success:function(list){
-				var content = "<option value='-1'>--------请选择--------</option>";
-				for(var i = 0; i < list.length; ++i){
-					content += "<option value='"+list[i].id+"'>"+list[i].name+"</option>";
-				}
-				$("#classes").text('');
-				$('#classes').html($('#classes').html()+content);
-				
-			},
-			error:function(){
-				alert("班级列表请求失败");
-			},
-			dataType:"json"
-		}); */
-		
 		$("#score1").blur(function (){
 			var score = $("#score1").val();
 			//alert(score < 60);
 			if(score < 60){
 				$("#score2").removeAttr("disabled");
         	}else{
-        		//禁用score2 score3
+        		//禁用score2
 				$("#score2").val('');
-				$("#score3").val('');
         		$("#score2").prop("disabled", "true");
-        		$("#score3").prop("disabled", "true");
-        	}
-		});
-		$("#score2").blur(function (){
-			var score = $("#score2").val();
-			//alert(score < 60);
-			if(score < 60){
-				$("#score3").removeAttr("disabled");
-        	}else{
-        		//禁用score2 score3
-				$("#score3").val('');
-        		$("#score3").prop("disabled", "true");
         	}
 		});
 		
@@ -202,14 +159,6 @@
 														style="width: 180px" maxlength=50 name="score2">
 								</td>
 							</tr>
-							<tr>
-								<td>三考 ：</td>
-								<td>
-									<input class=textbox id="score3"
-														style="width: 180px" maxlength=50 name="score3">
-								</td>
-							</tr>
-							
 							<tr>
 								<td rowspan=2>
 								<input class=button id=save type=submit

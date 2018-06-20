@@ -29,7 +29,6 @@ public class ScoreDaoImpl implements ScoreDao {
 		score.setSemester(rs.getString("semester"));
 		score.setScore1(rs.getObject("score1") == null?null:rs.getFloat("score1"));
 		score.setScore2(rs.getObject("score2") == null?null:rs.getFloat("score2"));
-		score.setScore3(rs.getObject("score3") == null?null:rs.getFloat("score3"));
 	}
 
 	public Score studentScore(String stid, Integer cid) {
@@ -68,7 +67,7 @@ public class ScoreDaoImpl implements ScoreDao {
 
 	public boolean saveScore(Student st) {
 		
-		String sql = "update score set id = ?, semester = ?, score1 = ?, score2 = ?, score3 = ? where studentid = ? && courseid = ?";
+		String sql = "update score set id = ?, semester = ?, score1 = ?, score2 = ? where studentid = ? && courseid = ?";
 		
 		Connection conn =null;
 		PreparedStatement pst = null;
@@ -78,7 +77,7 @@ public class ScoreDaoImpl implements ScoreDao {
 			conn = DataSourceUtils.getConnection();
 			pst = conn.prepareStatement(sql);
 			
-			DB.fillStatement(pst, Long.parseLong(st.getId()+""+st.getCourses().get(0).getId()), st.getCourses().get(0).getScore().getSemester(), st.getCourses().get(0).getScore().getScore1(), st.getCourses().get(0).getScore().getScore2(), st.getCourses().get(0).getScore().getScore3(), st.getId(), st.getCourses().get(0).getId());
+			DB.fillStatement(pst, Long.parseLong(st.getId()+""+st.getCourses().get(0).getId()), st.getCourses().get(0).getScore().getSemester(), st.getCourses().get(0).getScore().getScore1(), st.getCourses().get(0).getScore().getScore2(), st.getId(), st.getCourses().get(0).getId());
 			//System.out.println(pst.toString().split(": ")[1]);
 			row = pst.executeUpdate();
 			logger.debug(sql);

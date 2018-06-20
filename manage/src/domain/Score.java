@@ -13,7 +13,6 @@ public class Score {
 	private String semester;
 	private Float score1;
 	private Float score2;
-	private Float score3;
 	public Long getId() {
 		return id;
 	}
@@ -38,15 +37,9 @@ public class Score {
 	public void setScore2(Float score2) {
 		this.score2 = score2;
 	}
-	public Float getScore3() {
-		return score3;
-	}
-	public void setScore3(Float score3) {
-		this.score3 = score3;
-	}
 	@Override
 	public String toString() {
-		return "Score [semester=" + semester + ", score1=" + score1
-				+ ", score2=" + score2 + ", score3=" + score3 + "]";
+		return "Score [id=" + id + ", semester=" + semester + ", score1="
+				+ score1 + ", score2=" + score2 + "]";
 	}
 }

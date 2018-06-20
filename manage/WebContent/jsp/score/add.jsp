@@ -75,7 +75,6 @@
 						+ "<TD><input name='semester' style=' text-align:center' value='"+json[i].学期+"' size='8' readonly></TD>"
 						+ "<TD><input name='score1' style=' text-align:center' value='"+(json[i].一考==null?"":json[i].一考)+"' size='8'></TD>"
 						+ "<TD><input name='score2' style=' text-align:center' value='"+(json[i].二考==null?"":json[i].二考)+"' size='8'></TD>"
-						+ "<TD><input name='score3' style=' text-align:center' value='"+(json[i].三考==null?"":json[i].三考)+"' size='8'></TD>"
 						/* + "<TD>"
 						+"<a href='${pageContext.request.contextPath}/jsp/customer/edit.jsp?id="+pageBean.list[i].id+"'>修改</a>"
 						+"&nbsp;&nbsp;"
@@ -204,7 +203,6 @@
 										<TD>课程</TD>
 										<TD>一考</TD>
 										<TD>二考</TD>
-										<TD>三考</TD>
 									</TR>
 								</TBODY>
 							</TABLE>

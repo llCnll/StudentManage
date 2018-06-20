@@ -174,7 +174,6 @@ public class ScoreServlet extends BaseServlet{
   		String[] semesters = request.getParameterValues("semester");
   		String[] score1s = request.getParameterValues("score1");
   		String[] score2s = request.getParameterValues("score2");
-  		String[] score3s = request.getParameterValues("score3");
   		
   		List<Student> list = new ArrayList<Student>();
   		logger.info("-----正在批量录入成绩中----");
@@ -188,10 +187,8 @@ public class ScoreServlet extends BaseServlet{
   			c.setName(courseNames[i]);
   			String score1 = score1s[i];
   			String score2 = score2s[i];
-  			String score3 = score3s[i];
   			sc.setScore1((score1 != null&&!"".equals(score1))?Float.parseFloat(score1):null);
   			sc.setScore2((score2 != null&&!"".equals(score2))?Float.parseFloat(score2):null);
-  			sc.setScore3((score3 != null&&!"".equals(score3))?Float.parseFloat(score3):null);
   			sc.setSemester(semesters[i]);
   			c.setScore(sc);
   			st.setCourses(new ArrayList<Course>());
@@ -219,10 +216,8 @@ public class ScoreServlet extends BaseServlet{
 		c.setId(Integer.parseInt(request.getParameter("cid")));
 		String score1 = request.getParameter("score1");
 		String score2 = request.getParameter("score2");
-		String score3 = request.getParameter("score3");
 		sc.setScore1((score1 != null&&!"".equals(score1))?Float.parseFloat(score1):null);
 		sc.setScore2((score2 != null&&!"".equals(score2))?Float.parseFloat(score2):null);
-		sc.setScore3((score3 != null&&!"".equals(score3))?Float.parseFloat(score3):null);
 		sc.setSemester(request.getParameter("semester"));
 		c.setScore(sc);
 		st.setCourses(new ArrayList<Course>());
