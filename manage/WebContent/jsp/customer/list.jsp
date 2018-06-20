@@ -33,9 +33,6 @@
 								+ "<TD style=\"width: 76px;\"><input type=\"checkbox\" name=\"select\" value=\""+pageBean.list[i].id+"\"/></TD>"
 								+ "<TD>"+pageBean.list[i].id+"</TD>"
 								+ "<TD>"+pageBean.list[i].name+"</TD>";
-								if(roleId == 1){
-									content += "<TD>"+pageBean.list[i].pwd+"</TD>";
-								}
 					content += "<TD>"+pageBean.list[i].classes.name+"</TD>"
 								+ "<TD>"+(pageBean.list[i].roleId == 0?"普通用户":"管理员")+"</TD>"
 								+ "<TD>"
@@ -213,9 +210,6 @@
 													</TD>
 													<TD>用户ID</TD>
 													<TD>用户姓名</TD>
-													<c:if test="${student.roleId == 1 }">
-														<TD>用户密码</TD>
-													</c:if>
 													<TD>用户班级</TD>
 													<TD>用户权限</TD>
 													<TD>操作</TD>
