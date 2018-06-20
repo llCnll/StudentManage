@@ -264,6 +264,7 @@
 								</td>
 								<td rowspan=2>
 								<input class=button id=addBactch type=button value="批量添加 " data-toggle="modal" data-target="#myModal">
+								<input class=button id=download type=button value="下载模板" onclick="javascript:location.href='${pageContext.request.contextPath }/download?method=download&fileName=StudentTest.xlsx';">
 								</td>
 							</tr>
 						</table>
