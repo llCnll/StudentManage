@@ -24,17 +24,20 @@ public class LoginFilter implements Filter {
 	public void destroy() {
 	}
 
+	@SuppressWarnings("deprecation")
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
 		HttpServletRequest req = (HttpServletRequest)request;
 		HttpServletResponse resp = (HttpServletResponse)response;
+		
+		System.setProperty("WebContent", req.getRealPath("/"));
 		
 		//获取根目录所对应的绝对路径
         String currentURL = req.getRequestURI();
         //截取到当前文件名用于比较
         String targetURL = currentURL.substring(currentURL.indexOf("/",1),currentURL.length());
         //System.out.println("currentURL: "+ currentURL);
-        //System.out.println("targetURL: "+ targetURL);
+       // System.out.println("targetURL: "+ targetURL);
         String method = req.getParameter("method");
         String signup = req.getParameter("signup");
         //System.out.println("method: "+ method);
