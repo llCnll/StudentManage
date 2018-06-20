@@ -45,7 +45,6 @@ public class CourseServlet extends BaseServlet {
 			sb.append("删除成功!");
 		}
 		String message = sb.toString();
-		System.out.println("{\"message\":"+"\""+message+"\"}");
 		response.setCharacterEncoding("utf-8");
 		response.getWriter().write("{\"message\":"+"\""+message+"\"}");
 	}	

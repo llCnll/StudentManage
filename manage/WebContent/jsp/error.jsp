@@ -38,7 +38,7 @@
 							<td align="center" style="font-size: 14px;"><img
 								src="${pageContext.request.contextPath }/images/info.png"
 								align="middle" height="30" width="30" />
-							    <span style="vertical-align: middle">您的操作失败！</span>	
+							    <span style="vertical-align: middle">您的操作失败！${error }</span>	
 							</td>
 						</tr>
 					</table>
