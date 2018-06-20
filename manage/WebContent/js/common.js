@@ -18,7 +18,7 @@
  }
  
  //班级下拉框
- function getClassesSelect(webContent){
+ function getClassesSelect(webContent, classes){
 	$.ajax({
 		url:webContent+"/classes",
 		data:{"method":"select"},
@@ -27,7 +27,7 @@
 		success:function(list){
 			var content = "<option value='-1'>--------请选择--------</option>";
 			for(var i = 0; i < list.length; ++i){
-				if(classes == list[i].id){
+				if(classes*1.0 == list[i].id){
 					content += "<option value='"+list[i].id+"' selected>"+list[i].name+"</option>";
 				}else{
 					content += "<option value='"+list[i].id+"'>"+list[i].name+"</option>";

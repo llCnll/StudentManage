@@ -101,7 +101,7 @@
 			dataType:"json"
 		});
 		//班级下拉框
-		getClassesSelect('${pageContext.request.contextPath}');
+		getClassesSelect('${pageContext.request.contextPath}', '${param.classes}');
 		//id 和 (姓名和班级)
 		function checkId(){
 			var id = $("#id").val();

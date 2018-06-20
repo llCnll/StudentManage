@@ -44,7 +44,7 @@
 		});
 		
 		//班级下拉框
-		getClassesSelect('${pageContext.request.contextPath}');
+		getClassesSelect('${pageContext.request.contextPath}', '${param.classes}');
 		
 		$('#form1').validate({
 			rules:{

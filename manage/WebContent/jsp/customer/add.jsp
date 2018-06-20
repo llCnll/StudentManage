@@ -95,7 +95,7 @@
 
 	$(function(){
 		//班级下拉框
-		getClassesSelect('${pageContext.request.contextPath}');
+		getClassesSelect('${pageContext.request.contextPath}', '${param.classes}');
 		
 		$('#addBatchButton').click(function(){
 	    	$.ajax({

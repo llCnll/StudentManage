@@ -150,7 +150,7 @@
 			dataType:"json"
 		});
 		//班级下拉框
-		getClassesSelect('${pageContext.request.contextPath}');
+		getClassesSelect('${pageContext.request.contextPath}', '${param.classes}');
 		//课程下拉框
 		$.ajax({
 			url:"${pageContext.request.contextPath}/course",

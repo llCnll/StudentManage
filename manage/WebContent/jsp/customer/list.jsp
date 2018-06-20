@@ -17,7 +17,6 @@
 		
 		checkId();
 		
-		var classes = <%=request.getParameter("classes")%>;
 		//学生列表
 		$.ajax({
 			url:"${pageContext.request.contextPath}/student",
@@ -101,7 +100,7 @@
 		});
 		
 		//班级下拉框
-		getClassesSelect('${pageContext.request.contextPath}');
+		getClassesSelect('${pageContext.request.contextPath}', '${param.classes}');
 		
 		//id 和 (姓名和班级)
 		function checkId(){
@@ -182,7 +181,7 @@
 														style="WIDTH: 80px" maxLength=50 name="name" value="${param.name}"></TD>
 													<TD>班级：</TD>
 													<TD>
-													   <select name="classes" id="classes">
+													   <select name="classes" id="classes" >
 													       <option value="-1">加载中...</option>
 													   </select>
 													</TD>
