@@ -97,7 +97,7 @@
 								<tr>
 									<td>原密码：</td>
 									<td>
-									<input class=textbox id="opwd"
+									<input class=textbox id="opwd" type="password"
 															style="width: 180px" maxlength=50 name="opwd">
 									</td>
 								</tr>
@@ -106,7 +106,7 @@
 								
 								<td>新密码 ：</td>
 								<td>
-								<input class=textbox id="npwd"
+								<input class=textbox id="npwd" type="password"
 														style="width: 180px" maxlength=50 name="npwd">
 								</td>
 							</tr>
@@ -114,7 +114,7 @@
 							<tr>
 								<td>确认密码：</td>
 								<td>
-								<input class=textbox id="repwd"
+								<input class=textbox id="repwd" type="password"
 														style="width: 180px" maxlength=50 name="repwd">
 								</td>
 							</tr>

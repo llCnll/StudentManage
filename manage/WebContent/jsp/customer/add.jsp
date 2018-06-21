@@ -225,14 +225,14 @@
 								
 								<td>用户密码 ：</td>
 								<td>
-								<input class=textbox id="pwd"
+								<input class=textbox id="pwd" type="password"
 														style="width: 180px" maxlength=50 name="pwd" value="${param.pwd }">
 								</td>
 							</tr>
 							<tr>
 								<td>确认密码：</td>
 								<td>
-								<input class=textbox id="repwd" name="repwd"
+								<input class=textbox id="repwd" name="repwd" type="password"
 														style="width: 180px" maxlength=50 value="${param.pwd }">
 								</td>
 							</tr>

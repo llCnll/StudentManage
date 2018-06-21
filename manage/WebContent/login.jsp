@@ -242,14 +242,14 @@ $(function(){
 								
 								<td style="color:black;">用户密码 ：</td>
 								<td>
-								<input class=textbox id="rpwd"
+								<input class=textbox id="rpwd" type="password"
 														style="width: 180px" maxlength=50 name="pwd">
 								</td>
 							</tr>
 							<tr>
 								<td style="color:black;">确认密码：</td>
 								<td>
-								<input class=textbox id="repwd"
+								<input class=textbox id="repwd" type="password"
 														style="width: 180px" maxlength=50 name="repwd">
 								</td>
 							</tr>
