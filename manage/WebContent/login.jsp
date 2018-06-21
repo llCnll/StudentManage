@@ -31,6 +31,11 @@ td {
 <script type="text/javascript">
 
 $(function(){
+	if(window.parent != window){// 如果是在框架中
+		//就让框架页面跳转到登陆页面
+		window.parent.location.href = "${pageContext.request.contextPath}/login.jsp";
+	}
+	
 	$('#signupButton').click(function(){
 		if(valContent()){
 	    	$.ajax({

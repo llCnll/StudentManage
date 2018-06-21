@@ -37,7 +37,7 @@ public class LoginFilter implements Filter {
         //截取到当前文件名用于比较
         String targetURL = currentURL.substring(currentURL.indexOf("/",1),currentURL.length());
         //System.out.println("currentURL: "+ currentURL);
-       // System.out.println("targetURL: "+ targetURL);
+        //System.out.println("targetURL: "+ targetURL);
         String method = req.getParameter("method");
         String signup = req.getParameter("signup");
         //System.out.println("method: "+ method);
@@ -60,7 +60,7 @@ public class LoginFilter implements Filter {
         		return ;
         	}
         	//放行js下文件
-        	if(targetURL.startsWith("/js")){
+        	if(targetURL.startsWith("/js/")){
         		chain.doFilter(request, response);
         		return ;
         	}
