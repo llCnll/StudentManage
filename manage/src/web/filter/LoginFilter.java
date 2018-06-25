@@ -24,13 +24,12 @@ public class LoginFilter implements Filter {
 	public void destroy() {
 	}
 
-	@SuppressWarnings("deprecation")
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
 		HttpServletRequest req = (HttpServletRequest)request;
 		HttpServletResponse resp = (HttpServletResponse)response;
 		
-		System.setProperty("WebContent", req.getRealPath("/"));
+		//System.setProperty("WebContent", req.getRealPath("/"));
 		
 		//获取根目录所对应的绝对路径
         String currentURL = req.getRequestURI();

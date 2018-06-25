@@ -36,6 +36,10 @@
 		%>
 		
 		$('#currentStudent').text('${selectStudent.name}');
+		if('${selectStudent.roleId}' == 1){
+			$('#selectedCourses').css('display','none');
+			$('#selectedCredithour').css('display','none');
+		}
 		
 		//选课列表
 		$.ajax({
@@ -82,7 +86,8 @@
 						selected += arr[i].split(",")[0]+", ";
 					}
 				}
-				$('#selectedCourses').text(selected);
+				$('#selectedCourses').text($('#selectedCourses').text()+selected);
+				$('#selectedCredithour').text($('#selectedCredithour').text()+'${selectStudent.totalCredit}');
 				$('#grid').html($('#grid').html()+content);
 				$("#totalCount").text(pageBean.totalCount);
 				$("#totalPage").text(pageBean.totalPage);
@@ -210,7 +215,7 @@
 		<TABLE cellSpacing=0 cellPadding=0 width="98%" border=0>
 			<TBODY>
 				<TR>
-					<TD width=15 background=${pageContext.request.contextPath }/images/new_022.jpg><IMG
+					<TD width=15 background='${pageContext.request.contextPath }/images/new_022.jpg'><IMG
 						src="${pageContext.request.contextPath }/images/new_022.jpg" border=0></TD>
 					<TD vAlign=top width="100%" bgColor=#ffffff>
 						<TABLE cellSpacing=0 cellPadding=5 width="100%" border=0>
@@ -245,7 +250,7 @@
 								</TR>
 								<tr>
 									<td>
-										当前用户: <span id="currentStudent"></span>, <input type="hidden" name="stid" value="${selectStudent.id }">已选课程:<span id="selectedCourses"></span>
+										当前用户: <span id="currentStudent"></span>, <input type="hidden" name="stid" value="${selectStudent.id }"><span id="selectedCourses">已选课程:</span><span id="selectedCredithour">已选学分:</span>
 									</td>
 								</tr>
 							    

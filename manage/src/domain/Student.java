@@ -26,6 +26,17 @@ public class Student {
 	private Integer flag;
 	
 	private List<Course> courses;
+	//获得总学分
+	public Float getTotalCredit(){
+		if(courses != null){
+			Float total = 0.0f;
+			for(Course c: courses){
+				total += c.getCredithour();
+			}
+			return total;
+		}
+		return 0.0f;
+	}
 	
 	public String getId() {
 		return id;

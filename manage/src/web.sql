@@ -48,7 +48,7 @@ CREATE TABLE `course` (
 
 /*Data for the table `course` */
 
-insert  into `course`(`id`,`name`,`credithour`,`classhour`,`practicehour`,`remark`) values ('42001','java',4,48,48,''),('42002','c/c++',4,48,48,''),('42003','计算机网络',3,24,24,''),('42004','操作系统',3,24,24,''),('42204','高等数学A',4,48,48,'');
+insert  into `course`(`id`,`name`,`credithour`,`classhour`,`practicehour`,`remark`) values ('42001','java',4,48,48,''),('42002','c/c++',4,48,48,''),('42003','计算机网络',3,24,24,''),('42004','操作系统',3,24,24,''),('42005','高等数学A',4,48,48,'');
 
 /*Table structure for table `log` */
 
@@ -90,7 +90,7 @@ CREATE TABLE `score` (
 
 /*Data for the table `score` */
 
-insert  into `score`(`id`,`studentId`,`courseId`,`semester`,`score1`,`score2`,`score3`) values (1642200142001,'16422001','42001','1',90,NULL,NULL),(1642200142002,'16422001','42002','1',59,90,NULL),(1642200142003,'16422001','42003','1',80,NULL,NULL),(1642200142004,'16422001','42004','1',90,NULL,NULL),(1642200242001,'16422002','42001','1',59,59,60),(1642200242002,'16422002','42002','1',90,NULL,NULL),(1642200242004,'16422002','42004','1',100,NULL,NULL),(1642200242204,'16422002','42204','1',100,NULL,NULL);
+insert  into `score`(`id`,`studentId`,`courseId`,`semester`,`score1`,`score2`,`score3`) values (1642200142001,'16422001','42001',NULL,NULL,NULL,NULL),(1642200142002,'16422001','42002',NULL,NULL,NULL,NULL),(1642200142003,'16422001','42003',NULL,NULL,NULL,NULL),(1642200142004,'16422001','42004',NULL,NULL,NULL,NULL),(1642200242001,'16422002','42001',NULL,NULL,NULL,NULL),(1642200242002,'16422002','42002',NULL,NULL,NULL,NULL),(1642200242004,'16422002','42004',NULL,NULL,NULL,NULL),(1642200242005,'16422002','42005',NULL,NULL,NULL,NULL);
 
 /*Table structure for table `student` */
 
